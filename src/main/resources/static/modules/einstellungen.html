@@ -1,0 +1,274 @@
+<div class="container-fluid">
+    <h1 class="mb-4">Einstellungen</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Einstellungs-Navigation -->
+            <div class="card mb-4">
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" role="tablist">
+                        <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#profile" role="tab">
+                            <i class="bi bi-person me-2"></i> Profil
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#notifications" role="tab">
+                            <i class="bi bi-bell me-2"></i> Benachrichtigungen
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#security" role="tab">
+                            <i class="bi bi-shield-lock me-2"></i> Sicherheit
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#appearance" role="tab">
+                            <i class="bi bi-palette me-2"></i> Erscheinungsbild
+                        </a>
+                        <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#integrations" role="tab">
+                            <i class="bi bi-box-arrow-up-right me-2"></i> Integrationen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- Einstellungs-Inhalt -->
+            <div class="tab-content">
+                <!-- Profil -->
+                <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Profil-Einstellungen</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="profileForm">
+                                <div class="row mb-4">
+                                    <div class="col-auto">
+                                        <div class="avatar-upload">
+                                            <img src="images/admin.png" class="rounded-circle" alt="Profilbild">
+                                            <button type="button" class="btn btn-sm btn-primary mt-2">
+                                                <i class="bi bi-upload"></i> Bild ändern
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Vorname</label>
+                                                <input type="text" class="form-control" value="Arnie">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Nachname</label>
+                                                <input type="text" class="form-control" value="Amsel">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">E-Mail</label>
+                                                <input type="email" class="form-control" value="arnie.amsel@email.de">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Telefon</label>
+                                                <input type="tel" class="form-control" value="+49 123 456789">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <label class="form-label">Farbschema</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="theme" id="themeIvory" value="ivory" checked>
+                                                <label class="form-check-label" for="themeIvory">
+                                                    Ivory
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="theme" id="themeAiryBlue" value="airyblue">
+                                                <label class="form-check-label" for="themeAiryBlue">
+                                                    Airy Blue
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="theme" id="themeDarkBlue" value="darkblue">
+                                                <label class="form-check-label" for="themeDarkBlue">
+                                                    Dark Blue
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benachrichtigungen -->
+                <div class="tab-pane fade" id="notifications" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Benachrichtigungs-Einstellungen</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="notificationsForm">
+                                <div class="mb-4">
+                                    <h6>E-Mail-Benachrichtigungen</h6>
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" id="emailNewContract" checked>
+                                        <label class="form-check-label" for="emailNewContract">Neue Verträge</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" id="emailNewMessage" checked>
+                                        <label class="form-check-label" for="emailNewMessage">Neue Nachrichten</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" id="emailNewTicket" checked>
+                                        <label class="form-check-label" for="emailNewTicket">Support-Tickets</label>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <h6>Push-Benachrichtigungen</h6>
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" id="pushNewContract">
+                                        <label class="form-check-label" for="pushNewContract">Neue Verträge</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" id="pushNewMessage" checked>
+                                        <label class="form-check-label" for="pushNewMessage">Neue Nachrichten</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" id="pushNewTicket">
+                                        <label class="form-check-label" for="pushNewTicket">Support-Tickets</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sicherheit -->
+                <div class="tab-pane fade" id="security" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Sicherheits-Einstellungen</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="securityForm">
+                                <div class="mb-4">
+                                    <h6>Passwort ändern</h6>
+                                    <div class="mb-3">
+                                        <label class="form-label">Aktuelles Passwort</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Neues Passwort</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Passwort bestätigen</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <h6>Zwei-Faktor-Authentifizierung</h6>
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox" class="form-check-input" id="enable2FA">
+                                        <label class="form-check-label" for="enable2FA">2FA aktivieren</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Erscheinungsbild -->
+                <div class="tab-pane fade" id="appearance" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Erscheinungsbild</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="appearanceForm">
+                                <div class="mb-4">
+                                    <h6>Theme</h6>
+                                    <div class="form-check mb-2">
+                                        <input type="radio" class="form-check-input" name="theme" id="themeLight" checked>
+                                        <label class="form-check-label" for="themeLight">Hell</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input type="radio" class="form-check-input" name="theme" id="themeDark">
+                                        <label class="form-check-label" for="themeDark">Dunkel</label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input type="radio" class="form-check-input" name="theme" id="themeSystem">
+                                        <label class="form-check-label" for="themeSystem">Systemeinstellung</label>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <h6>Schriftgröße</h6>
+                                    <select class="form-select">
+                                        <option value="small">Klein</option>
+                                        <option value="medium" selected>Normal</option>
+                                        <option value="large">Groß</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrationen -->
+                <div class="tab-pane fade" id="integrations" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Integrationen</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h6>Verbundene Dienste</h6>
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-0">Google Kalender</h6>
+                                                <small class="text-muted">Termine synchronisieren</small>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input type="checkbox" class="form-check-input" id="syncGoogleCalendar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-0">Microsoft Office 365</h6>
+                                                <small class="text-muted">Dokumente synchronisieren</small>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input type="checkbox" class="form-check-input" id="syncOffice365">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h6>API-Zugriff</h6>
+                                <div class="mb-3">
+                                    <label class="form-label">API-Schlüssel</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="••••••••••••••••" readonly>
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="bi bi-clipboard"></i>
+                                        </button>
+                                        <button class="btn btn-outline-primary" type="button">
+                                            Neu generieren
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <h1 class="mb-4">Angebotsrechner</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Versicherungsauswahl -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Versicherungsart</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" onclick="selectInsuranceType('kfz')">
+                            <i class="bi bi-car-front"></i> KFZ-Versicherung
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="selectInsuranceType('leben')">
+                            <i class="bi bi-heart"></i> Lebensversicherung
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="selectInsuranceType('hausrat')">
+                            <i class="bi bi-house"></i> Hausratversicherung
+                        </button>
+                        <button class="btn btn-outline-primary" onclick="selectInsuranceType('haftpflicht')">
+                            <i class="bi bi-shield"></i> Haftpflicht
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kundenauswahl -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Kunde</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <select class="form-select" id="customerSelect">
+                            <option value="">Neuer Kunde</option>
+                            <option value="1">Thomas Schmidt</option>
+                            <option value="2">Maria Müller</option>
+                            <option value="3">Peter Wagner</option>
+                        </select>
+                    </div>
+                    <div id="newCustomerForm">
+                        <div class="mb-3">
+                            <label class="form-label">Vorname</label>
+                            <input type="text" class="form-control" id="firstName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nachname</label>
+                            <input type="text" class="form-control" id="lastName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Geburtsdatum</label>
+                            <input type="date" class="form-control" id="birthDate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <!-- Dynamischer Bereich für Versicherungsdetails -->
+            <div id="insuranceDetails" class="card mb-4 d-none">
+                <!-- Wird dynamisch durch JavaScript gefüllt -->
+            </div>
+
+            <!-- Ergebnis -->
+            <div id="calculationResult" class="card mb-4 d-none">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Angebotsergebnis</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Monatlicher Beitrag</h6>
+                            <h3 class="text-primary" id="monthlyFee">0,00 €</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Jahresbeitrag</h6>
+                            <h3 class="text-primary" id="yearlyFee">0,00 €</h3>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h6>Versicherungssumme</h6>
+                            <p id="insuranceSum">0,00 €</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Selbstbeteiligung</h6>
+                            <p id="deductible">0,00 €</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn-success me-2" onclick="createOffer()">
+                            <i class="bi bi-file-earmark-text"></i> Angebot erstellen
+                        </button>
+                        <button class="btn btn-primary" onclick="createContract()">
+                            <i class="bi bi-file-earmark-check"></i> Vertrag erstellen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

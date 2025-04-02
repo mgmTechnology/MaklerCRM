@@ -1,0 +1,120 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Verträge</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newContractModal">
+            <i class="bi bi-plus-circle"></i> Neuer Vertrag
+        </button>
+    </div>
+
+    <!-- Filter-Bereich -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Versicherungsart</label>
+                    <select class="form-select" id="insuranceType">
+                        <option value="">Alle</option>
+                        <option value="kfz">KFZ-Versicherung</option>
+                        <option value="leben">Lebensversicherung</option>
+                        <option value="hausrat">Hausratversicherung</option>
+                        <option value="haftpflicht">Haftpflicht</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="contractStatus">
+                        <option value="">Alle</option>
+                        <option value="active">Aktiv</option>
+                        <option value="pending">In Bearbeitung</option>
+                        <option value="cancelled">Gekündigt</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Kunde</label>
+                    <input type="text" class="form-control" id="customerSearch" placeholder="Suchen...">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Vertragsnummer</label>
+                    <input type="text" class="form-control" id="contractNumber" placeholder="VS-...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vertrags-Tabelle -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="contractsTable">
+                    <thead>
+                        <tr>
+                            <th>Vertragsnummer</th>
+                            <th>Kunde</th>
+                            <th>Versicherungsart</th>
+                            <th>Status</th>
+                            <th>Beginn</th>
+                            <th>Jahresbeitrag</th>
+                            <th>Provision</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contractsTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal für neuen Vertrag -->
+<div class="modal fade" id="newContractModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neuer Vertrag</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newContractForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Versicherungsart</label>
+                            <select class="form-select" required>
+                                <option value="">Bitte wählen...</option>
+                                <option value="kfz">KFZ-Versicherung</option>
+                                <option value="leben">Lebensversicherung</option>
+                                <option value="hausrat">Hausratversicherung</option>
+                                <option value="haftpflicht">Haftpflicht</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Kunde</label>
+                            <select class="form-select" required>
+                                <option value="">Kunde auswählen...</option>
+                                <option value="1">Thomas Schmidt</option>
+                                <option value="2">Maria Müller</option>
+                                <option value="3">Peter Wagner</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Versicherungsbeginn</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Jahresbeitrag</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" step="0.01" required>
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="saveNewContract()">Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>

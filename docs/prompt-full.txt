@@ -1,0 +1,84 @@
+# Maklerportal – Projektbeschreibung & Prompt
+
+Erstelle ein vollständig modular aufgebautes Maklerportal als Webanwendung mit Fokus auf moderner, responsiver Benutzeroberfläche. Die Anwendung dient als zentrale Plattform für Versicherungsmakler, deren Betreuer sowie Administratoren.
+
+## Zielgruppen (Rollen)
+1. Makler
+2. Betreuer
+3. Admin
+
+Jede Rolle hat unterschiedliche Rechte und Zugriffsmöglichkeiten auf die Funktionen der Plattform.
+
+## Anforderungen – Frontend
+- Die GUI soll modern, responsiv und interaktiv sein („fancy look & feel“).
+- Sidebar links wie bei WordPress (Tool-Menü)
+- Topbar oben für Userinfos, Logout, Light/Dark Mode Toggle
+- Zentraler Inhaltsbereich für Module
+
+## Module (jeweils eigene HTML + JS-Datei)
+1. Dashboard
+2. Verträge
+3. Angebotsrechner
+4. Dokumente
+5. Kommunikation
+6. Provisionen
+7. Support
+8. Einstellungen
+
+Jedes Modul lädt seinen HTML-Inhalt und initialisiert eine Dummy-Funktion über eine eigene JavaScript-Datei.
+
+
+
+
+## Light/Dark Mode
+- Umschaltbar per Button
+- Einstellung wird in localStorage gespeichert
+
+## Login
+- Login-Simulation über login.html
+- Auswahl der Rolle (Makler, Betreuer, Admin)
+- Speicherung der Rolle in sessionStorage
+- Weiterleitung zu index.html nach Login
+
+## Projektstruktur (Maven-kompatibel, vorbereitet für Spring Boot Backend)
+- Verwendung von Maven zur Projektorganisation
+- Statisches Frontend unter src/main/resources/static/
+- Java-Backend vorbereitbar unter src/main/java
+- Späteres Backend via Spring Boot (REST, Auth etc.)
+
+## Frontend-Technologien
+- HTML, Vanilla JavaScript, CSS
+- Bootstrap 5 (CDN)
+- Bootstrap Icons (CDN)
+
+## Ziel
+Das Portal soll sofort im Browser bedienbar sein, ohne Backend – mit Möglichkeit zur späteren Erweiterung mit Spring Boot.
+
+
+## Projektstruktur
+maklerportal/
+│
+├── index.html                  # Haupttemplate mit Navigation, Header, Content-Container
+├── css/
+│   └── style.css               # Zentrales Stylesheet
+├── js/
+│   ├── router.js               # Navigation & Modul-Loader
+│   ├── dashboard.js            # Logik für Dashboard
+│   ├── vertrage.js             # Logik für Verträge
+│   ├── angebotsrechner.js      # Logik für Angebotsrechner
+│   ├── dokumente.js            # Logik für Dokumente
+│   ├── kommunikation.js        # Logik für Kommunikation
+│   ├── provisionen.js          # Logik für Provisionen
+│   ├── support.js              # Logik für Supportbereich
+│   └── einstellungen.js        # Logik für Benutzereinstellungen
+├── modules/
+│   ├── dashboard.html
+│   ├── vertrage.html
+│   ├── angebotsrechner.html
+│   ├── dokumente.html
+│   ├── kommunikation.html
+│   ├── provisionen.html
+│   ├── support.html
+│   └── einstellungen.html
+└── assets/
+    └── icons/, images/, ...

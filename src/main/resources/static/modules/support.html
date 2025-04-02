@@ -1,0 +1,224 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Support</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTicketModal">
+            <i class="bi bi-plus-circle"></i> Neues Ticket
+        </button>
+    </div>
+
+    <!-- Übersichtskarten -->
+    <div class="row">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-primary h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Offene Tickets</div>
+                            <div class="h5 mb-0" id="openTickets">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-ticket h2 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-warning h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">In Bearbeitung</div>
+                            <div class="h5 mb-0" id="inProgressTickets">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-gear h2 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-success h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Gelöste Tickets</div>
+                            <div class="h5 mb-0" id="solvedTickets">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-check-circle h2 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-info h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Durchschn. Reaktionszeit</div>
+                            <div class="h5 mb-0" id="avgResponseTime">0h</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-clock h2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter und Suche -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="ticketStatus">
+                        <option value="">Alle</option>
+                        <option value="open">Offen</option>
+                        <option value="in_progress">In Bearbeitung</option>
+                        <option value="solved">Gelöst</option>
+                        <option value="closed">Geschlossen</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Priorität</label>
+                    <select class="form-select" id="ticketPriority">
+                        <option value="">Alle</option>
+                        <option value="high">Hoch</option>
+                        <option value="medium">Mittel</option>
+                        <option value="low">Niedrig</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Kategorie</label>
+                    <select class="form-select" id="ticketCategory">
+                        <option value="">Alle</option>
+                        <option value="technical">Technisch</option>
+                        <option value="contract">Vertrag</option>
+                        <option value="billing">Abrechnung</option>
+                        <option value="other">Sonstiges</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Suche</label>
+                    <input type="text" class="form-control" id="searchTickets" placeholder="Ticket suchen...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket-Liste -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="ticketsTable">
+                    <thead>
+                        <tr>
+                            <th>Ticket-Nr.</th>
+                            <th>Betreff</th>
+                            <th>Status</th>
+                            <th>Priorität</th>
+                            <th>Kategorie</th>
+                            <th>Erstellt am</th>
+                            <th>Letzte Aktualisierung</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketsTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neues Ticket Modal -->
+<div class="modal fade" id="newTicketModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neues Support-Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newTicketForm">
+                    <div class="mb-3">
+                        <label class="form-label">Betreff</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kategorie</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="technical">Technisch</option>
+                            <option value="contract">Vertrag</option>
+                            <option value="billing">Abrechnung</option>
+                            <option value="other">Sonstiges</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Priorität</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="high">Hoch</option>
+                            <option value="medium">Mittel</option>
+                            <option value="low">Niedrig</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Beschreibung</label>
+                        <textarea class="form-control" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Anhänge</label>
+                        <input type="file" class="form-control" multiple>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="createTicket()">Ticket erstellen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ticket Details Modal -->
+<div class="modal fade" id="ticketDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ticket Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="ticketDetails">
+                    <!-- Wird durch JavaScript gefüllt -->
+                </div>
+                <hr>
+                <h6>Kommentare</h6>
+                <div id="ticketComments" class="mb-3">
+                    <!-- Wird durch JavaScript gefüllt -->
+                </div>
+                <form id="commentForm">
+                    <div class="mb-3">
+                        <label class="form-label">Neuer Kommentar</label>
+                        <textarea class="form-control" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                <button type="button" class="btn btn-success" onclick="addComment()">Kommentar hinzufügen</button>
+            </div>
+        </div>
+    </div>
+</div>

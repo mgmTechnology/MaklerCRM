@@ -1,0 +1,5 @@
+1. layouts wie uhren nomos
+2. admin manage users
+3. click events auf allen dashboards
+4. ausreichend betreuer/makler daten für demo
+

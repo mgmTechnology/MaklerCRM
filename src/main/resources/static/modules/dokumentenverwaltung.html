@@ -1,0 +1,228 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Dokumentenverwaltung</h1>
+        <div>
+            <button class="btn btn-outline-primary me-2" onclick="uploadDocument()">
+                <i class="bi bi-upload"></i> Dokument hochladen
+            </button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createFolderModal">
+                <i class="bi bi-folder-plus"></i> Neuer Ordner
+            </button>
+        </div>
+    </div>
+
+    <!-- Übersichtskarten -->
+    <div class="row mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Gesamt Dokumente</h6>
+                            <h4 class="mb-0" id="totalDocuments">0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-files h1 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Speicherplatz</h6>
+                            <h4 class="mb-0" id="storageUsed">0 GB</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-hdd h1 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Neue Dokumente (30d)</h6>
+                            <h4 class="mb-0" id="newDocuments">0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-file-earmark-plus h1 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Aktive Freigaben</h6>
+                            <h4 class="mb-0" id="activeShares">0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-share h1 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter und Suche -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Dokumententyp</label>
+                    <select class="form-select" id="documentType">
+                        <option value="">Alle</option>
+                        <option value="contract">Verträge</option>
+                        <option value="training">Schulungen</option>
+                        <option value="certificate">Zertifikate</option>
+                        <option value="policy">Richtlinien</option>
+                        <option value="other">Sonstige</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Makler</label>
+                    <select class="form-select" id="brokerFilter">
+                        <option value="">Alle Makler</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Zeitraum</label>
+                    <select class="form-select" id="periodFilter">
+                        <option value="all">Alle</option>
+                        <option value="today">Heute</option>
+                        <option value="week">Diese Woche</option>
+                        <option value="month">Dieser Monat</option>
+                        <option value="year">Dieses Jahr</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Suche</label>
+                    <input type="text" class="form-control" id="searchDocuments" placeholder="Dokumentenname...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ordnerstruktur und Dokumente -->
+    <div class="card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb" id="folderPath">
+                    <li class="breadcrumb-item"><a href="#" onclick="navigateFolder('root')">Home</a></li>
+                </ol>
+            </nav>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;"></th>
+                            <th>Name</th>
+                            <th>Typ</th>
+                            <th>Makler</th>
+                            <th>Größe</th>
+                            <th>Geändert</th>
+                            <th>Status</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentsTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neuer Ordner Modal -->
+<div class="modal fade" id="createFolderModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neuen Ordner erstellen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Ordnername</label>
+                    <input type="text" class="form-control" id="newFolderName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Beschreibung (optional)</label>
+                    <textarea class="form-control" id="newFolderDescription" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Zugriffsrechte</label>
+                    <select class="form-select" id="newFolderAccess">
+                        <option value="private">Nur Betreuer</option>
+                        <option value="selected">Ausgewählte Makler</option>
+                        <option value="all">Alle Makler</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="createFolder()">Ordner erstellen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dokument Details Modal -->
+<div class="modal fade" id="documentDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dokumentdetails</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#documentInfo">Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#documentHistory">Verlauf</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#documentSharing">Freigaben</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" id="documentInfo">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="documentHistory">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="documentSharing">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary me-2" onclick="downloadDocument()">
+                    <i class="bi bi-download"></i> Herunterladen
+                </button>
+                <button type="button" class="btn btn-outline-success me-2" onclick="shareDocument()">
+                    <i class="bi bi-share"></i> Freigeben
+                </button>
+                <button type="button" class="btn btn-outline-danger" onclick="deleteDocument()">
+                    <i class="bi bi-trash"></i> Löschen
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

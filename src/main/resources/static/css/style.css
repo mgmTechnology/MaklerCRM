@@ -1,0 +1,376 @@
+/* Grundlegende Variablen */
+:root {
+    --primary-color: #4e73df;
+    --primary-hover: #2e59d9;
+    --sidebar-width: 250px;
+    --header-height: 60px;
+    --sidebar-bg: #fff;
+    --sidebar-text: #5a5c69;
+    --sidebar-hover: #eaecf4;
+    --border-color: #e3e6f0;
+    --vb-primary: #003876;      /* Dunkelblau - Hauptfarbe */
+    --vb-secondary: #0066b3;    /* Mittelblau */
+    --vb-accent: #e6007e;       /* Magenta Akzentfarbe */
+    --vb-light: #f5f6fa;        /* Heller Hintergrund */
+    --vb-gray: #6c757d;         /* Grau für Text */
+    --vb-border: #dee2e6;       /* Rahmenfarbe */
+    --bs-primary: var(--vb-primary);
+    --bs-secondary: var(--vb-secondary);
+    --bs-link-color: var(--vb-secondary);
+    --bs-link-hover-color: var(--vb-primary);
+    --menu-primary: #2c7be5;    /* Hellblau */
+    --menu-light: #f8f9fa;      /* Helles Grau */
+    --menu-hover: #1a68d1;      /* Dunkleres Blau für Hover */
+    --menu-active: #ffffff;     /* Weiß für aktive Elemente */
+    --menu-text: #ffffff;       /* Weiß für Text */
+    --menu-text-dark: #495057;  /* Dunkelgrau für Text */
+    --bg-primary: var(--vb-light);
+    --bg-secondary: var(--vb-secondary);
+    --text-primary: var(--vb-gray);
+    --text-secondary: var(--vb-gray);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --sidebar-bg: #1a1c24;
+    --sidebar-text: #ffffff;
+    --sidebar-hover: #2d2f3b;
+    --border-color: #2d2f3b;
+    --vb-light: #1a1a1a;
+    --vb-border: #2d2d2d;
+    --bg-primary: #121212;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #adb5bd;
+}
+
+/* Wrapper */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* Sidebar */
+#sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all 0.3s;
+    border-right: 1px solid var(--border-color);
+    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+}
+
+#sidebar.active {
+    margin-left: calc(-1 * var(--sidebar-width));
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+#sidebar .sidebar-header img {
+    max-width: 100%;
+    height: auto;
+}
+
+#sidebar .sidebar-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+#sidebar ul li a:hover {
+    background: var(--sidebar-hover);
+    border-left-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+#sidebar ul li.active > a {
+    background: var(--sidebar-hover);
+    border-left-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* Content */
+#content {
+    width: 100%;
+    min-height: 100vh;
+    margin-left: var(--sidebar-width);
+    transition: all 0.3s;
+}
+
+#content.active {
+    margin-left: 0;
+}
+
+/* Top Navigation */
+.navbar {
+    padding: 15px;
+    background: #fff;
+    border-bottom: 1px solid var(--border-color);
+    height: var(--header-height);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        margin-left: 0;
+    }
+    #content.active {
+        margin-left: var(--sidebar-width);
+    }
+}
+
+/* User Info */
+#userInfo {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Menu Groups */
+.menu-group {
+    margin-bottom: 15px;
+}
+
+.menu-group-title {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #b7b9cc;
+    font-weight: 600;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Card Styling */
+.card {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    border-radius: 8px;
+    border: 1px solid var(--vb-border);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid var(--vb-border);
+}
+
+/* Tabellen */
+.table thead th {
+    background-color: var(--vb-light);
+    color: var(--vb-primary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--vb-primary);
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--vb-secondary);
+    box-shadow: 0 0 0 0.2rem rgba(0,102,179,0.25);
+}
+
+.form-label {
+    color: var(--vb-primary);
+    font-weight: 500;
+}
+
+/* Badges */
+.badge.bg-primary {
+    background-color: var(--vb-primary) !important;
+}
+
+.badge.bg-secondary {
+    background-color: var(--vb-secondary) !important;
+}
+
+/* Progress Bars */
+.progress-bar {
+    background-color: var(--vb-primary);
+}
+
+/* Modals */
+.modal-header {
+    background-color: var(--vb-primary);
+    color: white;
+}
+
+.modal-header .btn-close {
+    color: white;
+}
+
+/* Custom Klassen */
+.border-left-primary {
+    border-left: 4px solid var(--vb-primary);
+}
+
+.border-left-secondary {
+    border-left: 4px solid var(--vb-secondary);
+}
+
+.text-primary {
+    color: var(--vb-primary) !important;
+}
+
+.text-secondary {
+    color: var(--vb-secondary) !important;
+}
+
+/* Dark Mode Anpassungen */
+[data-theme="dark"] .card,
+[data-theme="dark"] .navbar,
+[data-theme="dark"] .sidebar {
+    background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .table thead th {
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .nav-link {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .form-control {
+    background-color: #2d2d2d;
+    border-color: #404040;
+    color: #ffffff;
+}
+
+/* Dokumente Styling */
+.table {
+    --bs-table-hover-bg: var(--sidebar-hover);
+    --bs-table-hover-color: inherit;
+}
+
+.table td, .table th {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.table thead th {
+    font-weight: 600;
+    border-bottom-width: 1px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--sidebar-text);
+}
+
+/* Dokument Icons */
+.document-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* Breadcrumb Styling */
+.breadcrumb {
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: var(--sidebar-text);
+}
+
+/* Card Styling für Dokumente */
+.card {
+    background-color: var(--sidebar-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Button Styling */
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Suchfeld Styling */
+.input-group .form-control {
+    border-color: var(--border-color);
+}
+
+.input-group .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Dark Mode Anpassungen für Dokumente */
+[data-theme="dark"] .table {
+    --bs-table-hover-bg: var(--sidebar-hover);
+    --bs-table-hover-color: var(--sidebar-text);
+}
+
+[data-theme="dark"] .card {
+    background-color: var(--sidebar-bg);
+}
+
+[data-theme="dark"] .breadcrumb-item.active {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .table td, 
+[data-theme="dark"] .table th {
+    border-color: var(--border-color);
+    color: var(--sidebar-text);
+}

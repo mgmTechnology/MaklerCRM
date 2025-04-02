@@ -1,0 +1,159 @@
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Administrator Dashboard</h1>
+    
+    <!-- Statistik-Karten -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Gesamtumsatz</h6>
+                    <h2 class="card-title mb-0">156.450 €</h2>
+                    <small class="text-success">+8% zum Vormonat</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Aktive Nutzer</h6>
+                    <h2 class="card-title mb-0">45</h2>
+                    <small class="text-muted">12 Betreuer, 33 Makler</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">System-Status</h6>
+                    <h2 class="card-title mb-0">99.9%</h2>
+                    <small class="text-success">Alle Systeme aktiv</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Offene Tickets</h6>
+                    <h2 class="card-title mb-0">3</h2>
+                    <small class="text-warning">1 kritisch</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System-Status und Aktivitäten -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">System-Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">Hauptserver</h6>
+                                    <small class="text-muted">Letzte Prüfung: vor 5 Minuten</small>
+                                </div>
+                                <span class="badge bg-success">Online</span>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">Datenbank</h6>
+                                    <small class="text-muted">Letzte Prüfung: vor 5 Minuten</small>
+                                </div>
+                                <span class="badge bg-success">Online</span>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">Backup-System</h6>
+                                    <small class="text-muted">Letztes Backup: 31.03.2025 20:00</small>
+                                </div>
+                                <span class="badge bg-success">Aktiv</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Letzte Aktivitäten</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">Neuer Betreuer angelegt</h6>
+                                    <small class="text-muted">Heute, 15:30 - durch Admin</small>
+                                </div>
+                                <span class="badge bg-info">System</span>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">Backup durchgeführt</h6>
+                                    <small class="text-muted">Heute, 14:00 - Automatisch</small>
+                                </div>
+                                <span class="badge bg-success">System</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance-Übersicht -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">System-Performance</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Metrik</th>
+                                    <th>Aktuell</th>
+                                    <th>Durchschnitt (24h)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CPU-Auslastung</td>
+                                    <td>32%</td>
+                                    <td>45%</td>
+                                    <td><span class="badge bg-success">Normal</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Speicherauslastung</td>
+                                    <td>68%</td>
+                                    <td>65%</td>
+                                    <td><span class="badge bg-warning">Beobachten</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Datenbank-Performance</td>
+                                    <td>95ms</td>
+                                    <td>102ms</td>
+                                    <td><span class="badge bg-success">Optimal</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

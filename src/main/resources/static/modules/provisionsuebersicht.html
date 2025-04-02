@@ -1,0 +1,354 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Provisionsübersicht</h1>
+        <div>
+            <button class="btn btn-outline-primary me-2" onclick="exportProvisions()">
+                <i class="bi bi-download"></i> Export
+            </button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#provisionSettingsModal">
+                <i class="bi bi-gear"></i> Einstellungen
+            </button>
+        </div>
+    </div>
+
+    <!-- Übersichtskarten -->
+    <div class="row mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Gesamtprovisionen (YTD)</h6>
+                            <h4 class="mb-0" id="totalCommissions">0 €</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-currency-euro h1 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Ø Provision pro Makler</h6>
+                            <h4 class="mb-0" id="avgCommissionPerBroker">0 €</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-people h1 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Offene Auszahlungen</h6>
+                            <h4 class="mb-0" id="pendingPayouts">0 €</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-clock-history h1 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Wachstum (YoY)</h6>
+                            <h4 class="mb-0" id="yearOverYearGrowth">0%</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-graph-up h1 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Provisionsentwicklung</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="commissionsChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Verteilung nach Produkten</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="productDistributionChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter und Suche -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Region</label>
+                    <select class="form-select" id="regionFilter">
+                        <option value="">Alle</option>
+                        <option value="nord">Nord</option>
+                        <option value="sued">Süd</option>
+                        <option value="west">West</option>
+                        <option value="ost">Ost</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="statusFilter">
+                        <option value="">Alle</option>
+                        <option value="paid">Ausgezahlt</option>
+                        <option value="pending">Ausstehend</option>
+                        <option value="processing">In Bearbeitung</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Zeitraum</label>
+                    <select class="form-select" id="periodFilter">
+                        <option value="thisMonth">Dieser Monat</option>
+                        <option value="lastMonth">Letzter Monat</option>
+                        <option value="thisQuarter">Dieses Quartal</option>
+                        <option value="thisYear">Dieses Jahr</option>
+                        <option value="custom">Benutzerdefiniert</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Suche</label>
+                    <input type="text" class="form-control" id="searchCommissions" placeholder="Makler oder Vertrag">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provisionsübersicht Tabelle -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Makler</th>
+                            <th>Region</th>
+                            <th>Verträge (YTD)</th>
+                            <th>Provision (YTD)</th>
+                            <th>Ø Provision/Vertrag</th>
+                            <th>Trend</th>
+                            <th>Status</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commissionsTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Provisionseinstellungen Modal -->
+<div class="modal fade" id="provisionSettingsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Provisionseinstellungen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#generalSettings">Allgemein</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#productSettings">Produkte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#bonusSettings">Boni</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" id="generalSettings">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Standard-Auszahlungstermin</label>
+                                <select class="form-select">
+                                    <option value="1">1. des Monats</option>
+                                    <option value="15">15. des Monats</option>
+                                    <option value="lastDay">Letzter Tag des Monats</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mindestbetrag für Auszahlung</label>
+                                <input type="number" class="form-control" value="100">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Stornoreserve (%)</label>
+                                <input type="number" class="form-control" value="15">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="productSettings">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Produkt</th>
+                                        <th>Basis-Provision (%)</th>
+                                        <th>Zusatz-Provision (%)</th>
+                                        <th>Laufzeit (Monate)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>KFZ-Versicherung</td>
+                                        <td><input type="number" class="form-control" value="15"></td>
+                                        <td><input type="number" class="form-control" value="5"></td>
+                                        <td><input type="number" class="form-control" value="12"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lebensversicherung</td>
+                                        <td><input type="number" class="form-control" value="25"></td>
+                                        <td><input type="number" class="form-control" value="10"></td>
+                                        <td><input type="number" class="form-control" value="24"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="bonusSettings">
+                        <div class="mb-3">
+                            <label class="form-label">Bonus-System</label>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Umsatzschwelle (€)</th>
+                                            <th>Bonus (%)</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bonusLevels">
+                                        <tr>
+                                            <td><input type="number" class="form-control" value="50000"></td>
+                                            <td><input type="number" class="form-control" value="2"></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="number" class="form-control" value="100000"></td>
+                                            <td><input type="number" class="form-control" value="5"></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-primary mt-2" onclick="addBonusLevel()">
+                                <i class="bi bi-plus-circle"></i> Neue Stufe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="saveProvisionSettings()">Einstellungen speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Makler-Details Modal -->
+<div class="modal fade" id="brokerDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Makler-Provisionsdetails</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">Makler-Informationen</h6>
+                            </div>
+                            <div class="card-body" id="brokerInfo">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h6 class="card-title mb-0">Performance</h6>
+                            </div>
+                            <div class="card-body" id="brokerPerformance">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h6 class="card-title mb-0">Provisionshistorie</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Datum</th>
+                                        <th>Vertrag</th>
+                                        <th>Produkt</th>
+                                        <th>Provision</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="brokerCommissionsHistory">
+                                    <!-- Wird durch JavaScript gefüllt -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title mb-0">Provision nach Produkten</h6>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="brokerProductChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

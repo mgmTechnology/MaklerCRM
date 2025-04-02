@@ -1,0 +1,116 @@
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Dokumentenverwaltung</h1>
+
+    <!-- Aktionsleiste -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="btn-group">
+                <button class="btn btn-primary">
+                    <i class="bi bi-upload"></i> Dokument hochladen
+                </button>
+                <button class="btn btn-outline-primary">
+                    <i class="bi bi-folder-plus"></i> Neuer Ordner
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Dokumente durchsuchen...">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Dokumente</a></li>
+            <li class="breadcrumb-item"><a href="#">Verträge</a></li>
+            <li class="breadcrumb-item active" aria-current="page">2025</li>
+        </ol>
+    </nav>
+
+    <!-- Dokumententabelle -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px"></th>
+                            <th>Name</th>
+                            <th>Typ</th>
+                            <th>Größe</th>
+                            <th>Geändert</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Ordner -->
+                        <tr>
+                            <td><i class="bi bi-folder text-warning fs-4"></i></td>
+                            <td><a href="#" class="text-decoration-none">Kundenverträge</a></td>
+                            <td>Ordner</td>
+                            <td>-</td>
+                            <td>31.03.2025</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-share"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- PDF Dokument -->
+                        <tr>
+                            <td><i class="bi bi-file-pdf text-danger fs-4"></i></td>
+                            <td><a href="#" class="text-decoration-none">Provisionsabrechnung_März.pdf</a></td>
+                            <td>PDF</td>
+                            <td>245 KB</td>
+                            <td>31.03.2025</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-download"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-share"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Excel Dokument -->
+                        <tr>
+                            <td><i class="bi bi-file-excel text-success fs-4"></i></td>
+                            <td><a href="#" class="text-decoration-none">Kundenübersicht_2025.xlsx</a></td>
+                            <td>Excel</td>
+                            <td>128 KB</td>
+                            <td>30.03.2025</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-download"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-share"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,184 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Maklerübersicht</h1>
+        <div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMaklerModal">
+                <i class="bi bi-person-plus"></i> Neuer Makler
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="statusFilter">
+                        <option value="">Alle</option>
+                        <option value="active">Aktiv</option>
+                        <option value="inactive">Inaktiv</option>
+                        <option value="pending">In Prüfung</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Region</label>
+                    <select class="form-select" id="regionFilter">
+                        <option value="">Alle</option>
+                        <option value="nord">Nord</option>
+                        <option value="sued">Süd</option>
+                        <option value="west">West</option>
+                        <option value="ost">Ost</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Qualifikation</label>
+                    <select class="form-select" id="qualificationFilter">
+                        <option value="">Alle</option>
+                        <option value="ihk">IHK-geprüft</option>
+                        <option value="dvep">DVEP-zertifiziert</option>
+                        <option value="gutachter">Gutachter</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Suche</label>
+                    <input type="text" class="form-control" id="searchMakler" placeholder="Name oder ID...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Makler-Liste -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="maklerTable">
+                    <thead>
+                        <tr>
+                            <th>Makler-ID</th>
+                            <th>Name</th>
+                            <th>Region</th>
+                            <th>Status</th>
+                            <th>Abschlüsse (YTD)</th>
+                            <th>Provision (YTD)</th>
+                            <th>Letzte Aktivität</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="maklerTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Makler Details Modal -->
+<div class="modal fade" id="maklerDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Makler Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#profile">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#contracts">Verträge</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#qualifications">Qualifikationen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#support">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#documents">Dokumente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#notes">Notizen</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" id="profile">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="contracts">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="qualifications">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="support">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="documents">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="notes">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neuer Makler Modal -->
+<div class="modal fade" id="addMaklerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neuen Makler anlegen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newMaklerForm">
+                    <div class="mb-3">
+                        <label class="form-label">Anrede</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="herr">Herr</option>
+                            <option value="frau">Frau</option>
+                            <option value="divers">Divers</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Vorname</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nachname</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-Mail</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Region</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="nord">Nord</option>
+                            <option value="sued">Süd</option>
+                            <option value="west">West</option>
+                            <option value="ost">Ost</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="createMakler()">Makler anlegen</button>
+            </div>
+        </div>
+    </div>
+</div>

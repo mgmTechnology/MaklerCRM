@@ -1,0 +1,141 @@
+<div class="container-fluid">
+    <h1 class="mb-4">Kommunikation</h1>
+
+    <div class="row">
+        <!-- Linke Spalte: Kontaktliste -->
+        <div class="col-md-4 col-xl-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Kontakte suchen..." id="contactSearch">
+                        <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#newContactModal">
+                            <i class="bi bi-person-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" id="contactsList">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rechte Spalte: Nachrichtenbereich -->
+        <div class="col-md-8 col-xl-9">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-3">
+                                <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Avatar">
+                            </div>
+                            <div>
+                                <h5 class="mb-0" id="currentContactName">Wählen Sie einen Kontakt</h5>
+                                <small class="text-muted" id="currentContactStatus"></small>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary" onclick="startCall()">
+                                <i class="bi bi-telephone"></i>
+                            </button>
+                            <button class="btn btn-outline-secondary" onclick="startVideoCall()">
+                                <i class="bi bi-camera-video"></i>
+                            </button>
+                            <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#contactDetailsModal">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body bg-light" id="chatContainer" style="height: 400px; overflow-y: auto;">
+                    <div id="messagesList">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <form id="messageForm" class="d-flex">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-outline-secondary" onclick="attachFile()">
+                                <i class="bi bi-paperclip"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="insertEmoji()">
+                                <i class="bi bi-emoji-smile"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control me-2" placeholder="Nachricht eingeben..." id="messageInput">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neuer Kontakt Modal -->
+<div class="modal fade" id="newContactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neuer Kontakt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newContactForm">
+                    <div class="mb-3">
+                        <label class="form-label">Vorname</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nachname</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-Mail</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kategorie</label>
+                        <select class="form-select">
+                            <option value="kunde">Kunde</option>
+                            <option value="makler">Makler</option>
+                            <option value="versicherung">Versicherung</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="saveNewContact()">Speichern</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Kontaktdetails Modal -->
+<div class="modal fade" id="contactDetailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kontaktdetails</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="contactDetails">
+                    <!-- Wird durch JavaScript gefüllt -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger me-auto" onclick="deleteContact()">Kontakt löschen</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                <button type="button" class="btn btn-primary" onclick="editContact()">Bearbeiten</button>
+            </div>
+        </div>
+    </div>
+</div>

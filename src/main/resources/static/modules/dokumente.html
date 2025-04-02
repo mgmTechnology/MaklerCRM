@@ -1,0 +1,121 @@
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                <i class="bi bi-cloud-upload"></i> Dokument hochladen
+            </button>
+            <button class="btn btn-outline-primary ms-2">
+                <i class="bi bi-folder-plus"></i> Neuer Ordner
+            </button>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchDocs" placeholder="Dokumente durchsuchen...">
+                <button class="btn btn-outline-secondary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" class="text-primary">Dokumente</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-primary">Verträge</a></li>
+            <li class="breadcrumb-item active">2025</li>
+        </ol>
+    </nav>
+
+    <!-- Dokumententabelle -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="documentsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Typ</th>
+                            <th>Größe</th>
+                            <th>Geändert</th>
+                            <th class="text-end">Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documentsTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dokument hochladen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadForm">
+                    <div class="mb-3">
+                        <label class="form-label">Dokumententyp</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="vertrag">Vertrag</option>
+                            <option value="antrag">Antrag</option>
+                            <option value="schaden">Schadensmeldung</option>
+                            <option value="korrespondenz">Korrespondenz</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dokument</label>
+                        <input type="file" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Beschreibung</label>
+                        <textarea class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Zuordnung</label>
+                        <select class="form-select">
+                            <option value="">Optional: Vertrag/Kunde zuordnen</option>
+                            <option value="vs-2024-001">VS-2024-001 (Thomas Schmidt)</option>
+                            <option value="vs-2024-002">VS-2024-002 (Maria Müller)</option>
+                            <option value="vs-2024-003">VS-2024-003 (Peter Wagner)</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="uploadDocument()">Hochladen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dokumentenvorschau</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="documentPreview" class="text-center">
+                    <!-- Vorschau wird hier eingefügt -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="downloadDocument()">
+                    <i class="bi bi-download"></i> Herunterladen
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

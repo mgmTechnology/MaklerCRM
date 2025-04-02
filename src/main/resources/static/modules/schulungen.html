@@ -1,0 +1,301 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Schulungen & Zertifikate</h1>
+        <div>
+            <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addTrainingModal">
+                <i class="bi bi-plus-circle"></i> Neue Schulung
+            </button>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addCertificationModal">
+                <i class="bi bi-plus-circle"></i> Neues Zertifikat
+            </button>
+        </div>
+    </div>
+
+    <!-- Übersichtskarten -->
+    <div class="row mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Aktive Schulungen</h6>
+                            <h4 class="mb-0" id="activeTrainings">0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-mortarboard h1 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Teilnehmer gesamt</h6>
+                            <h4 class="mb-0" id="totalParticipants">0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-people h1 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Ablaufende Zertifikate</h6>
+                            <h4 class="mb-0" id="expiringCertificates">0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-exclamation-triangle h1 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="text-muted mb-2">Ø Bewertung</h6>
+                            <h4 class="mb-0" id="avgRating">0.0</h4>
+                        </div>
+                        <div class="ms-3">
+                            <i class="bi bi-star h1 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schulungen und Zertifikate Tabs -->
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#trainings">Schulungen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#certifications">Zertifikate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#calendar">Kalender</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <!-- Schulungen Tab -->
+                <div class="tab-pane fade show active" id="trainings">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Schulung</th>
+                                    <th>Typ</th>
+                                    <th>Datum</th>
+                                    <th>Dauer</th>
+                                    <th>Teilnehmer</th>
+                                    <th>Status</th>
+                                    <th>Bewertung</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trainingsTableBody">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Zertifikate Tab -->
+                <div class="tab-pane fade" id="certifications">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Makler</th>
+                                    <th>Zertifikat</th>
+                                    <th>Erworben am</th>
+                                    <th>Gültig bis</th>
+                                    <th>Status</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="certificationsTableBody">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Kalender Tab -->
+                <div class="tab-pane fade" id="calendar">
+                    <div id="trainingCalendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neue Schulung Modal -->
+<div class="modal fade" id="addTrainingModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neue Schulung anlegen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newTrainingForm">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Schulungstitel</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Typ</label>
+                            <select class="form-select" required>
+                                <option value="">Bitte wählen...</option>
+                                <option value="praesenz">Präsenzschulung</option>
+                                <option value="online">Online-Schulung</option>
+                                <option value="hybrid">Hybrid-Schulung</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Kategorie</label>
+                            <select class="form-select" required>
+                                <option value="">Bitte wählen...</option>
+                                <option value="produkt">Produktschulung</option>
+                                <option value="verkauf">Verkaufstraining</option>
+                                <option value="recht">Rechtliche Grundlagen</option>
+                                <option value="digital">Digitale Tools</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Datum</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Uhrzeit</label>
+                            <input type="time" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Dauer (Stunden)</label>
+                            <input type="number" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Max. Teilnehmer</label>
+                            <input type="number" class="form-control" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Beschreibung</label>
+                            <textarea class="form-control" rows="3" required></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="createTraining()">Schulung anlegen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Neues Zertifikat Modal -->
+<div class="modal fade" id="addCertificationModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Neues Zertifikat hinzufügen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="newCertificationForm">
+                    <div class="mb-3">
+                        <label class="form-label">Makler</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <!-- Wird durch JavaScript gefüllt -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Zertifikat</label>
+                        <select class="form-select" required>
+                            <option value="">Bitte wählen...</option>
+                            <option value="ihk">IHK-Prüfung</option>
+                            <option value="dvep">DVEP-Zertifizierung</option>
+                            <option value="gut">Gutachter-Zertifizierung</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Erworben am</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Gültig bis</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Zertifikatsnummer</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="createCertification()">Zertifikat hinzufügen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schulungsdetails Modal -->
+<div class="modal fade" id="trainingDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Schulungsdetails</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#trainingInfo">Informationen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#participants">Teilnehmer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#materials">Materialien</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#feedback">Feedback</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" id="trainingInfo">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="participants">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="materials">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                    <div class="tab-pane fade" id="feedback">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

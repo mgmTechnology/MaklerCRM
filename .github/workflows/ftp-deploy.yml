@@ -1,0 +1,47 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  web-deploy:
+    name: Deploy to FTP
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    # Optional: Wenn Sie ein Maven-Build benötigen
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+      
+    # FTP Upload
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: mgm.technology
+        username: mgmtechnology
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /makler/
+        local-dir: ./src/main/resources/static/  # Nur den static-Ordner deployen
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          README.md
+          .env
+        dangerous-clean-slate: false  # Verhindert das Löschen von Dateien auf dem Server
+        log-level: verbose

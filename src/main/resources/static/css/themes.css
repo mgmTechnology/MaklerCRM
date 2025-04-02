@@ -1,0 +1,118 @@
+/* Farbschema-Definitionen */
+:root {
+    /* Standard-Theme (Ivory) */
+    --bg-primary: #f5f0e6;    /* Warmes Ivory wie auf dem Zifferblatt */
+    --bg-secondary: #f8f4eb;  /* Helleres Ivory für Hintergründe */
+    --text-primary: #333333;  /* Dunkler Text für guten Kontrast */
+    --text-secondary: #666666;/* Sekundärer Text */
+    --accent: #c17f61;        /* Gedämpftes Orange-Braun */
+    --border: #e6e0d6;        /* Dezente Rahmenfarbe */
+    --btn-primary: #a67a64;   /* Warmes Braun für Buttons */
+    --btn-primary-hover: #8c6552; /* Dunkleres Braun für Hover */
+    --btn-text: #ffffff;      /* Weißer Button-Text */
+    --sidebar-bg: var(--bg-primary);
+    --sidebar-text: var(--text-primary);
+    --navbar-bg: var(--bg-primary);
+    --navbar-text: var(--text-primary);
+}
+
+/* Airy Blue Theme */
+[data-theme="airyblue"] {
+    --bg-primary: #f0f5f9;    /* Helles, luftiges Blau */
+    --bg-secondary: #f5f8fc;  /* Noch helleres Blau für Hintergründe */
+    --text-primary: #2c3e50;  /* Dunkelblauer Text */
+    --text-secondary: #5c7185;/* Hellerer blauer Text */
+    --accent: #7e9ab8;        /* Gedämpftes Blau */
+    --border: #e0e7f0;        /* Hellblaue Rahmenfarbe */
+    --btn-primary: #6b8cae;   /* Sanftes Blau für Buttons */
+    --btn-primary-hover: #567a9b; /* Dunkleres Blau für Hover */
+    --btn-text: #ffffff;      /* Weißer Button-Text */
+    --sidebar-bg: var(--bg-primary);
+    --sidebar-text: var(--text-primary);
+    --navbar-bg: var(--bg-primary);
+    --navbar-text: var(--text-primary);
+}
+
+/* Dark Blue Theme */
+[data-theme="darkblue"] {
+    --bg-primary: #1e2837;    /* Dunkles Navy-Blau */
+    --bg-secondary: #2c3848;  /* Etwas helleres Navy für Hintergründe */
+    --text-primary: #ffffff;  /* Weißer Text */
+    --text-secondary: #b0b8c1;/* Hellgrauer Text */
+    --accent: #4a6484;        /* Gedämpftes Blau */
+    --border: #3a4757;        /* Dunkelgraue Rahmenfarbe */
+    --btn-primary: #405875;   /* Dunkles Blau für Buttons */
+    --btn-primary-hover: #334860; /* Noch dunkleres Blau für Hover */
+    --btn-text: #ffffff;      /* Weißer Button-Text */
+    --sidebar-bg: var(--bg-primary);
+    --sidebar-text: var(--text-primary);
+    --navbar-bg: var(--bg-primary);
+    --navbar-text: var(--text-primary);
+}
+
+/* Navigation Styles */
+#sidebar {
+    background-color: var(--sidebar-bg) !important;
+    color: var(--sidebar-text) !important;
+}
+
+#sidebar .nav-link {
+    color: var(--sidebar-text) !important;
+}
+
+#sidebar .nav-link:hover {
+    background-color: var(--accent) !important;
+    color: var(--btn-text) !important;
+}
+
+.navbar {
+    background-color: var(--navbar-bg) !important;
+    color: var(--navbar-text) !important;
+}
+
+.navbar .nav-link {
+    color: var(--navbar-text) !important;
+}
+
+.navbar .nav-link:hover {
+    color: var(--accent) !important;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--btn-primary) !important;
+    border-color: var(--btn-primary) !important;
+    color: var(--btn-text) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--btn-primary-hover) !important;
+    border-color: var(--btn-primary-hover) !important;
+}
+
+/* Links und andere interaktive Elemente */
+a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: var(--btn-primary-hover);
+}
+
+/* Form-Elemente */
+.form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem rgba(var(--accent), 0.25);
+}
+
+/* Active States */
+.nav-link.active {
+    color: var(--accent) !important;
+    background-color: var(--bg-secondary) !important;
+}
+
+.btn-check:checked + .btn-primary {
+    background-color: var(--btn-primary-hover) !important;
+    border-color: var(--btn-primary-hover) !important;
+}

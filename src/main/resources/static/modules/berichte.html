@@ -1,0 +1,294 @@
+<!-- Berichte & Analysen -->
+<div class="container-fluid">
+    <h1 class="mb-4">Berichte & Analysen</h1>
+
+    <!-- Statistik-Karten -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Aktive Makler</h6>
+                    <h2 class="card-title" id="activeBrokers">-</h2>
+                    <div class="small text-success">
+                        <i class="bi bi-arrow-up"></i> +5% zum Vormonat
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Ø Verträge pro Makler</h6>
+                    <h2 class="card-title" id="avgContracts">-</h2>
+                    <div class="small text-success">
+                        <i class="bi bi-arrow-up"></i> +8% zum Vormonat
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Ø Provision pro Vertrag</h6>
+                    <h2 class="card-title" id="avgCommission">-</h2>
+                    <div class="small text-success">
+                        <i class="bi bi-arrow-up"></i> +3% zum Vormonat
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Stornoquote</h6>
+                    <h2 class="card-title" id="cancellationRate">-</h2>
+                    <div class="small text-success">
+                        <i class="bi bi-arrow-down"></i> -0,3% zum Vormonat
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vertragsentwicklung Chart -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Abschlüsse & Provisionen im Jahresverlauf</h5>
+                    <div style="height: 400px;">
+                        <canvas id="vertragsentwicklungChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Produktverteilung und Regionale Verteilung -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Verteilung nach Produkten</h5>
+                    <div style="height: 300px;">
+                        <canvas id="produktverteilungChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Regionale Verteilung</h5>
+                    <div style="height: 300px;">
+                        <canvas id="regionaleVerteilungChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hauptanalysen -->
+    <div class="row mb-4">
+        <!-- Vertragsentwicklung -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Vertragsentwicklung</h5>
+                    <div style="height: 300px;">
+                        <canvas id="contractsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Performer -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top Performer</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Verträge</th>
+                                    <th>Provision</th>
+                                    <th>Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody id="topPerformersTable">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Produktverteilung -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Produktverteilung</h5>
+                    <div style="height: 250px;">
+                        <canvas id="productDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Regionale Verteilung -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Regionale Verteilung</h5>
+                    <div style="height: 250px;">
+                        <canvas id="regionalDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Detaillierte KPIs</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Kennzahl</th>
+                                    <th>Aktuell</th>
+                                    <th>Vorperiode</th>
+                                    <th>Veränderung</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kpiTable">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prognosen -->
+    <div class="row mb-4">
+        <h5>Prognosen (6 Monate)</h5>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Vertragsabschlüsse</h6>
+                    <div style="height: 200px;">
+                        <canvas id="contractsForecastChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Provisionen</h6>
+                    <div style="height: 200px;">
+                        <canvas id="commissionsForecastChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Maklerentwicklung</h6>
+                    <div style="height: 200px;">
+                        <canvas id="brokersForecastChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export & Planung -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Berichtsexport</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Format</label>
+                        <select class="form-select">
+                            <option value="pdf">PDF</option>
+                            <option value="excel">Excel</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Zeitraum</label>
+                        <select class="form-select">
+                            <option value="current">Aktueller Monat</option>
+                            <option value="last">Letzter Monat</option>
+                            <option value="quarter">Aktuelles Quartal</option>
+                            <option value="year">Aktuelles Jahr</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="bi bi-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Berichtsplanung</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Häufigkeit</label>
+                        <select class="form-select">
+                            <option value="daily">Täglich</option>
+                            <option value="weekly">Wöchentlich</option>
+                            <option value="monthly">Monatlich</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-Mail-Empfänger</label>
+                        <input type="email" class="form-control" placeholder="E-Mail-Adresse">
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="bi bi-clock"></i> Planen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="js/berichte.js"></script>
+<script>
+    // Initialisierung
+    document.addEventListener('DOMContentLoaded', function() {
+        loadStatistics();
+        loadTopPerformers();
+        loadKPIs();
+        initializeCharts();
+    });
+
+    /**
+     * Hilfsfunktion für die Trendfarben
+     * @param {string} trend - Der Trend (up, down, stable)
+     * @returns {string} Die entsprechende Bootstrap-Farbe
+     */
+    function getTrendColor(trend) {
+        switch(trend) {
+            case 'up': return 'success';
+            case 'down': return 'danger';
+            case 'stable': return 'warning';
+            default: return 'secondary';
+        }
+    }
+</script>

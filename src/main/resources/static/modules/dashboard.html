@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <h1 class="mb-4">Dashboard</h1>
+    
+    <div class="row">
+        <!-- Verträge Overview -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-primary h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Aktive Verträge</div>
+                            <div class="h5 mb-0" id="activeContracts">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-file-text h2 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Provisionen Overview -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-success h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Provisionen (MTD)</div>
+                            <div class="h5 mb-0" id="monthlyCommission">0,00 €</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-currency-euro h2 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offene Anträge -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-info h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Offene Anträge</div>
+                            <div class="h5 mb-0" id="openApplications">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-hourglass-split h2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Tickets -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-warning h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Offene Tickets</div>
+                            <div class="h5 mb-0" id="openTickets">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-ticket h2 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Letzte Aktivitäten -->
+        <div class="col-xl-8 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Letzte Aktivitäten</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group" id="activities">
+                        <!-- Aktivitäten werden dynamisch eingefügt -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schnellzugriff -->
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Schnellzugriff</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" onclick="router.loadModule('angebotsrechner')">
+                            <i class="bi bi-calculator"></i> Neues Angebot erstellen
+                        </button>
+                        <button class="btn btn-success" onclick="router.loadModule('dokumente')">
+                            <i class="bi bi-file-earmark-arrow-up"></i> Dokument hochladen
+                        </button>
+                        <button class="btn btn-info" onclick="router.loadModule('support')">
+                            <i class="bi bi-ticket"></i> Support-Ticket erstellen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

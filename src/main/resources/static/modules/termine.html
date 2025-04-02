@@ -1,0 +1,49 @@
+<div class="container-fluid py-4">
+    <h1 class="mb-4">Terminkalender</h1>
+    
+    <!-- Kalender-Navigation -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group">
+                <button class="btn btn-outline-primary" id="prevMonth">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="btn btn-outline-primary" id="currentMonth">März 2025</button>
+                <button class="btn btn-outline-primary" id="nextMonth">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+            <button class="btn btn-primary ms-2" id="newTermin">
+                <i class="bi bi-plus"></i> Neuer Termin
+            </button>
+        </div>
+    </div>
+
+    <!-- Kalender -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Montag</th>
+                                    <th>Dienstag</th>
+                                    <th>Mittwoch</th>
+                                    <th>Donnerstag</th>
+                                    <th>Freitag</th>
+                                    <th class="table-light">Samstag</th>
+                                    <th class="table-light">Sonntag</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calendarBody">
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

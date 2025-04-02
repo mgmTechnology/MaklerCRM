@@ -1,0 +1,159 @@
+<div class="container-fluid">
+    <h1 class="mb-4">Provisionen</h1>
+
+    <!-- Übersichtskarten -->
+    <div class="row">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-success h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Provisionen (MTD)</div>
+                            <div class="h5 mb-0" id="mtdCommission">0,00 €</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-currency-euro h2 text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-primary h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Provisionen (YTD)</div>
+                            <div class="h5 mb-0" id="ytdCommission">0,00 €</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-calendar h2 text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-info h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Offene Provisionen</div>
+                            <div class="h5 mb-0" id="pendingCommission">0,00 €</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-hourglass-split h2 text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card border-left-warning h-100">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-secondary mb-1">Stornoreserve</div>
+                            <div class="h5 mb-0" id="cancelationReserve">0,00 €</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-piggy-bank h2 text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter und Suche -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Zeitraum</label>
+                    <select class="form-select" id="timePeriod">
+                        <option value="current_month">Aktueller Monat</option>
+                        <option value="last_month">Letzter Monat</option>
+                        <option value="current_quarter">Aktuelles Quartal</option>
+                        <option value="current_year">Aktuelles Jahr</option>
+                        <option value="custom">Benutzerdefiniert</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="commissionStatus">
+                        <option value="">Alle</option>
+                        <option value="paid">Ausgezahlt</option>
+                        <option value="pending">Ausstehend</option>
+                        <option value="cancelled">Storniert</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Versicherungsart</label>
+                    <select class="form-select" id="insuranceType">
+                        <option value="">Alle</option>
+                        <option value="kfz">KFZ-Versicherung</option>
+                        <option value="leben">Lebensversicherung</option>
+                        <option value="hausrat">Hausratversicherung</option>
+                        <option value="haftpflicht">Haftpflicht</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Suche</label>
+                    <input type="text" class="form-control" id="searchCommissions" placeholder="Vertrag/Kunde suchen...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provisionstabelle -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="commissionsTable">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Vertragsnummer</th>
+                            <th>Kunde</th>
+                            <th>Versicherungsart</th>
+                            <th>Jahresbeitrag</th>
+                            <th>Provision</th>
+                            <th>Status</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commissionsTableBody">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provisionsdetails Modal -->
+    <div class="modal fade" id="commissionDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Provisionsdetails</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="commissionDetails">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    <button type="button" class="btn btn-primary" onclick="exportCommissionDetails()">
+                        <i class="bi bi-download"></i> Exportieren
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
