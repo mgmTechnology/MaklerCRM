@@ -62,10 +62,10 @@
      */
     function loadStatistics() {
         const elements = {
-            activeBrokers: document.getElementById('activeBrokers'),
-            avgContracts: document.getElementById('avgContracts'),
-            avgCommission: document.getElementById('avgCommission'),
-            cancellationRate: document.getElementById('cancellationRate')
+            activeBrokers: document.getElementById('brokerActiveBrokers'),
+            avgContracts: document.getElementById('brokerAvgContracts'),
+            avgCommission: document.getElementById('brokerAvgCommission'),
+            cancellationRate: document.getElementById('brokerCancellationRate')
         };
 
         // Prüfe, ob alle Elemente existieren
@@ -90,13 +90,13 @@
         try {
             // Demo-Daten für Top Performer
             const topPerformers = [
-                { name: 'Max Mustermann', contracts: 45, commission: '4.250 €' },
-                { name: 'Anna Schmidt', contracts: 38, commission: '3.820 €' },
-                { name: 'Tom Weber', contracts: 36, commission: '3.590 €' }
+                { name: 'Birgit Taus', contracts: 45, commission: '4.250 €' },
+                { name: 'Christiane Koch', contracts: 38, commission: '3.820 €' },
+                { name: 'Roland Lützow', contracts: 36, commission: '3.590 €' }
             ];
 
             console.log('Suche Top Performers Table...');
-            const tbody = document.getElementById('topPerformersTable');
+            const tbody = document.getElementById('brokerTopPerformersTable');
             console.log('Table gefunden:', tbody);
             
             if (!tbody) {
@@ -134,65 +134,28 @@
                     name: 'Vertragsabschlüsse',
                     current: '358',
                     previous: '325',
-                    change: '+10,2%',
-                    status: 'success'
+                    trend: 'up'
                 },
                 {
-                    name: 'Durchschnittliche Provision',
+                    name: 'Durchschnittsprovision',
                     current: '1.850 €',
                     previous: '1.780 €',
-                    change: '+3,9%',
-                    status: 'success'
+                    trend: 'up'
                 },
                 {
                     name: 'Stornoquote',
                     current: '3,2%',
                     previous: '3,5%',
-                    change: '-8,6%',
-                    status: 'success'
-                },
-                {
-                    name: 'Bearbeitungszeit (Ø)',
-                    current: '2,8 Tage',
-                    previous: '3,2 Tage',
-                    change: '-12,5%',
-                    status: 'success'
-                },
-                {
-                    name: 'Kundenzufriedenheit',
-                    current: '4,6/5,0',
-                    previous: '4,4/5,0',
-                    change: '+4,5%',
-                    status: 'success'
-                },
-                {
-                    name: 'Cross-Selling-Quote',
-                    current: '28,5%',
-                    previous: '25,8%',
-                    change: '+10,5%',
-                    status: 'success'
-                },
-                {
-                    name: 'Neukundenquote',
-                    current: '15,8%',
-                    previous: '14,2%',
-                    change: '+11,3%',
-                    status: 'success'
+                    trend: 'down'
                 }
             ];
 
             console.log('Suche KPI-Tabelle...');
-            const table = document.getElementById('kpiTable');
-            if (!table) {
+            const tbody = document.getElementById('brokerKpiTable');
+            if (!tbody) {
                 throw new Error('KPI-Tabelle nicht gefunden');
             }
             console.log('KPI-Tabelle gefunden ✅');
-
-            const tbody = table.querySelector('tbody');
-            if (!tbody) {
-                throw new Error('KPI-Tabelle tbody nicht gefunden');
-            }
-            console.log('KPI-Tabelle tbody gefunden ✅');
 
             console.log('Fülle KPI-Daten...');
             tbody.innerHTML = kpis.map(kpi => `
@@ -200,16 +163,13 @@
                     <td>${kpi.name}</td>
                     <td>${kpi.current}</td>
                     <td>${kpi.previous}</td>
-                    <td><span class="text-${kpi.status}">${kpi.change}</span></td>
                     <td>
-                        <span class="badge bg-${kpi.status}">
-                            <i class="bi bi-check-circle"></i>
-                        </span>
+                        <i class="bi bi-arrow-${kpi.trend}" style="color: ${kpi.trend === 'up' ? 'green' : 'red'}"></i>
                     </td>
                 </tr>
             `).join('');
-            console.log('KPI-Daten erfolgreich eingefügt ✅');
 
+            console.log('KPIs erfolgreich geladen ✅');
         } catch (error) {
             console.error('❌ Fehler beim Laden der KPIs:', error);
             throw error;
@@ -227,9 +187,9 @@
         try {
             console.log('Suche Chart-Elemente...');
             const chartElements = {
-                vertragsentwicklung: document.getElementById('vertragsentwicklungChart'),
-                produktverteilung: document.getElementById('produktverteilungChart'),
-                regionaleVerteilung: document.getElementById('regionaleVerteilungChart')
+                vertragsentwicklung: document.getElementById('brokerContractChart'),
+                produktverteilung: document.getElementById('brokerProductChart'),
+                regionaleVerteilung: document.getElementById('brokerRegionChart')
             };
 
             // Prüfe, ob alle Chart-Elemente existieren
@@ -249,17 +209,17 @@
             // Initialisiere die einzelnen Charts
             if (chartElements.vertragsentwicklung) {
                 console.log('Initialisiere Vertragsentwicklung...');
-                initVertragsentwicklung();
+                initContractChart();
             }
             
             if (chartElements.produktverteilung) {
                 console.log('Initialisiere Produktverteilung...');
-                initProduktverteilung();
+                initProductChart();
             }
             
             if (chartElements.regionaleVerteilung) {
                 console.log('Initialisiere Regionale Verteilung...');
-                initRegionaleVerteilung();
+                initRegionChart();
             }
 
         } catch (error) {
@@ -271,14 +231,14 @@
     }
 
     /**
-     * Initialisiert das Vertragsentwicklungs-Chart
+     * Initialisiert das Vertragsabschluss-Chart
      * @private
      */
-    function initVertragsentwicklung() {
-        console.groupCollapsed('📈 Vertragsentwicklung Chart');
+    function initContractChart() {
+        console.groupCollapsed('📈 Vertragsabschluss Chart');
         try {
             console.log('Hole Canvas-Element...');
-            const canvas = document.getElementById('vertragsentwicklungChart');
+            const canvas = document.getElementById('brokerContractChart');
             console.log('Canvas gefunden:', canvas);
 
             console.log('Hole 2D-Kontext...');
@@ -307,7 +267,7 @@
             const chart = new Chart(ctx, config);
             console.log('Chart erstellt:', chart);
         } catch (error) {
-            console.error('❌ Fehler beim Erstellen des Vertragsentwicklungs-Charts:', error);
+            console.error('❌ Fehler beim Erstellen des Vertragsabschluss-Charts:', error);
             throw error;
         } finally {
             console.groupEnd();
@@ -318,11 +278,11 @@
      * Initialisiert das Produktverteilungs-Chart
      * @private
      */
-    function initProduktverteilung() {
+    function initProductChart() {
         console.groupCollapsed('🍩 Produktverteilung Chart');
         try {
             console.log('Hole Canvas-Element...');
-            const canvas = document.getElementById('produktverteilungChart');
+            const canvas = document.getElementById('brokerProductChart');
             console.log('Canvas gefunden:', canvas);
 
             console.log('Hole 2D-Kontext...');
@@ -331,17 +291,16 @@
 
             console.log('Erstelle Chart-Konfiguration...');
             const config = {
-                type: 'doughnut',
+                type: 'pie',
                 data: {
-                    labels: ['Lebensversicherung', 'KFZ', 'Hausrat', 'Haftpflicht', 'Sonstige'],
+                    labels: ['Leben', 'Sach', 'KFZ', 'Kranken'],
                     datasets: [{
-                        data: [35, 25, 15, 15, 10],
+                        data: [40, 30, 20, 10],
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(153, 102, 255, 0.5)'
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 205, 86)',
+                            'rgb(54, 162, 235)'
                         ]
                     }]
                 },
@@ -363,14 +322,14 @@
     }
 
     /**
-     * Initialisiert das Regionale-Verteilungs-Chart
+     * Initialisiert das Regions-Chart
      * @private
      */
-    function initRegionaleVerteilung() {
+    function initRegionChart() {
         console.groupCollapsed('📊 Regionale Verteilung Chart');
         try {
             console.log('Hole Canvas-Element...');
-            const canvas = document.getElementById('regionaleVerteilungChart');
+            const canvas = document.getElementById('brokerRegionChart');
             console.log('Canvas gefunden:', canvas);
 
             console.log('Hole 2D-Kontext...');
@@ -381,11 +340,11 @@
             const config = {
                 type: 'bar',
                 data: {
-                    labels: ['Nord', 'Süd', 'West', 'Ost', 'Zentral'],
+                    labels: ['Nord', 'Süd', 'West', 'Ost'],
                     datasets: [{
-                        label: 'Verträge pro Region',
-                        data: [285, 320, 245, 198, 275],
-                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        label: 'Verträge nach Region',
+                        data: [125, 158, 142, 98],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgb(75, 192, 192)',
                         borderWidth: 1
                     }]

@@ -1,0 +1,137 @@
+<!-- Admin System-Monitoring -->
+<div class="container-fluid py-4">
+    <h2 class="mb-4">System-Monitoring & Statistiken</h2>
+
+    <!-- System-Status-Karten -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">System-Verfügbarkeit</h6>
+                    <h3 class="card-title mb-0" id="systemAvailability">99.9%</h3>
+                    <small class="text-success">Letzte 24 Stunden</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Aktive Benutzer</h6>
+                    <h3 class="card-title mb-0" id="activeUsers">0</h3>
+                    <small class="text-muted">Aktuell eingeloggt</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Ø Antwortzeit</h6>
+                    <h3 class="card-title mb-0" id="avgResponseTime">0ms</h3>
+                    <small class="text-success">Alle Systeme</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Letztes Backup</h6>
+                    <h3 class="card-title mb-0" id="lastBackup">-</h3>
+                    <small id="backupStatus" class="text-success">Erfolgreich</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System-Status -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Systemstatus</h5>
+            <div class="table-responsive">
+                <table class="table table-hover" id="systemStatusTable">
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Status</th>
+                            <th>Verfügbarkeit (24h)</th>
+                            <th>Ø Antwortzeit</th>
+                            <th>Letzter Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Letzte Logins -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Letzte Logins</h5>
+            <div class="table-responsive">
+                <table class="table table-hover" id="lastLoginsTable">
+                    <thead>
+                        <tr>
+                            <th>Benutzer</th>
+                            <th>Zeitpunkt</th>
+                            <th>IP-Adresse</th>
+                            <th>Browser</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modul-Nutzung -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Modul-Nutzung (letzte 24h)</h5>
+            <div style="height: 300px;">
+                <canvas id="moduleUsageChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backup-Historie -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Backup-Historie</h5>
+            <div class="table-responsive">
+                <table class="table table-hover" id="backupHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>Zeitpunkt</th>
+                            <th>Typ</th>
+                            <th>Größe</th>
+                            <th>Dauer</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="btn-group">
+                <button class="btn btn-outline-primary" onclick="refreshData()">
+                    <i class="bi bi-arrow-clockwise"></i> Aktualisieren
+                </button>
+                <button class="btn btn-outline-primary" onclick="exportSystemReport()">
+                    <i class="bi bi-download"></i> Report exportieren
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

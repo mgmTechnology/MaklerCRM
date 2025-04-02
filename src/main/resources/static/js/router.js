@@ -153,7 +153,7 @@ class Router {
             'users': 'makleruebersicht',
             'system': 'einstellungen',
             'reports': 'berichte',
-            'logs': 'system_logs',  // Korrigiere den Dateinamen für system-logs.js
+            'logs': 'syslogs',  // Korrigiere den Dateinamen für syslogs
             'makler': 'makleruebersicht',
             'tickets': 'supportanfragen',
             'training': 'schulungen',
@@ -167,8 +167,13 @@ class Router {
         // Wenn es ein Mapping gibt, verwende den gemappten Namen
         const mappedModuleName = moduleMapping[moduleName] || moduleName;
         
-        // Wenn es das Dashboard ist, füge den Rollen-Prefix hinzu
-        if (moduleName === 'dashboard') {
+        // Wenn es das Dashboard ist oder Admin-Berichte, füge den Rollen-Prefix hinzu
+        if (moduleName === 'dashboard' && role === 'Administrator') {
+            this.loadModule(mappedModuleName, 'administrator');
+        } else if (moduleName === 'berichte' && role === 'Administrator') {
+            // Admin sieht die Admin-Version der Berichte
+            this.loadModule(mappedModuleName, 'admin');
+        } else if (moduleName === 'dashboard') {
             this.loadModule(mappedModuleName, role.toLowerCase());
         } else {
             // Für andere Module verwende den gemappten Namen ohne Prefix
@@ -229,7 +234,9 @@ class Router {
                     console.log('Chart.js nachgeladen ✅');
                 }
 
-                const scriptName = moduleName.replace('-', '_');
+                const scriptName = rolePrefix 
+                    ? `${rolePrefix}-${moduleName}`
+                    : moduleName;
                 const scriptUrl = `js/${scriptName}.js`;
                 console.log('Script URL:', scriptUrl);
 
@@ -244,7 +251,15 @@ class Router {
                 await new Promise((resolve, reject) => {
                     const script = document.createElement('script');
                     script.src = scriptUrl;
-                    script.onload = resolve;
+                    script.onload = () => {
+                        // Initialisiere das Modul
+                        if (window.initAdminBerichte && moduleName === 'berichte' && rolePrefix === 'admin') {
+                            window.initAdminBerichte();
+                        } else if (window.initBerichte) {
+                            window.initBerichte();
+                        }
+                        resolve();
+                    };
                     script.onerror = reject;
                     document.body.appendChild(script);
                 });

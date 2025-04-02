@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Aktive Makler</h6>
-                    <h2 class="card-title" id="activeBrokers">-</h2>
+                    <h2 class="card-title" id="brokerActiveBrokers">-</h2>
                     <div class="small text-success">
                         <i class="bi bi-arrow-up"></i> +5% zum Vormonat
                     </div>
@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Ø Verträge pro Makler</h6>
-                    <h2 class="card-title" id="avgContracts">-</h2>
+                    <h2 class="card-title" id="brokerAvgContracts">-</h2>
                     <div class="small text-success">
                         <i class="bi bi-arrow-up"></i> +8% zum Vormonat
                     </div>
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Ø Provision pro Vertrag</h6>
-                    <h2 class="card-title" id="avgCommission">-</h2>
+                    <h2 class="card-title" id="brokerAvgCommission">-</h2>
                     <div class="small text-success">
                         <i class="bi bi-arrow-up"></i> +3% zum Vormonat
                     </div>
@@ -41,7 +41,7 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-subtitle mb-2 text-muted">Stornoquote</h6>
-                    <h2 class="card-title" id="cancellationRate">-</h2>
+                    <h2 class="card-title" id="brokerCancellationRate">-</h2>
                     <div class="small text-success">
                         <i class="bi bi-arrow-down"></i> -0,3% zum Vormonat
                     </div>
@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Abschlüsse & Provisionen im Jahresverlauf</h5>
                     <div style="height: 400px;">
-                        <canvas id="vertragsentwicklungChart"></canvas>
+                        <canvas id="brokerContractChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Verteilung nach Produkten</h5>
                     <div style="height: 300px;">
-                        <canvas id="produktverteilungChart"></canvas>
+                        <canvas id="brokerProductChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Regionale Verteilung</h5>
                     <div style="height: 300px;">
-                        <canvas id="regionaleVerteilungChart"></canvas>
+                        <canvas id="brokerRegionChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                                     <th>Provision</th>
                                 </tr>
                             </thead>
-                            <tbody id="topPerformersTable">
+                            <tbody id="brokerTopPerformersTable">
                                 <!-- Wird durch JavaScript gefüllt -->
                             </tbody>
                         </table>
@@ -208,7 +208,55 @@
             </div>
         </div>
     </div>
+ <!-- Top Performer & KPIs -->
+ <div class="row mb-4">
+    <!-- Top Performer -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Top Performer</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Verträge</th>
+                                <th>Provision</th>
+                            </tr>
+                        </thead>
+                        <tbody id="brokerTopPerformersTable">
+                            <!-- Wird durch JavaScript gefüllt -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- KPIs -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">KPI Entwicklung</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="brokerKpiTable">
+                        <thead>
+                            <tr>
+                                <th>Kennzahl</th>
+                                <th>Aktuell</th>
+                                <th>Vormonat</th>
+                                <th>Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Wird durch JavaScript gefüllt -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
-<!-- JavaScript -->
-<script src="js/berichte.js"></script>
+ 
