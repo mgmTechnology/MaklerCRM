@@ -153,15 +153,15 @@ class Router {
             'users': 'makleruebersicht',
             'system': 'einstellungen',
             'reports': 'berichte',
-            'logs': 'syslogs',  // Korrigiere den Dateinamen für syslogs
+            'logs': 'syslogs',
             'makler': 'makleruebersicht',
-            'tickets': 'supportanfragen',
-            'training': 'schulungen',
+            'tickets': 'support',  // Korrigiert von 'supportanfragen' auf 'support'
+            'training': 'training',
             'calendar': 'termine',
-            'documents': 'dokumente',  // Korrektes Mapping zu dokumente.html
-            'customers': 'customers',   // Neues Mapping für Kundenverwaltung
-            'sys_eva_aida_neuvertraege': 'sys_eva_aida_neuvertraege', // Mapping für AIDA Neuverträge
-            'sys_eva_aida_lv': 'sys_eva_aida_lv' // Mapping für AIDA Lebensversicherung
+            'documents': 'dokumente',
+            'customers': 'customers',
+            'sys_eva_aida_neuvertraege': 'sys_eva_aida_neuvertraege',
+            'sys_eva_aida_lv': 'sys_eva_aida_lv'
         };
 
         // Wenn es ein Mapping gibt, verwende den gemappten Namen
@@ -252,11 +252,23 @@ class Router {
                     const script = document.createElement('script');
                     script.src = scriptUrl;
                     script.onload = () => {
-                        // Initialisiere das Modul
-                        if (window.initAdminBerichte && moduleName === 'berichte' && rolePrefix === 'admin') {
+                        // Initialisiere das Modul mit der passenden Funktion
+                        if (moduleName === 'berichte' && rolePrefix === 'admin' && window.initAdminBerichte) {
                             window.initAdminBerichte();
-                        } else if (window.initBerichte) {
+                        } else if ((moduleName === 'berichte' || moduleName === 'reports') && window.initBerichte) {
                             window.initBerichte();
+                        } else if (moduleName === 'training' && window.initSchulungen) {
+                            window.initSchulungen();
+                        } else if (moduleName === 'logs' && window.initSysLogs) {
+                            window.initSysLogs();
+                        } else if (moduleName === 'sys_eva_aida_lv' && window.initAidaLV) {
+                            window.initAidaLV();
+                        } else if (moduleName === 'sys_eva_aida_neuvertraege' && window.initAidaNeuvertraege) {
+                            window.initAidaNeuvertraege();
+                        } else if (moduleName === 'tickets' && window.initSupport) {
+                            window.initSupport();
+                        } else {
+                            console.warn(`Keine passende Initialisierungsfunktion für Modul ${moduleName} gefunden`);
                         }
                         resolve();
                     };

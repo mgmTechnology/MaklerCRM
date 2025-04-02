@@ -1,0 +1,82 @@
+<!-- Schulungen -->
+<div class="container-fluid py-4">
+    <h2 class="mb-4">Schulungen & Weiterbildung</h2>
+
+    <!-- Verfügbare Schulungen -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Verfügbare Schulungen</h5>
+            <div class="row" id="availableTrainings">
+                <!-- Wird durch JavaScript gefüllt -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Anstehende Schulungen -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Anstehende Schulungen</h5>
+            <div class="table-responsive">
+                <table class="table table-hover" id="upcomingTrainingsTable">
+                    <thead>
+                        <tr>
+                            <th>Schulung</th>
+                            <th>Datum</th>
+                            <th>Uhrzeit</th>
+                            <th>Ort</th>
+                            <th>Trainer</th>
+                            <th>Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Abgeschlossene Schulungen -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Abgeschlossene Schulungen</h5>
+            <div class="table-responsive">
+                <table class="table table-hover" id="completedTrainingsTable">
+                    <thead>
+                        <tr>
+                            <th>Schulung</th>
+                            <th>Abschlussdatum</th>
+                            <th>Ergebnis</th>
+                            <th>Zertifikat-Nr.</th>
+                            <th>Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter und Aktionen -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="btn-group">
+                <button class="btn btn-outline-primary" onclick="refreshTrainings()">
+                    <i class="bi bi-arrow-clockwise"></i> Aktualisieren
+                </button>
+                <button class="btn btn-outline-primary" onclick="exportTrainingReport()">
+                    <i class="bi bi-download"></i> Bericht exportieren
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="btn-group">
+                <button class="btn btn-outline-secondary" onclick="filterTrainings('all')">Alle</button>
+                <button class="btn btn-outline-secondary" onclick="filterTrainings('online')">Online</button>
+                <button class="btn btn-outline-secondary" onclick="filterTrainings('presence')">Präsenz</button>
+            </div>
+        </div>
+    </div>
+</div>

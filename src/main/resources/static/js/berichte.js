@@ -4,6 +4,13 @@
     
     console.log('%cBerichte.js wird geladen...', 'color: blue; font-size: 12px');
 
+    // Speichere Referenzen auf aktive Charts
+    const activeCharts = {
+        contractChart: null,
+        productChart: null,
+        regionChart: null
+    };
+
     /**
      * Initialisiert die Berichte-Seite
      */
@@ -28,6 +35,9 @@
         try {
             console.group('Berichte Initialisierung');
             
+            // Zerstöre alle existierenden Charts
+            destroyAllCharts();
+
             // Prüfe ob Chart.js verfügbar ist
             if (typeof Chart === 'undefined') {
                 throw new Error('Chart.js nicht gefunden! Bitte stellen Sie sicher, dass Chart.js geladen wurde.');
@@ -54,6 +64,23 @@
             console.error('Fehler bei der Berichte-Initialisierung:', error);
             throw error;
         }
+    }
+
+    /**
+     * Zerstört alle aktiven Charts
+     * @private
+     */
+    function destroyAllCharts() {
+        console.log('🗑️ Zerstöre existierende Charts...');
+        Object.values(activeCharts).forEach(chart => {
+            if (chart) {
+                chart.destroy();
+            }
+        });
+        // Setze Referenzen zurück
+        Object.keys(activeCharts).forEach(key => {
+            activeCharts[key] = null;
+        });
     }
 
     /**
@@ -264,8 +291,8 @@
             };
 
             console.log('Initialisiere Chart mit Konfiguration...');
-            const chart = new Chart(ctx, config);
-            console.log('Chart erstellt:', chart);
+            activeCharts.contractChart = new Chart(ctx, config);
+            console.log('Chart erstellt:', activeCharts.contractChart);
         } catch (error) {
             console.error('❌ Fehler beim Erstellen des Vertragsabschluss-Charts:', error);
             throw error;
@@ -311,8 +338,8 @@
             };
 
             console.log('Initialisiere Chart mit Konfiguration...');
-            const chart = new Chart(ctx, config);
-            console.log('Chart erstellt:', chart);
+            activeCharts.productChart = new Chart(ctx, config);
+            console.log('Chart erstellt:', activeCharts.productChart);
         } catch (error) {
             console.error('❌ Fehler beim Erstellen des Produktverteilungs-Charts:', error);
             throw error;
@@ -361,8 +388,8 @@
             };
 
             console.log('Initialisiere Chart mit Konfiguration...');
-            const chart = new Chart(ctx, config);
-            console.log('Chart erstellt:', chart);
+            activeCharts.regionChart = new Chart(ctx, config);
+            console.log('Chart erstellt:', activeCharts.regionChart);
         } catch (error) {
             console.error('❌ Fehler beim Erstellen des Regionale-Verteilungs-Charts:', error);
             throw error;
