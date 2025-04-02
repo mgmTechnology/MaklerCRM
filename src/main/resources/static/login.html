@@ -44,11 +44,11 @@
                 <form id="loginForm">
                     <div class="mb-3">
                         <label for="username" class="form-label">Benutzername</label>
-                        <input type="text" class="form-control" id="username" required autocomplete="username">
+                        <input type="text" class="form-control" id="username" required autocomplete="username" title="betreuer oder makler oder admin">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Passwort</label>
-                        <input type="password" class="form-control" id="password" required value="Geheim">
+                        <input type="password" class="form-control" id="password" required value="Geheim" title="Password wird im POC nicht verwendet">
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Rolle</label>
@@ -82,12 +82,13 @@
             e.preventDefault();
             
             const username = document.getElementById('username').value.toLowerCase();
-            const password = document.getElementById('password').value;
+            //const password = document.getElementById('password').value;
             const selectedRole = document.getElementById('role').value;
             
             // Überprüfe Login-Daten
             const user = validUsers[username];
-            if (user && user.password === password && user.role === selectedRole) {
+            if (user && user.role === selectedRole) {
+            //if (user && user.password === password && user.role === selectedRole) {
                 // Login erfolgreich
                 localStorage.setItem('role', selectedRole);
                 localStorage.setItem('username', username);
