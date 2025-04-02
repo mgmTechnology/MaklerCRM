@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/themes.css" rel="stylesheet">
@@ -18,47 +20,47 @@
     </script>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" id="wrapper">
         <!-- Sidebar -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <img src="images/vb-logo-farbe.svg" alt="VB Logo" height="30">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header" id="sidebarHeader">
+                <img src="images/vb-logo-farbe.svg" alt="VB Logo" height="30" id="vbLogo">
             </div>
 
             <!-- Makler Menü -->
             <div id="maklerMenu" style="display: none;">
-                <div class="menu-group">
+                <div class="menu-group" id="maklerHauptfunktionen">
                     <div class="menu-group-title">Hauptfunktionen</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="maklerDashboardLink">
                             <a href="#" data-module="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
                         </li>
-                        <li>
+                        <li id="maklerVertraegeLink">
                             <a href="#" data-module="contracts"><i class="bi bi-file-earmark-text"></i> Verträge</a>
                         </li>
-                        <li>
+                        <li id="maklerKundenLink">
                             <a href="#" data-module="customers"><i class="bi bi-people"></i> Kunden</a>
                         </li>
                     </ul>
                 </div>
-                <div class="menu-group">
+                <div class="menu-group" id="maklerFinanzen">
                     <div class="menu-group-title">Finanzen</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="maklerProvisionenLink">
                             <a href="#" data-module="commission"><i class="bi bi-currency-euro"></i> Provisionen</a>
                         </li>
-                        <li>
+                        <li id="maklerBerichteLink">
                             <a href="#" data-module="reports"><i class="bi bi-graph-up"></i> Berichte</a>
                         </li>
                     </ul>
                 </div>
-                <div class="menu-group">
+                <div class="menu-group" id="maklerOrganisation">
                     <div class="menu-group-title">Organisation</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="maklerTermineLink">
                             <a href="#" data-module="calendar"><i class="bi bi-calendar"></i> Termine</a>
                         </li>
-                        <li>
+                        <li id="maklerDokumenteLink">
                             <a href="#" data-module="documents"><i class="bi bi-folder"></i> Dokumente</a>
                         </li>
                     </ul>
@@ -67,27 +69,27 @@
 
             <!-- Administrator Menü -->
             <div id="adminMenu" style="display: none;">
-                <div class="menu-group">
+                <div class="menu-group" id="adminSystem">
                     <div class="menu-group-title">System</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="adminDashboardLink">
                             <a href="#" data-module="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
                         </li>
-                        <li>
+                        <li id="adminSystemeinstellungenLink">
                             <a href="#" data-module="system"><i class="bi bi-gear"></i> Systemeinstellungen</a>
                         </li>
-                        <li>
-                            <a href="#" data-module="logs"><i class="bi bi-journal-text"></i> System-Logs</a>
+                        <li id="adminSystemLogsLink">
+                            <a href="#" data-module="system-logs"><i class="bi bi-journal-text"></i> System-Logs</a>
                         </li>
                     </ul>
                 </div>
-                <div class="menu-group">
+                <div class="menu-group" id="adminVerwaltung">
                     <div class="menu-group-title">Verwaltung</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="adminBenutzerverwaltungLink">
                             <a href="#" data-module="users"><i class="bi bi-people"></i> Benutzerverwaltung</a>
                         </li>
-                        <li>
+                        <li id="adminBerichteStatistikenLink">
                             <a href="#" data-module="reports"><i class="bi bi-graph-up"></i> Berichte & Statistiken</a>
                         </li>
                     </ul>
@@ -96,40 +98,39 @@
 
             <!-- Betreuer Menü -->
             <div id="betreuerMenu" style="display: none;">
-                <div class="menu-group">
+                <div class="menu-group" id="betreuerUebersicht">
                     <div class="menu-group-title">Übersicht</div>
                     <ul class="list-unstyled components">
-                        
-                        
-                        <li>
-                            <a href="#" data-module="makler"><i class="bi bi-person-badge"></i> Maklerübersicht</a>
-                        </li>
-                        <li>
+                        <li id="betreuerDashboardLink">
                             <a href="#" data-module="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
                         </li>
-                        <li>
+                        <li id="betreuerMakleruebersichtLink">
+                            <a href="#" data-module="makler"><i class="bi bi-person-badge"></i> Maklerübersicht</a>
+                        </li>
+                        
+                        <li id="betreuerAIDALebensversicherungLink">
                             <a href="#" data-module="sys_eva_aida_lv"><i class="bi bi-shield-check"></i> AIDA Lebensversicherung</a>
                         </li>
-                        <li>
+                        <li id="betreuerAIDANeuvertraegeLink">
                             <a href="#" data-module="sys_eva_aida_neuvertraege"><i class="bi bi-diagram-3"></i> AIDA Neuverträge</a>
                         </li>
                     </ul>
                 </div>
-                <div class="menu-group">
+                <div class="menu-group" id="betreuerSupport">
                     <div class="menu-group-title">Support</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="betreuerSupportTicketsLink">
                             <a href="#" data-module="tickets"><i class="bi bi-ticket"></i> Support-Tickets</a>
                         </li>
-                        <li>
+                        <li id="betreuerSchulungenLink">
                             <a href="#" data-module="training"><i class="bi bi-mortarboard"></i> Schulungen</a>
                         </li>
                     </ul>
                 </div>
-                <div class="menu-group">
+                <div class="menu-group" id="betreuerAuswertungen">
                     <div class="menu-group-title">Auswertungen</div>
                     <ul class="list-unstyled components">
-                        <li>
+                        <li id="betreuerBerichteLink">
                             <a href="#" data-module="reports"><i class="bi bi-graph-up"></i> Berichte</a>
                         </li>
                     </ul>
@@ -140,41 +141,69 @@
         <!-- Page Content -->
         <div id="content">
             <!-- Top Navigation -->
-            <nav class="navbar navbar-expand-lg">
+            <nav class="navbar navbar-expand-lg" id="topNavigation">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" id="navbarToggler">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="ms-auto d-flex align-items-center">
-                        <div class="me-3" id="userInfo">
-                            <!-- Benutzerinformationen werden dynamisch durch router.js geladen -->
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="themeDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-palette"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <button class="dropdown-item" onclick="setTheme('ivory')">
-                                        <i class="bi bi-circle-fill me-2 text-warning"></i>Ivory
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" onclick="setTheme('airyblue')">
-                                        <i class="bi bi-circle-fill me-2 text-info"></i>Airy Blue
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="dropdown-item" onclick="setTheme('darkblue')">
-                                        <i class="bi bi-circle-fill me-2 text-primary"></i>Dark Blue
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-outline-danger ms-2" id="logoutBtn">
-                            <i class="bi bi-box-arrow-right"></i>
-                        </button>
-                    </div>
+                     <div class="ms-auto d-flex align-items-center" id="topNavigationItems">
+                         <div class="me-3" id="roleInfo" align="left">
+                             <span id="currentRole"></span> | <span id="currentModule"></span>
+                         </div>
+                         <div class="me-3" id="userInfo">
+                             <!-- Benutzerinformationen werden dynamisch durch router.js geladen -->
+                         </div>
+                         <div class="nav-item dropdown">
+                             <a class="nav-link dropdown-toggle" href="#" id="themeDropdown" role="button" data-bs-toggle="dropdown">
+                                 <i class="bi bi-palette"></i>
+                             </a>
+                             <ul class="dropdown-menu dropdown-menu-end">
+                                 <li>
+                                     <button class="dropdown-item" onclick="setTheme('ivory')" id="ivoryThemeButton">
+                                         <i class="bi bi-circle-fill me-2 text-warning"></i>Ivory
+                                     </button>
+                                 </li>
+                                 <li>
+                                     <button class="dropdown-item" onclick="setTheme('airyblue')" id="airyBlueThemeButton">
+                                         <i class="bi bi-circle-fill me-2 text-info"></i>Airy Blue
+                                     </button>
+                                 </li>
+                                 <li>
+                                     <button class="dropdown-item" onclick="setTheme('darkblue')" id="darkBlueThemeButton">
+                                         <i class="bi bi-circle-fill me-2 text-primary"></i>Dark Blue
+                                     </button>
+                                 </li>
+                             </ul>
+                         </div>
+                         <button class="btn btn-outline-danger ms-2" id="logoutBtn">
+                             <i class="bi bi-box-arrow-right"></i>
+                         </button>
+                     </div>
+                     
+                     <script>
+                         // Setze die aktuelle Rolle und das Modul
+                         const currentRole = localStorage.getItem('role');
+                         document.getElementById('currentRole').textContent = currentRole;
+                     
+                         // Funktion zum Aktualisieren des angezeigten Moduls
+                         function updateCurrentModule(moduleName) {
+                             document.getElementById('currentModule').textContent = moduleName;
+                         }
+
+                         // Event-Listener für alle Sidebar-Links
+                         document.addEventListener('DOMContentLoaded', function() {
+                             const sidebarLinks = document.querySelectorAll('a[data-module]');
+                             sidebarLinks.forEach(link => {
+                                 link.addEventListener('click', function(e) {
+                                     const moduleName = this.getAttribute('data-module');
+                                     updateCurrentModule(moduleName);
+                                 });
+                             });
+                         });
+                     
+                         // Setze das initiale Modul beim Laden der Seite
+                         updateCurrentModule('Dashboard');
+                     </script>
                 </div>
             </nav>
 
@@ -201,8 +230,6 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom JS -->
     <script src="js/router.js"></script>
     <script src="js/theme-switcher.js"></script>

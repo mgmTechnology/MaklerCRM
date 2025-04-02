@@ -73,7 +73,9 @@ class Router {
     loadUserInfo() {
         const role = localStorage.getItem('role');
         const username = localStorage.getItem('username');
-        console.log('Lade Benutzerinfo für:', username, 'Rolle:', role);
+        
+
+        console.log(`%cLade Benutzerinfo: ${username} (Rolle: ${role})`, "color: blue; font-size: 12px;");
         
         if (!role || !username) {
             console.error('Keine Benutzerinformationen gefunden');
@@ -119,8 +121,8 @@ class Router {
     }
 
     showMenuForRole(role) {
-        console.log('Setze Menü für Rolle:', role);
         
+        console.log(`%cLade Menü: ${role}`, "color: blue; font-size: 12px;");
         // Alle Menüs ausblenden
         document.getElementById('adminMenu')?.style.setProperty('display', 'none');
         document.getElementById('betreuerMenu')?.style.setProperty('display', 'none');
@@ -141,7 +143,8 @@ class Router {
     }
 
     loadModuleForRole(moduleName, role) {
-        console.log('Lade Dashboard für Rolle:', role, 'mit Prefix:', role.toLowerCase());
+        
+        //console.log( `%cLade Dashboard für  ${role} / ${role.toLowerCase()}`,  "color: red; font-size: 12px;");
         
         // Mapping der Modul-Namen zu den tatsächlichen Dateinamen
         const moduleMapping = {
@@ -150,7 +153,7 @@ class Router {
             'users': 'makleruebersicht',
             'system': 'einstellungen',
             'reports': 'berichte',
-            'logs': 'system-logs',  // Korrigiere den Dateinamen für system-logs.js
+            'logs': 'system_logs',  // Korrigiere den Dateinamen für system-logs.js
             'makler': 'makleruebersicht',
             'tickets': 'supportanfragen',
             'training': 'schulungen',
@@ -179,7 +182,8 @@ class Router {
                 ? `modules/${rolePrefix}-${moduleName}.html` 
                 : `modules/${moduleName}.html`;
             
-            console.log('Lade Modul:', moduleUrl);
+                
+
             
             const response = await fetch(moduleUrl);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -191,8 +195,10 @@ class Router {
             const scriptName = moduleName.replace('-', '_');  // Ersetze Bindestriche durch Unterstriche
             const scriptUrl = `js/${scriptName}.js`;
             
-            console.log('Lade Script:', scriptUrl);
-            
+            console.log(`%cModul: ${moduleUrl}\nScript: ${scriptUrl}`, "color: blue; font-size: 12px;" );
+              
+
+
             // Prüfe ob das Script bereits geladen wurde
             const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
             if (!existingScript) {

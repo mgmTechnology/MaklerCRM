@@ -9,6 +9,34 @@ Erstelle ein vollständig modular aufgebautes Maklerportal als Webanwendung mit 
 
 Jede Rolle hat unterschiedliche Rechte und Zugriffsmöglichkeiten auf die Funktionen der Plattform.
 
+## Rollen und ihre Aktionen in der Sidebar
+
+### Makler
+- **Dashboard**: Übersicht über aktuelle Verträge und Provisionen.
+- **Verträge**: Verwaltung und Anzeige von Verträgen.
+- **Provisionen**: Einsehen der eigenen Provisionen.
+- **Dokumente**: Hochladen und Verwalten von Dokumenten.
+- **Supportanfragen**: Erstellen und Verfolgen von Support-Tickets.
+- **Termine**: Verwalten von Terminen und Erinnerungen.
+
+### Betreuer
+- **Dashboard**: Übersicht über zugewiesene Makler und deren Verträge.
+- **Maklerübersicht**: Verwaltung der zugewiesenen Makler.
+- **Provisionen**: Einsehen der Provisionen der zugewiesenen Makler.
+- **Schulungen**: Planen und Verwalten von Schulungen für Makler.
+- **Supportanfragen**: Bearbeiten von Support-Tickets der zugewiesenen Makler.
+- **Termine**: Verwalten von Terminen und Erinnerungen.
+
+### Admin
+- **Dashboard**: Übersicht über alle Makler, Betreuer und Systemstatistiken.
+- **Maklerübersicht**: Verwaltung aller Makler und Betreuer.
+- **Einstellungen**: Konfiguration der Systemeinstellungen.
+- **Berichte**: Generieren und Einsehen von Systemberichten.
+- **System-Logs**: Einsehen und Analysieren von System-Logs.
+- **Kunden**: Verwaltung der Kundenstammdaten.
+- **AIDA Neuverträge**: Integration und Verwaltung von AIDA Neuverträgen.
+- **AIDA Lebensversicherung**: Integration und Verwaltung von AIDA Lebensversicherungen.
+
 ## Anforderungen – Frontend
 - Die GUI soll modern, responsiv und interaktiv sein („fancy look & feel“).
 - Sidebar links wie bei WordPress (Tool-Menü)
@@ -55,30 +83,28 @@ Jedes Modul lädt seinen HTML-Inhalt und initialisiert eine Dummy-Funktion über
 Das Portal soll sofort im Browser bedienbar sein, ohne Backend – mit Möglichkeit zur späteren Erweiterung mit Spring Boot.
 
 
+## Sidebar-Mappings
+Jede Rolle hat eine Sidebar mit unterschiedlichen Modulen. Die Mappings der Module sind in `router.js` definiert:
+
+```javascript
+const moduleMapping = {
+    'contracts': 'vertrage',
+    'commission': 'provisionen',
+    'users': 'makleruebersicht',
+    'system': 'einstellungen',
+    'reports': 'berichte',
+    'logs': 'system-logs',
+    'makler': 'makleruebersicht',
+    'tickets': 'supportanfragen',
+    'training': 'schulungen',
+    'calendar': 'termine',
+    'documents': 'dokumente',
+    'customers': 'customers',
+    'sys_eva_aida_neuvertraege': 'sys_eva_aida_neuvertraege',
+    'sys_eva_aida_lv': 'sys_eva_aida_lv'
+};
+```
+
+Alle Mappings sind korrekt und entsprechen den Modulnamen in der Codebase.
+
 ## Projektstruktur
-maklerportal/
-│
-├── index.html                  # Haupttemplate mit Navigation, Header, Content-Container
-├── css/
-│   └── style.css               # Zentrales Stylesheet
-├── js/
-│   ├── router.js               # Navigation & Modul-Loader
-│   ├── dashboard.js            # Logik für Dashboard
-│   ├── vertrage.js             # Logik für Verträge
-│   ├── angebotsrechner.js      # Logik für Angebotsrechner
-│   ├── dokumente.js            # Logik für Dokumente
-│   ├── kommunikation.js        # Logik für Kommunikation
-│   ├── provisionen.js          # Logik für Provisionen
-│   ├── support.js              # Logik für Supportbereich
-│   └── einstellungen.js        # Logik für Benutzereinstellungen
-├── modules/
-│   ├── dashboard.html
-│   ├── vertrage.html
-│   ├── angebotsrechner.html
-│   ├── dokumente.html
-│   ├── kommunikation.html
-│   ├── provisionen.html
-│   ├── support.html
-│   └── einstellungen.html
-└── assets/
-    └── icons/, images/, ...

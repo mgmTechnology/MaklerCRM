@@ -162,33 +162,25 @@ function initializeCharts() {
  */
 function initVertragsentwicklung() {
     const ctx = document.getElementById('vertragsentwicklungChart').getContext('2d');
-    const data = {
-        labels: ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
-        datasets: [{
-            label: 'Abschlüsse',
-            data: [12, 15, 18, 22, 25, 28, 30, 32, 35, 38, 40, 42],
-            borderColor: 'rgb(54, 162, 235)',
-            tension: 0.1,
-            fill: false
-        }, {
-            label: 'Provisionen (in Tsd. €)',
-            data: [20, 25, 30, 35, 40, 45, 48, 50, 52, 55, 58, 60],
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-            fill: false
-        }]
-    };
     new Chart(ctx, {
         type: 'line',
-        data: data,
+        data: {
+            labels: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+            datasets: [{
+                label: 'Vertragsabschlüsse',
+                data: [65, 59, 80, 81, 56, 55, 40, 45, 58, 62, 75, 85],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }, {
+                label: 'Provisionen (T€)',
+                data: [120, 110, 145, 150, 105, 102, 75, 82, 108, 115, 138, 155],
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+            maintainAspectRatio: false
         }
     });
 }
@@ -199,30 +191,24 @@ function initVertragsentwicklung() {
  */
 function initProduktverteilung() {
     const ctx = document.getElementById('produktverteilungChart').getContext('2d');
-    const data = {
-        labels: ['Lebensversicherung', 'KFZ', 'Hausrat', 'Haftpflicht', 'Kranken'],
-        datasets: [{
-            data: [30, 25, 20, 15, 10],
-            backgroundColor: [
-                'rgb(54, 162, 235)',
-                'rgb(75, 192, 192)',
-                'rgb(255, 205, 86)',
-                'rgb(255, 99, 132)',
-                'rgb(153, 102, 255)'
-            ]
-        }]
-    };
     new Chart(ctx, {
-        type: 'pie',
-        data: data,
+        type: 'doughnut',
+        data: {
+            labels: ['Lebensversicherung', 'KFZ', 'Hausrat', 'Haftpflicht', 'Sonstige'],
+            datasets: [{
+                data: [35, 25, 15, 15, 10],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 206, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(153, 102, 255)'
+                ]
+            }]
+        },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'right'
-                }
-            }
+            maintainAspectRatio: false
         }
     });
 }
@@ -233,19 +219,18 @@ function initProduktverteilung() {
  */
 function initRegionaleVerteilung() {
     const ctx = document.getElementById('regionaleVerteilungChart').getContext('2d');
-    const data = {
-        labels: ['Nord', 'Süd', 'West', 'Ost'],
-        datasets: [{
-            label: 'Verträge pro Region',
-            data: [250, 320, 280, 190],
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgb(54, 162, 235)',
-            borderWidth: 1
-        }]
-    };
     new Chart(ctx, {
         type: 'bar',
-        data: data,
+        data: {
+            labels: ['Nord', 'Süd', 'West', 'Ost', 'Zentral'],
+            datasets: [{
+                label: 'Verträge pro Region',
+                data: [285, 320, 245, 198, 275],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 1
+            }]
+        },
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -264,15 +249,19 @@ function initRegionaleVerteilung() {
  * @returns {string} Die entsprechende Bootstrap-Farbe
  */
 function getTrendColor(trend) {
-    switch(trend) {
-        case 'up': return 'success';
-        case 'down': return 'danger';
-        case 'stable': return 'warning';
-        default: return 'secondary';
+    switch (trend) {
+        case 'up':
+            return 'success';
+        case 'down':
+            return 'danger';
+        case 'stable':
+            return 'secondary';
+        default:
+            return 'secondary';
     }
 }
 
 // Initialisiere die Berichte wenn sie geladen werden
-if (typeof router !== 'undefined') {
+document.addEventListener('DOMContentLoaded', function() {
     initBerichte();
-}
+});
