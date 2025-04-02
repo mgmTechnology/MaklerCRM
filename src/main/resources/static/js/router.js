@@ -11,6 +11,7 @@ class Router {
         // Event-Listener für Menü-Links
         document.addEventListener('click', (e) => {
             const target = e.target.closest('a[data-module]');
+            console.log(`%cKlick auf ${target?.getAttribute('data-module')}`, "color: blue; font-size: 12px;");
             if (target) {
                 e.preventDefault();
                 const module = target.getAttribute('data-module');
@@ -144,7 +145,7 @@ class Router {
 
     loadModuleForRole(moduleName, role) {
         
-        //console.log( `%cLade Dashboard für  ${role} / ${role.toLowerCase()}`,  "color: red; font-size: 12px;");
+        console.log( `%cLade Dashboard für  ${role} / ${role.toLowerCase()}`,  "color: red; font-size: 12px;");
         
         // Mapping der Modul-Namen zu den tatsächlichen Dateinamen
         const moduleMapping = {
@@ -173,7 +174,7 @@ class Router {
             this.loadModule(mappedModuleName, 'administrator');
         } else if (moduleName === 'berichte' && role === 'Administrator') {
             // Admin sieht die Admin-Version der Berichte
-            this.loadModule(mappedModuleName, 'admin');
+            this.loadModule(mappedModuleName, '');
         } else if (moduleName === 'dashboard') {
             this.loadModule(mappedModuleName, role.toLowerCase());
         } else {
@@ -253,8 +254,9 @@ class Router {
                     const script = document.createElement('script');
                     script.src = scriptUrl;
                     script.onload = () => {
+                        console.log('Module Name: '+ moduleName);
                         // Initialisiere das Modul mit der passenden Funktion
-                        if (moduleName === 'berichte' && rolePrefix === 'admin' && window.initAdminBerichte) {
+                        if (moduleName === 'admin-berichte' && window.initAdminBerichte) {
                             window.initAdminBerichte();
                         } else if ((moduleName === 'berichte' || moduleName === 'reports') && window.initBerichte) {
                             window.initBerichte();

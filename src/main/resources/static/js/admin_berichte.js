@@ -4,7 +4,7 @@
 (function() {
     'use strict';
 
-    console.log('%cAdmin-Berichte.js wird geladen...', 'color: blue; font-size: 12px');
+    console.log('%cadmin_berichte.js wird geladen...', 'color: blue; font-size: 12px');
 
     /**
      * Initialisiert das System-Monitoring
@@ -265,5 +265,5 @@
     // Exportiere die Initialisierungsfunktion
     window.initBerichte = initBerichte;
 
-    console.log('%cAdmin-Berichte.js geladen ✅', 'color: blue; font-size: 12px');
+    console.log('%cadmin_berichte.js geladen ✅', 'color: blue; font-size: 12px');
 })();

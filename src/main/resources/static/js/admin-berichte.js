@@ -4,7 +4,7 @@
 (function() {
     'use strict';
 
-    console.log('%cAdmin-Berichte.js wird geladen...', 'color: blue; font-size: 12px');
+    console.log('%cadmin_berichte.js wird geladen...', 'color: blue; font-size: 12px');
 
     /**
      * Initialisiert das Admin-Berichte Modul
@@ -357,5 +357,5 @@
         initAdminBerichte();
     });
 
-    console.log('%cAdmin-Berichte.js geladen ✅', 'color: blue; font-size: 12px');
+    console.log('%cadmin_berichte.js geladen ✅', 'color: blue; font-size: 12px');
 })();
