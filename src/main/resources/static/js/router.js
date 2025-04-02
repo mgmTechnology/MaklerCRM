@@ -178,46 +178,99 @@ class Router {
 
     async loadModule(moduleName, rolePrefix = '') {
         try {
+            console.group('Modul laden');
             const moduleUrl = rolePrefix 
                 ? `modules/${rolePrefix}-${moduleName}.html` 
                 : `modules/${moduleName}.html`;
             
-                
-
+            console.log(`%cModul: ${moduleUrl}`, "color: blue; font-size: 12px;" );
             
+            // 1. HTML laden
+            console.group('1. HTML laden');
             const response = await fetch(moduleUrl);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const content = await response.text();
-            
-            document.getElementById('main-content').innerHTML = content;
-            
-            // Versuche das zugehörige JavaScript zu laden
-            const scriptName = moduleName.replace('-', '_');  // Ersetze Bindestriche durch Unterstriche
-            const scriptUrl = `js/${scriptName}.js`;
-            
-            console.log(`%cModul: ${moduleUrl}\nScript: ${scriptUrl}`, "color: blue; font-size: 12px;" );
-              
-
-
-            // Prüfe ob das Script bereits geladen wurde
-            const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
-            if (!existingScript) {
-                const script = document.createElement('script');
-                script.src = scriptUrl;
-                script.onerror = () => {
-                    console.log('Script nicht gefunden:', scriptUrl);
-                    // Fehler beim Laden des Scripts ist nicht kritisch
-                };
-                document.body.appendChild(script);
+            if (!response.ok) {
+                console.error(`Fehler beim Laden von ${moduleUrl}:`, response.status);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            const content = await response.text();
+            console.log('HTML Content Länge:', content.length);
+            console.groupEnd();
+            
+            // 2. HTML einfügen
+            console.group('2. HTML einfügen');
+            const mainContent = document.getElementById('main-content');
+            if (!mainContent) {
+                console.error('main-content Element nicht gefunden!');
+                throw new Error('main-content Element nicht gefunden');
+            }
+            mainContent.innerHTML = content;
+            console.log('HTML eingefügt');
+            console.groupEnd();
+            
+            // 3. Modul-Anzeige aktualisieren
+            console.group('3. Modul-Anzeige aktualisieren');
+            updateCurrentModule(moduleName);
+            console.log('Modul-Anzeige aktualisiert:', moduleName);
+            console.groupEnd();
+
+            // 4. JavaScript laden und initialisieren
+            console.group('4. JavaScript laden');
+            try {
+                // Prüfe, ob Chart.js verfügbar ist, wenn es für das Modul benötigt wird
+                if (moduleName === 'berichte' && typeof Chart === 'undefined') {
+                    console.warn('Chart.js nicht gefunden, lade es nach...');
+                    await new Promise((resolve, reject) => {
+                        const chartScript = document.createElement('script');
+                        chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                        chartScript.onload = resolve;
+                        chartScript.onerror = reject;
+                        document.head.appendChild(chartScript);
+                    });
+                    console.log('Chart.js nachgeladen ✅');
+                }
+
+                const scriptName = moduleName.replace('-', '_');
+                const scriptUrl = `js/${scriptName}.js`;
+                console.log('Script URL:', scriptUrl);
+
+                // Entferne vorhandenes Script, falls vorhanden
+                const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
+                if (existingScript) {
+                    console.log('Entferne vorhandenes Script:', scriptUrl);
+                    existingScript.remove();
+                }
+
+                // Lade neues Script
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = scriptUrl;
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.body.appendChild(script);
+                });
+                console.log('Script geladen ✅');
+
+                console.groupEnd();
+                console.groupEnd(); // Modul laden
+            } catch (error) {
+                console.error('Fehler beim Laden des Scripts:', error);
+                console.groupEnd();
+                console.groupEnd(); // Modul laden
+                throw error;
+            }
+            
+            console.groupEnd(); // Modul laden
         } catch (error) {
             console.error('Fehler beim Laden des Moduls:', error);
             document.getElementById('main-content').innerHTML = `
                 <div class="alert alert-danger m-3">
                     <h4 class="alert-heading">Fehler beim Laden des Moduls</h4>
                     <p>Das Modul "${moduleName}" konnte nicht geladen werden.</p>
+                    <p class="mb-0"><small>Fehler: ${error.message}</small></p>
                 </div>
             `;
+        } finally {
+            console.groupEnd(); // Modul laden
         }
     }
 }

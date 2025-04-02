@@ -89,31 +89,22 @@
     </div>
 
     <!-- Hauptanalysen -->
+  
+
+    <!-- Top Performer & KPIs -->
     <div class="row mb-4">
-        <!-- Vertragsentwicklung -->
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Vertragsentwicklung</h5>
-                    <div style="height: 300px;">
-                        <canvas id="contractsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Top Performer -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Top Performer</h5>
                     <div class="table-responsive">
-                        <table class="table table-sm">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Verträge</th>
                                     <th>Provision</th>
-                                    <th>Trend</th>
                                 </tr>
                             </thead>
                             <tbody id="topPerformersTable">
@@ -124,41 +115,28 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row mb-4">
-        <!-- Produktverteilung -->
-        <div class="col-md-4">
+        <!-- KPIs -->
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Produktverteilung</h5>
-                    <div style="height: 250px;">
-                        <canvas id="productDistributionChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Regionale Verteilung -->
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Regionale Verteilung</h5>
-                    <div style="height: 250px;">
-                        <canvas id="regionalDistributionChart"></canvas>
+                    <h5 class="card-title">Key Performance Indicators</h5>
+                    <div id="kpiContainer" class="row">
+                        <!-- Wird durch JavaScript gefüllt -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- KPIs -->
+    <!-- Detaillierte KPIs -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Detaillierte KPIs</h5>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-hover" id="kpiTable">
                             <thead>
                                 <tr>
                                     <th>Kennzahl</th>
@@ -168,45 +146,10 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="kpiTable">
+                            <tbody>
                                 <!-- Wird durch JavaScript gefüllt -->
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Prognosen -->
-    <div class="row mb-4">
-        <h5>Prognosen (6 Monate)</h5>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Vertragsabschlüsse</h6>
-                    <div style="height: 200px;">
-                        <canvas id="contractsForecastChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Provisionen</h6>
-                    <div style="height: 200px;">
-                        <canvas id="commissionsForecastChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted">Maklerentwicklung</h6>
-                    <div style="height: 200px;">
-                        <canvas id="brokersForecastChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -269,26 +212,3 @@
 
 <!-- JavaScript -->
 <script src="js/berichte.js"></script>
-<script>
-    // Initialisierung
-    document.addEventListener('DOMContentLoaded', function() {
-        loadStatistics();
-        loadTopPerformers();
-        loadKPIs();
-        initializeCharts();
-    });
-
-    /**
-     * Hilfsfunktion für die Trendfarben
-     * @param {string} trend - Der Trend (up, down, stable)
-     * @returns {string} Die entsprechende Bootstrap-Farbe
-     */
-    function getTrendColor(trend) {
-        switch(trend) {
-            case 'up': return 'success';
-            case 'down': return 'danger';
-            case 'stable': return 'warning';
-            default: return 'secondary';
-        }
-    }
-</script>
