@@ -55,8 +55,99 @@ Jede Rolle hat unterschiedliche Rechte und Zugriffsmöglichkeiten auf die Funkti
 
 Jedes Modul lädt seinen HTML-Inhalt und initialisiert eine Dummy-Funktion über eine eigene JavaScript-Datei.
 
+## Modul- und Menüstruktur
 
+### Administrator-Rolle
+#### Sidebar-Menü
+- Dashboard (`/admin`)
+  - Modul: `modules/admin-dashboard.html`
+  - JS: `js/admin-dashboard.js`
+- Berichte (`/admin/berichte`)
+  - Modul: `modules/admin-berichte.html`
+  - JS: `js/admin-berichte.js`
+- System-Logs (`/admin/logs`)
+  - Modul: `modules/syslogs.html`
+  - JS: `js/syslogs.js`
+- AIDA Auswertungen
+  - Lebensversicherung (`/admin/sys_eva_aida_lv`)
+    - Modul: `modules/sys_eva_aida_lv.html`
+    - JS: `js/sys_eva_aida_lv.js`
+  - Neuverträge (`/admin/sys_eva_aida_neuvertraege`)
+    - Modul: `modules/sys_eva_aida_neuvertraege.html`
+    - JS: `js/sys_eva_aida_neuvertraege.js`
+- Support-Tickets (`/admin/tickets`)
+  - Modul: `modules/support.html`
+  - JS: `js/support.js`
+- Schulungen (`/admin/training`)
+  - Modul: `modules/training.html`
+  - JS: `js/training.js`
 
+### Makler-Rolle
+#### Sidebar-Menü
+- Dashboard (`/makler`)
+  - Modul: `modules/makler-dashboard.html`
+  - JS: `js/makler-dashboard.js`
+- Verträge (`/makler/contracts`)
+  - Modul: `modules/vertrage.html`
+  - JS: `js/vertrage.js`
+- Provisionen (`/makler/commission`)
+  - Modul: `modules/provisionen.html`
+  - JS: `js/provisionen.js`
+- Berichte (`/makler/reports`)
+  - Modul: `modules/berichte.html`
+  - JS: `js/berichte.js`
+- Dokumente (`/makler/documents`)
+  - Modul: `modules/dokumente.html`
+  - JS: `js/dokumente.js`
+- Termine (`/makler/calendar`)
+  - Modul: `modules/termine.html`
+  - JS: `js/termine.js`
+- Kunden (`/makler/customers`)
+  - Modul: `modules/customers.html`
+  - JS: `js/customers.js`
+- Support (`/makler/tickets`)
+  - Modul: `modules/support.html`
+  - JS: `js/support.js`
+
+### Modul-Mapping (router.js)
+```javascript
+const moduleMapping = {
+    'contracts': 'vertrage',
+    'commission': 'provisionen',
+    'users': 'makleruebersicht',
+    'system': 'einstellungen',
+    'reports': 'berichte',  // Für Betreuer-Berichte
+    'berichte': 'admin-berichte',  // Für Admin-Berichte
+    'logs': 'syslogs',
+    'makler': 'makleruebersicht',
+    'tickets': 'support',
+    'training': 'training',
+    'calendar': 'termine',
+    'documents': 'dokumente',
+    'customers': 'customers',
+    'sys_eva_aida_neuvertraege': 'sys_eva_aida_neuvertraege',
+    'sys_eva_aida_lv': 'sys_eva_aida_lv'
+};
+```
+
+### Modul-Initialisierung
+Jedes Modul wird durch eine spezifische Initialisierungsfunktion gestartet:
+
+- `initAdminBerichte()` - Admin-Berichte
+- `initBerichte()` - Makler-Berichte
+- `initSchulungen()` - Schulungen
+- `initSysLogs()` - System-Logs
+- `initAidaLV()` - AIDA Lebensversicherung
+- `initAidaNeuvertraege()` - AIDA Neuverträge
+- `initSupport()` - Support-Tickets
+- `initDokumente()` - Dokumente
+
+Alle Module folgen dem gleichen Muster:
+1. HTML-Datei unter `modules/`
+2. JavaScript-Datei unter `js/`
+3. Initialisierungsfunktion wird vom Router aufgerufen
+4. Module sind als IIFE (Immediately Invoked Function Expression) strukturiert
+5. Öffentliche API wird über das `window`-Objekt exportiert
 
 ## Light/Dark Mode
 - Umschaltbar per Button
@@ -81,7 +172,6 @@ Jedes Modul lädt seinen HTML-Inhalt und initialisiert eine Dummy-Funktion über
 
 ## Ziel
 Das Portal soll sofort im Browser bedienbar sein, ohne Backend – mit Möglichkeit zur späteren Erweiterung mit Spring Boot.
-
 
 ## Sidebar-Mappings
 Jede Rolle hat eine Sidebar mit unterschiedlichen Modulen. Die Mappings der Module sind in `router.js` definiert:
