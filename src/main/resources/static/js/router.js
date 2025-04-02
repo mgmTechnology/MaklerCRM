@@ -11,7 +11,9 @@ class Router {
         // Event-Listener für Menü-Links
         document.addEventListener('click', (e) => {
             const target = e.target.closest('a[data-module]');
-            console.log(`%cKlick auf ${target?.getAttribute('data-module')}`, "color: blue; font-size: 12px;");
+            if (target != undefined) {
+                console.info(`%cKlick auf ${target?.getAttribute('data-module')}`, "color: blue; font-size: 12px;");
+            }
             if (target) {
                 e.preventDefault();
                 const module = target.getAttribute('data-module');
@@ -145,7 +147,7 @@ class Router {
 
     loadModuleForRole(moduleName, role) {
         
-        console.log( `%cLade Dashboard für  ${role} / ${role.toLowerCase()}`,  "color: red; font-size: 12px;");
+        // console.log( `%cLade Dashboard für  ${role} / ${role.toLowerCase()}`,  "color: black; font-size: 12px;");
         
         // Mapping der Modul-Namen zu den tatsächlichen Dateinamen
         const moduleMapping = {
@@ -185,7 +187,8 @@ class Router {
 
     async loadModule(moduleName, rolePrefix = '') {
         try {
-            console.group('Modul laden');
+            console.groupCollapsed(`Modul laden: ${moduleName}`);
+
             const moduleUrl = rolePrefix 
                 ? `modules/${rolePrefix}-${moduleName}.html` 
                 : `modules/${moduleName}.html`;
@@ -273,7 +276,7 @@ class Router {
                         } else if (moduleName === 'documents' && window.initDokumente) {
                             window.initDokumente();
                         } else {
-                            console.warn(`Keine passende Initialisierungsfunktion für Modul ${moduleName} gefunden`);
+                            console.info(`Keine spezielle Initialisierungsfunktion für Modul ${moduleName} aufgerufen.`);
                         }
                         resolve();
                     };
