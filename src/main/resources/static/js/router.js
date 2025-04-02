@@ -152,10 +152,11 @@ class Router {
             'commission': 'provisionen',
             'users': 'makleruebersicht',
             'system': 'einstellungen',
-            'reports': 'berichte',
+            'reports': 'berichte',  // Für Betreuer-Berichte
+            'berichte': 'admin-berichte',  // Für Admin-Berichte
             'logs': 'syslogs',
             'makler': 'makleruebersicht',
-            'tickets': 'support',  // Korrigiert von 'supportanfragen' auf 'support'
+            'tickets': 'support',
             'training': 'training',
             'calendar': 'termine',
             'documents': 'dokumente',
@@ -267,6 +268,8 @@ class Router {
                             window.initAidaNeuvertraege();
                         } else if (moduleName === 'tickets' && window.initSupport) {
                             window.initSupport();
+                        } else if (moduleName === 'documents' && window.initDokumente) {
+                            window.initDokumente();
                         } else {
                             console.warn(`Keine passende Initialisierungsfunktion für Modul ${moduleName} gefunden`);
                         }

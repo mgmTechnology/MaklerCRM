@@ -1,17 +1,8 @@
-/**
- * Initialisiert das Dokumente-Modul
- * @function
- */
-function initDokumente() {
-    loadDocuments();
-    initializeEventListeners();
-}
+// Dokumente-Modul
+(function() {
+    'use strict';
 
-/**
- * Lädt die Dummy-Dokumentendaten
- * @function
- */
-function loadDocuments() {
+    // Dummy-Dokumentendaten
     const documents = [
         {
             name: 'Versicherungspolice_Schmidt_2024.pdf',
@@ -39,135 +30,187 @@ function loadDocuments() {
         }
     ];
 
-    const tableBody = document.getElementById('documentsTableBody');
-    tableBody.innerHTML = documents.map(doc => `
-        <tr>
-            <td>
-                <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
-                ${doc.name}
-            </td>
-            <td><span class="badge bg-${getTypeBadgeClass(doc.type)}">${getTypeText(doc.type)}</span></td>
-            <td>${doc.date}</td>
-            <td>${doc.size}</td>
-            <td>${doc.uploadedBy}</td>
-            <td>
-                <button class="btn btn-sm btn-outline-primary me-1" onclick="previewDocument('${doc.id}')">
-                    <i class="bi bi-eye"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-success me-1" onclick="downloadDocument('${doc.id}')">
-                    <i class="bi bi-download"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteDocument('${doc.id}')">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-/**
- * Initialisiert die Event-Listener für Filter und Suche
- * @function
- */
-function initializeEventListeners() {
-    // Filter für Dokumententyp
-    document.getElementById('documentType').addEventListener('change', filterDocuments);
-    
-    // Datumsfilter
-    document.getElementById('dateFrom').addEventListener('change', filterDocuments);
-    document.getElementById('dateTo').addEventListener('change', filterDocuments);
-    
-    // Suche
-    document.getElementById('searchDocs').addEventListener('input', filterDocuments);
-}
-
-/**
- * Filtert die Dokumente basierend auf den ausgewählten Kriterien
- * @function
- */
-function filterDocuments() {
-    // Implementierung der Filter-Logik hier
-    console.log('Filtering documents...');
-}
-
-/**
- * Gibt die CSS-Klasse für den Typ-Badge zurück
- * @param {string} type - Der Dokumententyp
- * @returns {string} Die CSS-Klasse für den Badge
- */
-function getTypeBadgeClass(type) {
-    switch(type) {
-        case 'vertrag': return 'primary';
-        case 'antrag': return 'success';
-        case 'schaden': return 'danger';
-        case 'korrespondenz': return 'info';
-        default: return 'secondary';
+    /**
+     * Initialisiert das Dokumente-Modul
+     * @function
+     */
+    function initDokumente() {
+        console.log('Initialisiere Dokumente-Modul...');
+        try {
+            loadDocuments();
+            initializeEventListeners();
+        } catch (error) {
+            console.error('Fehler bei der Initialisierung des Dokumente-Moduls:', error);
+        }
     }
-}
 
-/**
- * Gibt den deutschen Text für den Dokumententyp zurück
- * @param {string} type - Der Dokumententyp
- * @returns {string} Der übersetzte Typ-Text
- */
-function getTypeText(type) {
-    switch(type) {
-        case 'vertrag': return 'Vertrag';
-        case 'antrag': return 'Antrag';
-        case 'schaden': return 'Schadensmeldung';
-        case 'korrespondenz': return 'Korrespondenz';
-        default: return type;
+    /**
+     * Lädt die Dokumentendaten in die Tabelle
+     * @private
+     */
+    function loadDocuments() {
+        const tableBody = document.getElementById('documentsTableBody');
+        if (!tableBody) {
+            console.error('Dokumente-Tabelle nicht gefunden');
+            return;
+        }
+
+        tableBody.innerHTML = documents.map(doc => `
+            <tr>
+                <td>
+                    <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
+                    ${doc.name}
+                </td>
+                <td><span class="badge bg-${getTypeBadgeClass(doc.type)}">${getTypeText(doc.type)}</span></td>
+                <td>${doc.date}</td>
+                <td>${doc.size}</td>
+                <td>${doc.uploadedBy}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary me-1" onclick="previewDocument('${doc.id}')">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success me-1" onclick="downloadDocument('${doc.id}')">
+                        <i class="bi bi-download"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteDocument('${doc.id}')">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
     }
-}
 
-/**
- * Lädt ein neues Dokument hoch
- * @function
- */
-function uploadDocument() {
-    console.log('Uploading document...');
-    // Hier würde die Upload-Logik implementiert
-    const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModal'));
-    modal.hide();
-}
+    /**
+     * Initialisiert die Event-Listener für Filter und Suche
+     * @private
+     */
+    function initializeEventListeners() {
+        // Sichere Elementreferenzen
+        const elements = {
+            documentType: document.getElementById('documentType'),
+            dateFrom: document.getElementById('dateFrom'),
+            dateTo: document.getElementById('dateTo'),
+            searchDocs: document.getElementById('searchDocs')
+        };
 
-/**
- * Zeigt eine Vorschau des Dokuments
- * @param {string} docId - Die Dokument-ID
- */
-function previewDocument(docId) {
-    console.log('Previewing document:', docId);
-    const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
-    
-    // Dummy-Vorschau
-    document.getElementById('documentPreview').innerHTML = `
-        <div class="text-center p-5">
-            <i class="bi bi-file-earmark-pdf display-1 text-danger"></i>
-            <h4 class="mt-3">Dokumentenvorschau</h4>
-            <p class="text-muted">Dokument-ID: ${docId}</p>
-        </div>
-    `;
-    
-    previewModal.show();
-}
-
-/**
- * Lädt ein Dokument herunter
- * @param {string} docId - Die Dokument-ID
- */
-function downloadDocument(docId) {
-    console.log('Downloading document:', docId);
-}
-
-/**
- * Löscht ein Dokument
- * @param {string} docId - Die Dokument-ID
- */
-function deleteDocument(docId) {
-    if (confirm('Möchten Sie dieses Dokument wirklich löschen?')) {
-        console.log('Deleting document:', docId);
+        // Prüfe ob alle Elemente existieren
+        for (const [key, element] of Object.entries(elements)) {
+            if (!element) {
+                console.warn(`Element nicht gefunden: ${key}`);
+                continue;
+            }
+            
+            if (key === 'searchDocs') {
+                element.addEventListener('input', filterDocuments);
+            } else {
+                element.addEventListener('change', filterDocuments);
+            }
+        }
     }
-}
+
+    /**
+     * Filtert die Dokumente basierend auf den ausgewählten Kriterien
+     * @private
+     */
+    function filterDocuments() {
+        // Implementierung folgt
+        console.log('Dokumente werden gefiltert...');
+    }
+
+    /**
+     * Gibt die CSS-Klasse für den Typ-Badge zurück
+     * @private
+     * @param {string} type - Der Dokumententyp
+     * @returns {string} Die CSS-Klasse für den Badge
+     */
+    function getTypeBadgeClass(type) {
+        switch (type) {
+            case 'vertrag': return 'primary';
+            case 'schaden': return 'danger';
+            case 'antrag': return 'success';
+            default: return 'secondary';
+        }
+    }
+
+    /**
+     * Gibt den deutschen Text für den Dokumententyp zurück
+     * @private
+     * @param {string} type - Der Dokumententyp
+     * @returns {string} Der übersetzte Typ-Text
+     */
+    function getTypeText(type) {
+        switch (type) {
+            case 'vertrag': return 'Vertrag';
+            case 'schaden': return 'Schaden';
+            case 'antrag': return 'Antrag';
+            default: return type;
+        }
+    }
+
+    /**
+     * Lädt ein neues Dokument hoch
+     * @function
+     */
+    function uploadDocument() {
+        // Implementierung folgt
+        console.log('Dokument wird hochgeladen...');
+    }
+
+    /**
+     * Zeigt eine Vorschau des Dokuments
+     * @param {string} docId - Die Dokument-ID
+     */
+    function previewDocument(docId) {
+        const doc = documents.find(d => d.id === docId);
+        if (!doc) {
+            console.error('Dokument nicht gefunden:', docId);
+            return;
+        }
+
+        const modal = new bootstrap.Modal(document.getElementById('previewModal'));
+        const modalTitle = document.querySelector('#previewModal .modal-title');
+        const modalBody = document.querySelector('#previewModal .modal-body');
+
+        if (modalTitle && modalBody) {
+            modalTitle.textContent = doc.name;
+            modalBody.innerHTML = `
+                <div class="text-center">
+                    <i class="bi bi-file-earmark-pdf display-1 text-danger"></i>
+                    <p class="mt-3">Vorschau für ${doc.name}</p>
+                </div>
+            `;
+        }
+
+        modal.show();
+    }
+
+    /**
+     * Lädt ein Dokument herunter
+     * @param {string} docId - Die Dokument-ID
+     */
+    function downloadDocument(docId) {
+        // Implementierung folgt
+        console.log('Dokument wird heruntergeladen:', docId);
+    }
+
+    /**
+     * Löscht ein Dokument
+     * @param {string} docId - Die Dokument-ID
+     */
+    function deleteDocument(docId) {
+        if (confirm('Möchten Sie dieses Dokument wirklich löschen?')) {
+            // Implementierung folgt
+            console.log('Dokument wird gelöscht:', docId);
+        }
+    }
+
+    // Exportiere die öffentliche API
+    window.initDokumente = initDokumente;
+    window.previewDocument = previewDocument;
+    window.downloadDocument = downloadDocument;
+    window.deleteDocument = deleteDocument;
+    window.uploadDocument = uploadDocument;
+})();
 
 // Initialisiere das Dokumente-Modul wenn es geladen wird
 if (typeof router !== 'undefined') {

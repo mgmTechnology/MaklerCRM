@@ -1,4 +1,6 @@
+<!-- Dokumente -->
 <div class="container-fluid py-4">
+    <!-- Aktionsleiste -->
     <div class="row mb-4">
         <div class="col-md-8">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
@@ -18,6 +20,27 @@
         </div>
     </div>
 
+    <!-- Filter -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <label class="form-label">Dokumententyp</label>
+            <select class="form-select" id="documentType">
+                <option value="">Alle Typen</option>
+                <option value="vertrag">Verträge</option>
+                <option value="antrag">Anträge</option>
+                <option value="schaden">Schadensmeldungen</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Von</label>
+            <input type="date" class="form-control" id="dateFrom">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Bis</label>
+            <input type="date" class="form-control" id="dateTo">
+        </div>
+    </div>
+
     <!-- Breadcrumb Navigation -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
@@ -31,18 +54,19 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover align-middle" id="documentsTable">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Typ</th>
+                            <th>Datum</th>
                             <th>Größe</th>
-                            <th>Geändert</th>
-                            <th class="text-end">Aktionen</th>
+                            <th>Hochgeladen von</th>
+                            <th>Aktionen</th>
                         </tr>
                     </thead>
                     <tbody id="documentsTableBody">
-                        <!-- Wird durch JavaScript gefüllt -->
+                        <!-- Dokumente werden dynamisch eingefügt -->
                     </tbody>
                 </table>
             </div>
@@ -67,25 +91,11 @@
                             <option value="vertrag">Vertrag</option>
                             <option value="antrag">Antrag</option>
                             <option value="schaden">Schadensmeldung</option>
-                            <option value="korrespondenz">Korrespondenz</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Dokument</label>
+                        <label class="form-label">Datei</label>
                         <input type="file" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Beschreibung</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Zuordnung</label>
-                        <select class="form-select">
-                            <option value="">Optional: Vertrag/Kunde zuordnen</option>
-                            <option value="vs-2024-001">VS-2024-001 (Thomas Schmidt)</option>
-                            <option value="vs-2024-002">VS-2024-002 (Maria Müller)</option>
-                            <option value="vs-2024-003">VS-2024-003 (Peter Wagner)</option>
-                        </select>
                     </div>
                 </form>
             </div>
@@ -106,14 +116,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div id="documentPreview" class="text-center">
-                    <!-- Vorschau wird hier eingefügt -->
-                </div>
+                <!-- Vorschau wird dynamisch eingefügt -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="downloadDocument()">
-                    <i class="bi bi-download"></i> Herunterladen
-                </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
             </div>
         </div>
