@@ -11,7 +11,7 @@ class Router {
         // Event-Listener für Menü-Links
         document.addEventListener('click', (e) => {
             const target = e.target.closest('a[data-module]');
-            if (target != undefined) {
+            if (target !== undefined) {
                 console.info(`%cKlick auf ${target?.getAttribute('data-module')}`, "color: blue; font-size: 12px;");
             }
             if (target) {
@@ -31,7 +31,8 @@ class Router {
                     const username = localStorage.getItem('username');
                     
                     // Lösche alle gespeicherten Daten
-                    localStorage.clear();
+                    localStorage.removeItem('role');
+                    localStorage.removeItem('username');
                     sessionStorage.clear();
                     
                     console.log('Benutzer', username, 'erfolgreich abgemeldet');
@@ -160,8 +161,10 @@ class Router {
             'logs': 'syslogs',
             'makler': 'makleruebersicht',
             'tickets': 'support',
+            'tickets_makler': 'support_makler',
             'training': 'training',
-            'calendar': 'termine',
+            'training_makler': 'training_makler',
+            'termine': 'termine',
             'documents': 'dokumente',
             'customers': 'customers',
             'sys_eva_aida_neuvertraege': 'sys_eva_aida_neuvertraege',
@@ -199,8 +202,14 @@ class Router {
             console.group('1. HTML laden');
             const response = await fetch(moduleUrl);
             if (!response.ok) {
-                console.error(`Fehler beim Laden von ${moduleUrl}:`, response.status);
-                throw new Error(`HTTP error! status: ${response.status}`);
+                console.error(`Fehler beim Laden des Moduls:`, {
+                    status: response.status,
+                    statusText: response.statusText,
+                    url: new URL(moduleUrl).pathname // Nur den Pfad loggen
+                });
+                throw new Error(
+                    `HTTP Fehler ${response.status} (${response.statusText})`
+                );
             }
             const content = await response.text();
             console.log('HTML Content Länge:', content.length);
@@ -263,8 +272,14 @@ class Router {
                             window.initAdminBerichte();
                         } else if ((moduleName === 'berichte' || moduleName === 'reports') && window.initBerichte) {
                             window.initBerichte();
+                        } else if ((moduleName === 'customers') && window.loadCustomers) {
+                            window.loadCustomers();
+                        } else if ((moduleName === 'termine') && window.loadCustomers) {
+                            window.loadCustomers();
                         } else if (moduleName === 'training' && window.initSchulungen) {
                             window.initSchulungen();
+                        } else if (moduleName === 'training_makler' && window.initSchulungenMakler) { //initSchulungenMakler kommt aus dem geladenen script
+                            window.initSchulungenMakler();
                         } else if (moduleName === 'logs' && window.initSysLogs) {
                             window.initSysLogs();
                         } else if (moduleName === 'sys_eva_aida_lv' && window.initAidaLV) {

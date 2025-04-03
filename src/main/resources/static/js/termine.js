@@ -1,7 +1,7 @@
 /**
  * Initialisiert die Kalenderansicht
  */
-document.addEventListener('DOMContentLoaded', function() {
+
     const calendarBody = document.getElementById('calendarBody');
     const currentMonthBtn = document.getElementById('currentMonth');
     const prevMonthBtn = document.getElementById('prevMonth');
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial rendern
     renderCalendar();
-});
+
 
 /**
  * Öffnet den Dialog für einen neuen Termin

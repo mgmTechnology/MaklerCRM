@@ -9,6 +9,13 @@ function initSchulungen() {
     initializeCalendar();
     loadMaklerForSelect();
 }
+function initSchulungenMakler() {
+    loadStatistics();
+    loadTrainings();
+    loadCertifications();
+    initializeCalendar();
+    loadMaklerForSelect();
+}
 
 /**
  * Lädt die Statistiken

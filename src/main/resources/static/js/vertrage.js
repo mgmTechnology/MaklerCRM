@@ -15,7 +15,7 @@ function loadContracts() {
     const contracts = [
         {
             number: 'VS-2024-001',
-            customer: 'Thomas Schmidt',
+            customer: 'Christiane Koch',
             type: 'KFZ-Versicherung',
             status: 'active',
             startDate: '01.01.2024',
@@ -24,7 +24,7 @@ function loadContracts() {
         },
         {
             number: 'VS-2024-002',
-            customer: 'Maria Müller',
+            customer: 'Sylvia Liebsch',
             type: 'Hausratversicherung',
             status: 'pending',
             startDate: '01.03.2024',
@@ -33,7 +33,7 @@ function loadContracts() {
         },
         {
             number: 'VS-2024-003',
-            customer: 'Peter Wagner',
+            customer: 'Peter Zungenbrecher',
             type: 'Lebensversicherung',
             status: 'active',
             startDate: '01.02.2024',

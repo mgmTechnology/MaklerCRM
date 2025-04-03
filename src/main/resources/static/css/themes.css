@@ -49,6 +49,19 @@
     --navbar-bg: var(--bg-primary);
     --navbar-text: var(--text-primary);
 }
+[data-theme="darkblue"] h1,
+[data-theme="darkblue"] h2,
+[data-theme="darkblue"] h3,
+[data-theme="darkblue"] h4,
+[data-theme="darkblue"] h5,
+[data-theme="darkblue"] h6 {
+    color: aliceblue;  /* Verwendet die definierte Textfarbe */
+}
+/* Falls Sie Bootstrap Form-Labels verwenden */
+[data-theme="darkblue"] .form-label {
+    color: #adb5bd;
+}
+
 
 /* Navigation Styles */
 #sidebar {

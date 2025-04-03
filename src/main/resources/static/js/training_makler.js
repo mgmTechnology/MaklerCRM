@@ -4,12 +4,12 @@
 (function() {
     'use strict';
 
-    console.log('%training.js wird geladen...', 'color: blue; font-size: 12px');
+    console.log('%ctraining_makler.js wird geladen...', 'color: blue; font-size: 12px');
 
     /**
      * Initialisiert die Schulungen-Seite
      */
-    function initSchulungen() {
+    function initSchulungenMakler() {
         console.groupCollapsed('🎓 Schulungen initialisieren');
         try {
             loadAvailableTrainings();
@@ -56,7 +56,7 @@
                 }
             ];
 
-            const container = document.getElementById('availableTrainings');
+            const container = document.getElementById('availableTrainingsMakler');
             if (!container) {
                 throw new Error('Container für verfügbare Schulungen nicht gefunden');
             }
@@ -72,8 +72,8 @@
                                 <li><i class="bi bi-laptop"></i> ${training.type}</li>
                                 <li><i class="bi bi-bar-chart"></i> ${training.level}</li>
                             </ul>
-                            <button class="btn btn-primary" onclick="detailsForTraining('${training.title}')">
-                                Details
+                            <button class="btn btn-primary" onclick="registerForTraining('${training.title}')">
+                                Anmelden
                             </button>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                 }
             ];
 
-            const tbody = document.querySelector('#completedTrainingsTable tbody');
+            const tbody = document.querySelector('#completedTrainingsTableMakler tbody');
             if (!tbody) {
                 throw new Error('Tabelle für abgeschlossene Schulungen nicht gefunden');
             }
@@ -151,21 +151,21 @@
             const trainings = [
                 {
                     title: 'AIDA Advanced',
-                    date: '15.04.2025',
+                    date: '15.04.2026',
                     time: '10:00 - 12:00',
                     location: 'Online',
-                    trainer: 'Dr. Schmidt'
+                    trainer: 'Dr. Taus'
                 },
                 {
                     title: 'Verkaufspsychologie',
-                    date: '22.04.2025',
+                    date: '22.04.2026',
                     time: '14:00 - 18:00',
                     location: 'Schulungszentrum Berlin',
-                    trainer: 'Prof. Weber'
+                    trainer: 'Prof. Richter'
                 }
             ];
 
-            const tbody = document.querySelector('#upcomingTrainingsTable tbody');
+            const tbody = document.querySelector('#upcomingTrainingsTableMakler tbody');
             if (!tbody) {
                 throw new Error('Tabelle für anstehende Schulungen nicht gefunden');
             }
@@ -198,9 +198,9 @@
      * Meldet den Benutzer für eine Schulung an
      * @param {string} title - Titel der Schulung
      */
-    window.detailsForTraining = function(title) {
-        console.log(`Details für Schulung: ${title}`);
-        alert(`Wir senden Ihnen eine E-Mail mit weiteren Informationen zu der Schulung "${title}".`);
+    window.registerForTraining = function(title) {
+        console.log(`Anmeldung für Schulung: ${title}`);
+        alert(`Sie wurden erfolgreich für die Schulung "${title}" angemeldet.`);
     };
 
     /**
@@ -224,7 +224,7 @@
     };
 
     // Exportiere die Initialisierungsfunktion
-    window.initSchulungen = initSchulungen;
+    window.initSchulungenMakler = initSchulungenMakler;
 
     console.log('%cSchulungen.js geladen ✅', 'color: blue; font-size: 12px');
 })();
