@@ -704,74 +704,62 @@ Sub ChangeTextOfShopAndVideoLinks()
 End Sub
 
 
-
-
+' Gibt einen gültigen Preis als Double zurück, sonst 0
+Function ParsePreis(val As Variant) As Double
+    Dim s As String
+    s = Trim(CStr(val))
+    If s = "" Then
+        ParsePreis = 0
+    ElseIf IsNumeric(Replace(s, ",", ".")) Then
+        ParsePreis = CDbl(Replace(s, ",", "."))
+    Else
+        ParsePreis = 0
+    End If
+End Function
 
 Public Sub ExportDataToJson()
     Dim wb As Workbook
     Dim ws As Worksheet
     Dim firstSheetIndex As Long, lastSheetIndex As Long
     Dim i As Long
-    
-    ' ------------------------
+
     ' Pfade / Dateinamen
-    ' ------------------------
     Dim jsonFolder As String
     Dim fileTimestamp As String
     Dim jsonFileName As String
     Dim jsonFilePath As String
-    
-    ' Beispiel-Ordner anpassen
     jsonFolder = "C:\Tmp\"
-
-    ' Zeitstempel für Dateinamen, z.B. 2025-01-11T18-05-49
     fileTimestamp = Format(Now, "yyyy-mm-dd")
-    
-    ' JSON-Dateiname zusammensetzen
-    'jsonFileName = "uhren_" & fileTimestamp & ".json"
     jsonFileName = "uhren.json"
     jsonFilePath = jsonFolder & jsonFileName
-    
-    ' ------------------------
-    ' Zeitstempel für JSON-Inhalt (z.B. 2025-01-11T18:05:49)
-    ' ------------------------
+
+    ' Zeitstempel für JSON-Inhalt
     Dim jsonTimestamp As String
     jsonTimestamp = Format(Now, "yyyy-mm-dd\THH:mm:ss")
-    
+
     Set wb = ThisWorkbook
-    
-    ' Wir lesen ab dem 3. Blatt
     firstSheetIndex = 3
     lastSheetIndex = wb.Worksheets.Count
-    
-    ' ------------------------
-    ' JSON: Kopf (timestamp + Startarray)
-    ' ------------------------
+
     Dim jsonString As String
-    jsonString = _
-        "{" & vbCrLf & _
-        "  ""timestamp"": """ & jsonTimestamp & """," & vbCrLf & _
-        "  ""Uhren"": [" & vbCrLf
-    
-    ' Hilfszähler, um Komma-Trennung zwischen Objekten zu handhaben
-    Dim itemCount As Long
-    itemCount = 0
-    
-    ' ------------------------
-    ' Iteration über die Blätter (3..Ende)
-    ' ------------------------
+    jsonString = "{" & vbCrLf & _
+                 "  ""timestamp"": """ & jsonTimestamp & """," & vbCrLf & _
+                 "  ""Uhren"": [" & vbCrLf
+
+    Dim itemCount As Long: itemCount = 0
+
     For i = firstSheetIndex To lastSheetIndex
         Set ws = wb.Worksheets(i)
-        
-        ' Lese relevante Werte aus den Zellen (B4, B5, ...)
-        Dim ID              As String: ID = CStr(ws.Range("H16").Value)
-        Dim NameBlatt       As String: NameBlatt = CStr(ws.Name)
-        Dim Kaufdatum       As String: Kaufdatum = CStr(ws.Range("B4").Value)
-        Dim Kaufpreis       As String: Kaufpreis = CStr(ws.Range("B5").Value)
-        Dim Hersteller      As String: Hersteller = CStr(ws.Range("B6").Value)
-        Dim Typ             As String: Typ = CStr(ws.Range("B7").Value)
-        Dim Modell          As String: Modell = CStr(ws.Range("B8").Value)
-        Dim Hommage         As String: Hommage = CStr(ws.Range("B9").Value)
+
+        Dim ID As String: ID = CStr(ws.Range("H16").Value)
+        Dim NameBlatt As String: NameBlatt = CStr(ws.Name)
+        Dim Kaufdatum As String: Kaufdatum = CStr(ws.Range("B4").Value)
+        Dim Kaufpreis As Double: Kaufpreis = ParsePreis(ws.Range("B5").Value)
+        Dim Hersteller As String: Hersteller = CStr(ws.Range("B6").Value)
+        Dim Typ As String: Typ = CStr(ws.Range("B7").Value)
+        Dim Modell As String: Modell = CStr(ws.Range("B8").Value)
+        Dim Hommage As String: Hommage = CStr(ws.Range("B9").Value)
+
         Dim VideoURL As String
         If ws.Range("B10").Hyperlinks.Count > 0 Then
             VideoURL = ws.Range("B10").Hyperlinks(1).Address
@@ -779,91 +767,71 @@ Public Sub ExportDataToJson()
             VideoURL = CStr(ws.Range("B10").Value)
         End If
 
-        Dim AKA             As String: AKA = CStr(ws.Range("B11").Value)
-        
-        Dim VKDatum         As String: VKDatum = CStr(ws.Range("C4").Value)
-        Dim VKPreis         As String: VKPreis = CStr(ws.Range("D5").Value)
+        Dim AKA As String: AKA = CStr(ws.Range("B11").Value)
+        Dim VKDatum As String: VKDatum = CStr(ws.Range("C4").Value)
+        Dim VKPreis As String: VKPreis = CStr(ws.Range("D5").Value)
         If VKDatum = "" Then VKDatum = "-"
         If VKPreis = "" Then VKPreis = "0"
+        Dim Herkunft As String: Herkunft = CStr(ws.Range("E7").Value)
+        Dim ShopURL As String: ShopURL = CStr(ws.Range("E8").Value)
+        Dim Bemerkungen As String: Bemerkungen = CStr(ws.Range("B14").Value)
 
-        Dim Herkunft        As String: Herkunft = CStr(ws.Range("E7").Value)
-        Dim ShopURL         As String: ShopURL = CStr(ws.Range("E8").Value)
-        
-        ' Beispiel für Bemerkungen in B14 (ggf. anpassen)
-        ' Oder nimm einen größeren Bereich, z.B. B14:B20, falls nötig
-        Dim Bemerkungen     As String: Bemerkungen = CStr(ws.Range("B14").Value)
-        
-        
-        
-
-
-        ' Feste Werte "Unknown" für Movement, Waterproof, CaseSize
-        Dim movement        As String: movement = "Unknown"
-        Dim waterproof      As String: waterproof = "Unknown"
-        Dim caseSize        As String: caseSize = "Unknown"
-        ' Platzhalterbild (eingebettetes SVG)
+        ' Fixwerte
+        Dim movement As String: movement = "Unknown"
+        Dim waterproof As String: waterproof = "Unknown"
+        Dim caseSize As String: caseSize = "Unknown"
         Dim BildURL As String
         BildURL = "https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22"
 
+        ' Nur exportieren, wenn Kaufpreis > 0
+        If Kaufpreis > 0 Then
+            If itemCount > 0 Then
+                jsonString = jsonString & "," & vbCrLf
+            End If
 
+            jsonString = jsonString & _
+                "    {" & vbCrLf & _
+                "      ""ID"": """ & ID & """," & vbCrLf & _
+                "      ""Name"": """ & ReplaceJsonString(NameBlatt) & """," & vbCrLf & _
+                "      ""Kaufdatum"": """ & ReplaceJsonString(Kaufdatum) & """," & vbCrLf & _
+                "      ""Kaufpreis"": " & Kaufpreis & "," & vbCrLf & _
+                "      ""Hersteller"": """ & ReplaceJsonString(Hersteller) & """," & vbCrLf & _
+                "      ""Typ"": """ & ReplaceJsonString(Typ) & """," & vbCrLf & _
+                "      ""Modell"": """ & ReplaceJsonString(Modell) & """," & vbCrLf & _
+                "      ""Hommage"": """ & ReplaceJsonString(Hommage) & """," & vbCrLf & _
+                "      ""VideoURL"": """ & ReplaceJsonString(VideoURL) & """," & vbCrLf & _
+                "      ""AKA"": """ & ReplaceJsonString(AKA) & """," & vbCrLf & _
+                "      ""VKDatum"": """ & ReplaceJsonString(VKDatum) & """," & vbCrLf & _
+                "      ""VKPreis"": """ & ReplaceJsonString(VKPreis) & """," & vbCrLf & _
+                "      ""Herkunft"": """ & ReplaceJsonString(Herkunft) & """," & vbCrLf & _
+                "      ""ShopURL"": """ & ReplaceJsonString(ShopURL) & """," & vbCrLf & _
+                "      ""Bemerkungen"": """ & ReplaceJsonString(Bemerkungen) & """," & vbCrLf & _
+                "      ""Movement"": """ & ReplaceJsonString(movement) & """," & vbCrLf & _
+                "      ""Waterproof"": """ & ReplaceJsonString(waterproof) & """," & vbCrLf & _
+                "      ""CaseSize"": """ & ReplaceJsonString(caseSize) & """," & vbCrLf & _
+                "      ""BildURL"": """ & ReplaceJsonString(BildURL) & """" & vbCrLf & _
+                "    }"
 
-        ' JSON-Objekt zusammensetzen (pro Blatt)
-        ' Falls "itemCount" > 0, setzen wir ein Komma vor das nächste Objekt
-        If itemCount > 0 Then
-            jsonString = jsonString & "," & vbCrLf
+            itemCount = itemCount + 1
         End If
-        
-        jsonString = jsonString & _
-            "    {" & vbCrLf & _
-            "      ""ID"": """ & ID & """," & vbCrLf & _
-            "      ""Name"": """ & ReplaceJsonString(NameBlatt) & """," & vbCrLf & _
-            "      ""Kaufdatum"": """ & ReplaceJsonString(Kaufdatum) & """," & vbCrLf & _
-            "      ""Kaufpreis"": """ & ReplaceJsonString(Kaufpreis) & """," & vbCrLf & _
-            "      ""Hersteller"": """ & ReplaceJsonString(Hersteller) & """," & vbCrLf & _
-            "      ""Typ"": """ & ReplaceJsonString(Typ) & """," & vbCrLf & _
-            "      ""Modell"": """ & ReplaceJsonString(Modell) & """," & vbCrLf & _
-            "      ""Hommage"": """ & ReplaceJsonString(Hommage) & """," & vbCrLf & _
-            "      ""VideoURL"": """ & ReplaceJsonString(VideoURL) & """," & vbCrLf & _
-            "      ""AKA"": """ & ReplaceJsonString(AKA) & """," & vbCrLf & _
-            "      ""VKDatum"": """ & ReplaceJsonString(VKDatum) & """," & vbCrLf & _
-            "      ""VKPreis"": """ & ReplaceJsonString(VKPreis) & """," & vbCrLf & _
-            "      ""Herkunft"": """ & ReplaceJsonString(Herkunft) & """," & vbCrLf & _
-            "      ""ShopURL"": """ & ReplaceJsonString(ShopURL) & """," & vbCrLf & _
-            "      ""Bemerkungen"": """ & ReplaceJsonString(Bemerkungen) & """," & vbCrLf & _
-            "      ""Movement"": """ & movement & """," & vbCrLf & _
-            "      ""Waterproof"": """ & waterproof & """," & vbCrLf & _
-            "      ""CaseSize"": """ & caseSize & """," & vbCrLf & _
-            "      ""BildURL"": """ & ReplaceJsonString(BildURL) & """" & vbCrLf & _
-            "    }"
-        
-        itemCount = itemCount + 1
     Next i
-    
-    ' ------------------------
-    ' JSON-Ende: Arrayschluss + Klammer
-    ' ------------------------
+
     jsonString = jsonString & vbCrLf & "  ]" & vbCrLf & "}"
-    
-    ' ------------------------
-    ' JSON in Datei schreiben
-    ' ------------------------
-    Dim fileNum As Integer
-    fileNum = FreeFile
-    
+
     Dim stream As Object
     Set stream = CreateObject("ADODB.Stream")
-    stream.Type = 2 ' Text
+    stream.Type = 2
     stream.Charset = "utf-8"
     stream.Open
     stream.WriteText jsonString
-    stream.SaveToFile jsonFilePath, 2 ' 2 = überschreiben
+    stream.SaveToFile jsonFilePath, 2
     stream.Close
     Set stream = Nothing
 
-    
     MsgBox "JSON-Datei erstellt: " & vbCrLf & jsonFilePath, vbInformation
     ExportHtmlFrontend
 End Sub
+
 
 ' ------------------------------------------------
 ' Hilfsfunktion: ReplaceJsonString
@@ -973,4 +941,6 @@ Private Function GetHtmlFrontendContent() As String
     GetHtmlFrontendContent = html
     
 End Function
+
+
 
