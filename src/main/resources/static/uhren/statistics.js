@@ -53,11 +53,12 @@ fetch('uhren.json')
   .then(json => {
     const watches = json.Uhren || [];
     renderWatchTable(watches);
-    renderGrowthCharts(watches);
+    renderCumulativeCountChart(watches);
+    renderAcquisitionChart(watches);
+    renderGrowthChart(watches);
+    renderTotalChart(watches);
     renderPieChart(watches, 'Hersteller', 'brandChart', 'Uhren pro Marke');
     renderPieChart(watches, 'Typ', 'typeChart', 'Uhren pro Typ');
-    renderPieChart(watches, 'Material', 'materialChart', 'Materialverteilung');
-    renderAcquisitionCharts(watches);
     renderPieValueChart(watches, 'Hersteller', 'brandValueChart', 'Wert nach Marke');
     renderPieValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ');
   });
@@ -188,20 +189,62 @@ document.addEventListener('click', function(e) {
  * Zerstört alte Instanzen, falls vorhanden.
  * @param {Array} watches - Uhren-Objekte
  */
-function renderGrowthCharts(watches) {
-  chartCanvas = replaceCanvas('growthChart');
-  totalChartCanvas = replaceCanvas('totalChart');
-  console.log('[DEBUG] renderGrowthCharts aufgerufen.');
-  if (growthChartInstance) {
-    console.log('[DEBUG] growthChartInstance.destroy() wird ausgeführt.');
-    growthChartInstance.destroy();
-    growthChartInstance = null;
-  }
-  if (totalChartInstance) {
-    console.log('[DEBUG] totalChartInstance.destroy() wird ausgeführt.');
-    totalChartInstance.destroy();
-    totalChartInstance = null;
-  }
+/**
+ * Erstellt oder aktualisiert das Linien-Diagramm für die Gesamtanzahl der Uhren über Zeit.
+ * @param {Array} watches - Uhren-Objekte
+ */
+function renderCumulativeCountChart(watches) {
+  const { DateTime } = luxon;
+  const byMonth = {};
+  watches.forEach(w => {
+    const dt = DateTime.fromFormat(w.Kaufdatum, 'dd.MM.yyyy');
+    if (!dt.isValid) return;
+    const key = dt.toFormat('yyyy-MM');
+    byMonth[key] = (byMonth[key] || 0) + 1;
+  });
+  const keys = Object.keys(byMonth).sort();
+  const counts = keys.map(k => byMonth[k]);
+  const cumulative = [];
+  let total = 0;
+  counts.forEach(v => { total += v; cumulative.push(total); });
+  cumulativeCountCanvas = replaceCanvas('cumulativeCountChart');
+  if (cumulativeCountChartInstance) cumulativeCountChartInstance.destroy();
+  cumulativeCountChartInstance = new Chart(cumulativeCountCanvas, {
+    type: 'line',
+    data: { labels: keys, datasets: [{ label: 'Kumulative Anzahl', data: cumulative, borderColor: '#198754', fill: false }] },
+    options: fixedChartHeight(400)
+  });
+}
+
+/**
+ * Erstellt oder aktualisiert das Balken-Diagramm für neue Uhren pro Monat.
+ * @param {Array} watches - Uhren-Objekte
+ */
+function renderAcquisitionChart(watches) {
+  const { DateTime } = luxon;
+  const byMonth = {};
+  watches.forEach(w => {
+    const dt = DateTime.fromFormat(w.Kaufdatum, 'dd.MM.yyyy');
+    if (!dt.isValid) return;
+    const key = dt.toFormat('yyyy-MM');
+    byMonth[key] = (byMonth[key] || 0) + 1;
+  });
+  const keys = Object.keys(byMonth).sort();
+  const counts = keys.map(k => byMonth[k]);
+  acquisitionChartCanvas = replaceCanvas('acquisitionChart');
+  if (acquisitionChartInstance) acquisitionChartInstance.destroy();
+  acquisitionChartInstance = new Chart(acquisitionChartCanvas, {
+    type: 'bar',
+    data: { labels: keys, datasets: [{ label: 'Neuzugänge', data: counts, backgroundColor: '#6610f2' }] },
+    options: fixedChartHeight(400)
+  });
+}
+
+/**
+ * Erstellt oder aktualisiert das Balken-Diagramm für Wertzuwachs pro Monat.
+ * @param {Array} watches - Uhren-Objekte
+ */
+function renderGrowthChart(watches) {
   const { DateTime } = luxon;
   const monthly = {};
   watches.forEach(w => {
@@ -214,27 +257,52 @@ function renderGrowthCharts(watches) {
     monthly[key] = (monthly[key] || 0) + price;
   });
   const keys = Object.keys(monthly).sort();
-  const deltas = [];
-  const cumulative = [];
-  let sum = 0;
-  keys.forEach(k => {
-    sum += monthly[k];
-    deltas.push(monthly[k]);
-    cumulative.push(sum);
-  });
+  const deltas = keys.map(k => monthly[k]);
+  chartCanvas = replaceCanvas('growthChart');
   if (growthChartInstance) growthChartInstance.destroy();
-  if (totalChartInstance) totalChartInstance.destroy();
   growthChartInstance = new Chart(chartCanvas, {
     type: 'bar',
     data: { labels: keys, datasets: [{ label: 'Wertzuwachs', data: deltas, backgroundColor: '#1e3a8a' }] },
     options: fixedChartHeight(400)
   });
+}
+
+/**
+ * Erstellt oder aktualisiert das Linien-Diagramm für den kumulierten Gesamtwert.
+ * @param {Array} watches - Uhren-Objekte
+ */
+function renderTotalChart(watches) {
+  const { DateTime } = luxon;
+  const monthly = {};
+  watches.forEach(w => {
+    if (!w.Kaufdatum || !w.Kaufpreis) return;
+    const dt = DateTime.fromFormat(w.Kaufdatum, 'dd.MM.yyyy');
+    if (!dt.isValid) return;
+    const key = dt.toFormat('yyyy-MM');
+    const price = parseFloat((w.Kaufpreis + '').replace(',', '.'));
+    if (!price || isNaN(price)) return;
+    monthly[key] = (monthly[key] || 0) + price;
+  });
+  const keys = Object.keys(monthly).sort();
+  const cumulative = [];
+  let sum = 0;
+  keys.forEach(k => {
+    sum += monthly[k];
+    cumulative.push(sum);
+  });
+  totalChartCanvas = replaceCanvas('totalChart');
+  if (totalChartInstance) totalChartInstance.destroy();
   totalChartInstance = new Chart(totalChartCanvas, {
     type: 'line',
     data: { labels: keys, datasets: [{ label: 'Kumulativer Wert', data: cumulative, borderColor: '#0f5132', fill: false }] },
     options: fixedChartHeight(400)
   });
 }
+
+// --- Alte Kombifunktionen entfernen ---
+// function renderGrowthCharts(watches) { ... }
+// function renderAcquisitionCharts(watches) { ... }
+
 
 /**
  * Erstellt oder aktualisiert ein Pie-Chart für das angegebene Feld.
@@ -249,6 +317,13 @@ const pieChartInstances = {};
  * Erstellt oder aktualisiert ein Pie-Chart für den aggregierten Kaufpreis eines Feldes (z.B. Marke oder Typ).
  * Zerstört alte Instanz, falls vorhanden.
  * @param {Array} watches - Uhren-Objekte
+ * @param {string} field - Feldname (z.B. 'Hersteller' oder 'Typ')
+ * @param {string} canvasId - ID des Canvas-Elements
+ * @param {string} title - Titel des Diagramms
+ */
+/**
+ * Erstellt oder aktualisiert ein horizontales Balkendiagramm für die aggregierten Kaufpreise eines Feldes.
+ * @param {Array<Object>} watches - Uhren-Objekte
  * @param {string} field - Feldname (z.B. 'Hersteller' oder 'Typ')
  * @param {string} canvasId - ID des Canvas-Elements
  * @param {string} title - Titel des Diagramms
@@ -269,10 +344,23 @@ function renderPieValueChart(watches, field, canvasId, title) {
       map[key] = (map[key] || 0) + price;
     }
   });
-  const labels = Object.keys(map).sort();
-  const values = labels.map(k => map[k]);
+  let pairs = Object.entries(map);
+  if (canvasId === 'brandValueChart') {
+    // Nur Marken mit mehr als einer Uhr anzeigen
+    // Dazu zählen wir die Uhren pro Marke (erneut, da map hier Summen enthält)
+    const countPerBrand = {};
+    watches.forEach(w => {
+      const key = w[field] || 'Unbekannt';
+      countPerBrand[key] = (countPerBrand[key] || 0) + 1;
+    });
+    pairs = pairs.filter(([k, v]) => countPerBrand[k] > 1);
+  }
+  // Nach Wert absteigend sortieren, dann nach Name
+  pairs = pairs.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const labels = pairs.map(([k]) => k);
+  const values = pairs.map(([_, v]) => v);
   pieChartInstances[canvasId] = new Chart(canvas, {
-    type: 'pie',
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [{
@@ -282,6 +370,7 @@ function renderPieValueChart(watches, field, canvasId, title) {
       }]
     },
     options: {
+      indexAxis: 'y', // horizontal
       responsive: true,
       maintainAspectRatio: true,
       aspectRatio: 1.2,
@@ -292,16 +381,34 @@ function renderPieValueChart(watches, field, canvasId, title) {
           callbacks: {
             label: function(context) {
               // Wert als EUR formatieren
-              let value = context.parsed;
+              let value = context.parsed.x;
               return `${context.label}: ${value.toLocaleString('de-DE', {style: 'currency', currency: 'EUR'})}`;
             }
           }
         }
+      },
+      scales: {
+        x: { beginAtZero: true }
       }
     }
   });
 }
 
+/**
+ * Erstellt oder aktualisiert ein horizontales Balkendiagramm (statt Pie-Chart) für ein kategorisches Feld.
+ * @param {Array<Object>} watches - Uhren-Objekte
+ * @param {string} field - Feldname (z.B. 'Hersteller')
+ * @param {string} canvasId - ID des Canvas-Elements
+ * @param {string} title - Titel des Diagramms
+ */
+/**
+ * Erstellt oder aktualisiert ein horizontales Balkendiagramm (statt Pie-Chart) für ein kategorisches Feld.
+ * Zeigt bei Marken nur Marken mit mehr als einer Uhr an.
+ * @param {Array<Object>} watches - Uhren-Objekte
+ * @param {string} field - Feldname (z.B. 'Hersteller')
+ * @param {string} canvasId - ID des Canvas-Elements
+ * @param {string} title - Titel des Diagramms
+ */
 function renderPieChart(watches, field, canvasId, title) {
   const canvas = replaceCanvas(canvasId);
   console.log(`[DEBUG] renderPieChart(${canvasId}) aufgerufen.`);
@@ -315,14 +422,20 @@ function renderPieChart(watches, field, canvasId, title) {
     const key = w[field] || 'Unbekannt';
     map[key] = (map[key] || 0) + 1;
   });
-  const labels = Object.keys(map).sort();
-  const values = labels.map(k => map[k]);
+  let pairs = Object.entries(map);
+  if (canvasId === 'brandChart') {
+    pairs = pairs.filter(([k, v]) => v > 1);
+  }
+  // Nach Wert absteigend sortieren, dann nach Name
+  pairs = pairs.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  let labels = pairs.map(([k]) => k);
+  let values = pairs.map(([_, v]) => v);
   // Vorherige Instanz zerstören, falls vorhanden
   if (pieChartInstances[canvasId]) {
     pieChartInstances[canvasId].destroy();
   }
   pieChartInstances[canvasId] = new Chart(canvas, {
-    type: 'pie',
+    type: 'bar',
     data: {
       labels: labels,
       datasets: [{
@@ -332,12 +445,25 @@ function renderPieChart(watches, field, canvasId, title) {
       }]
     },
     options: {
+      indexAxis: 'y', // horizontal
       responsive: true,
       maintainAspectRatio: true,
       aspectRatio: 1.2,
       plugins: {
         legend: { position: 'right' },
-        animation: { duration: 0 }
+        animation: { duration: 0 },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              // Anzahl anzeigen
+              let value = context.parsed.x;
+              return `${context.label}: ${value} Uhr${value !== 1 ? 'en' : ''}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { beginAtZero: true }
       }
     }
   });
