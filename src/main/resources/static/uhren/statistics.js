@@ -119,6 +119,21 @@ function renderWatchTable(watches) {
     responsive: true,
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/de-DE.json'
+    },
+    footerCallback: function ( row, data, start, end, display ) {
+      var api = this.api();
+      // Kaufpreis-Summe berechnen (nur sichtbare Zeilen)
+      var sum = api.column(6, {search:'applied'}).data().reduce(function(a, b) {
+        // b ist z.B. "175,00 €"; entferne alles außer Zahl und Komma
+        var num = (typeof b === 'string') ? b.replace(/[^\d,.-]/g, '').replace(',', '.') : b;
+        num = parseFloat(num) || 0;
+        return a + num;
+      }, 0);
+      // Anzahl sichtbare Zeilen
+      var count = api.column(0, {search:'applied'}).data().length;
+      // Ausgabe formatieren
+      $(api.column(6).footer()).html(sum.toLocaleString('de-DE', {style:'currency', currency:'EUR'}));
+      $('#sumCount').html(count + ' Uhren');
     }
   });
 }
