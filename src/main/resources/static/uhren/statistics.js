@@ -62,30 +62,42 @@ fetch('uhren.json')
     renderPieValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ');
   });
 
+/**
+ * Rendert die Tabelle mit allen Uhren.
+ * Fügt für jede Uhr eine Zeile in die Tabelle ein und zeigt alle relevanten Informationen an,
+ * inklusive der ID der Uhr als erste Spalte.
+ * @param {Array<Object>} watches - Array von Uhrenobjekten
+ */
 function renderWatchTable(watches) {
   const svgFallback = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100%' height='100%' fill='%23e0e7f0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%235c7185' font-family='Arial' font-size='12'>Kein Bild</text></svg>`;
   const tableBody = document.querySelector('#watchTable tbody');
   tableBody.innerHTML = '';
   watches.forEach(uhr => {
     const row = document.createElement('tr');
-    const imageUrl = uhr.BildURL && uhr.BildURL.trim() !== '' ? uhr.BildURL : svgFallback;
-    const preisFormatted = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(parseFloat(uhr.Kaufpreis));
-    const videoLink = uhr.VideoURL && uhr.VideoURL.trim() !== '' ? `<a href='${uhr.VideoURL}' target='_blank'>🎥</a>` : '';
+    const getValue = v => (v === undefined || v === null) ? '' : v;
+    const imageUrl = getValue(uhr.BildURL) && getValue(uhr.BildURL).trim() !== '' ? uhr.BildURL : svgFallback;
+    const preisFormatted = uhr.Kaufpreis ? new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(parseFloat(uhr.Kaufpreis)) : '';
+    const videoLink = getValue(uhr.VideoURL).trim() !== '' ? `<a href='${uhr.VideoURL}' target='_blank'>🎥</a>` : '';
     row.innerHTML = `
-      <td><img src='${imageUrl}' alt='${uhr.Name}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;'></td>
-      <td>${uhr.Name}</td>
-      <td>${uhr.Modell}</td>
-      <td>${uhr.Typ}</td>
-      <td>${uhr.Kaufdatum}</td>
+      <td>${getValue(uhr.ID)}</td>
+      <td><img src='${imageUrl}' alt='${getValue(uhr.Name)}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;'></td>
+      <td>${getValue(uhr.Name)}</td>
+      <td>${getValue(uhr.Modell)}</td>
+      <td>${getValue(uhr.Typ)}</td>
+      <td>${getValue(uhr.Kaufdatum)}</td>
       <td>${preisFormatted}</td>
-      <td>${uhr.Hersteller}</td>
-      <td>${uhr.Herkunft}</td>
-      <td>${uhr.Hommage}</td>
+      <td>${getValue(uhr.Hersteller)}</td>
+      <td>${getValue(uhr.Herkunft)}</td>
+      <td>${getValue(uhr.Hommage)}</td>
       <td>${videoLink}</td>
-      <td>${uhr.Bemerkungen}</td>
+      <td>${getValue(uhr.Bemerkungen)}</td>
     `;
     tableBody.appendChild(row);
   });
+  // DataTable ggf. vorher zerstören
+  if ($.fn.DataTable.isDataTable('#watchTable')) {
+    $('#watchTable').DataTable().destroy();
+  }
   new DataTable('#watchTable', {
     pageLength: 25,
     responsive: true,
