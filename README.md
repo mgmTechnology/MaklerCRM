@@ -1,2 +1,0 @@
-# MaklerCRM
-Update Version

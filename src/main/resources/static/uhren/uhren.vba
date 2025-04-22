@@ -794,9 +794,11 @@ Public Sub ExportDataToJson()
         Dim Bemerkungen As String: Bemerkungen = CStr(ws.Range("B14").Value)
 
         ' Fixwerte
-        Dim movement As String: movement = "Unknown"
+
         Dim waterproof As String: waterproof = "Unknown"
-        Dim caseSize As String: caseSize = "Unknown"
+        Dim caseSize As String: caseSize = CStr(ws.Range("D9").Value)
+        Dim movement As String: movement = CStr(ws.Range("D10").Value)
+        Dim glass As String: glass = CStr(ws.Range("D11").Value)
         Dim BildURL As String
         BildURL = "https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22"
 
@@ -826,6 +828,7 @@ Public Sub ExportDataToJson()
                 "      ""Movement"": """ & ReplaceJsonString(movement) & """," & vbCrLf & _
                 "      ""Waterproof"": """ & ReplaceJsonString(waterproof) & """," & vbCrLf & _
                 "      ""CaseSize"": """ & ReplaceJsonString(caseSize) & """," & vbCrLf & _
+                "      ""Glass"": """ & ReplaceJsonString(glass) & """," & vbCrLf & _
                 "      ""BildURL"": """ & ReplaceJsonString(BildURL) & """" & vbCrLf & _
                 "    }"
 
@@ -960,4 +963,25 @@ Private Function GetHtmlFrontendContent() As String
 End Function
 
 
+
+Sub CopyTemplateFieldsToAllSheets()
+    Dim wsSource As Worksheet
+    Dim wsTarget As Worksheet
+    Dim cellRange As Range
+
+    ' Quelle: Blatt "Template"
+    Set wsSource = ThisWorkbook.Sheets("Template")
+    Set cellRange = wsSource.Range("D9:D11")
+
+    ' Durch alle Blätter iterieren
+    For Each wsTarget In ThisWorkbook.Sheets
+        ' Template selbst überspringen
+        If wsTarget.Name <> wsSource.Name Then
+            ' Zellen in das Zielblatt kopieren
+            cellRange.Copy Destination:=wsTarget.Range("D9")
+        End If
+    Next wsTarget
+
+    MsgBox "Felder D9 bis D11 wurden erfolgreich in alle Blätter kopiert.", vbInformation
+End Sub
 

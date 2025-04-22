@@ -8,6 +8,11 @@ let totalChartInstance = null;
 let acquisitionChartInstance = null;
 let cumulativeCountChartInstance = null;
 
+/**
+ * Replaces a canvas element with a new one (to reset Chart.js state).
+ * @param {string} id - The ID of the canvas element to replace.
+ * @returns {HTMLCanvasElement|null} The new canvas element or null if not found.
+ */
 function replaceCanvas(id) {
   const oldCanvas = document.getElementById(id);
   if (oldCanvas) {
@@ -37,6 +42,11 @@ Chart.defaults.font.size = 12;
  * Gibt Chart.js-Optionen für responsive, nicht zu große Charts zurück.
  * Die Höhe wird nur noch per CSS geregelt.
  * @param {number} height - (ignoriert, bleibt für Kompatibilität)
+ */
+/**
+ * Returns Chart.js options for responsive charts with fixed height via CSS.
+ * @param {number} height - (Ignored, kept for compatibility)
+ * @returns {Object} Chart.js options object
  */
 function fixedChartHeight(height = 400) {
   return {
@@ -68,6 +78,11 @@ fetch('uhren.json')
  * Fügt für jede Uhr eine Zeile in die Tabelle ein und zeigt alle relevanten Informationen an,
  * inklusive der ID der Uhr als erste Spalte.
  * @param {Array<Object>} watches - Array von Uhrenobjekten
+ */
+/**
+ * Renders the table of all watches, including images, prices, manufacturer, type, and more.
+ * Initializes DataTable with sorting, search, and sum calculation.
+ * @param {Array<Object>} watches - Array of watch objects
  */
 function renderWatchTable(watches) {
   const svgFallback = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100%' height='100%' fill='%23e0e7f0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%235c7185' font-family='Arial' font-size='12'>Kein Bild</text></svg>`;
@@ -193,6 +208,10 @@ document.addEventListener('click', function(e) {
  * Erstellt oder aktualisiert das Linien-Diagramm für die Gesamtanzahl der Uhren über Zeit.
  * @param {Array} watches - Uhren-Objekte
  */
+/**
+ * Creates or updates the line chart for cumulative watch count over time.
+ * @param {Array<Object>} watches - Array of watch objects
+ */
 function renderCumulativeCountChart(watches) {
   const { DateTime } = luxon;
   const byMonth = {};
@@ -220,6 +239,10 @@ function renderCumulativeCountChart(watches) {
  * Erstellt oder aktualisiert das Balken-Diagramm für neue Uhren pro Monat.
  * @param {Array} watches - Uhren-Objekte
  */
+/**
+ * Creates or updates the bar chart for new watch acquisitions per month.
+ * @param {Array<Object>} watches - Array of watch objects
+ */
 function renderAcquisitionChart(watches) {
   const { DateTime } = luxon;
   const byMonth = {};
@@ -243,6 +266,10 @@ function renderAcquisitionChart(watches) {
 /**
  * Erstellt oder aktualisiert das Balken-Diagramm für Wertzuwachs pro Monat.
  * @param {Array} watches - Uhren-Objekte
+ */
+/**
+ * Creates or updates the bar chart for value growth per month.
+ * @param {Array<Object>} watches - Array of watch objects
  */
 function renderGrowthChart(watches) {
   const { DateTime } = luxon;
@@ -270,6 +297,10 @@ function renderGrowthChart(watches) {
 /**
  * Erstellt oder aktualisiert das Linien-Diagramm für den kumulierten Gesamtwert.
  * @param {Array} watches - Uhren-Objekte
+ */
+/**
+ * Creates or updates the line chart for cumulative total value over time.
+ * @param {Array<Object>} watches - Array of watch objects
  */
 function renderTotalChart(watches) {
   const { DateTime } = luxon;
@@ -327,6 +358,14 @@ const pieChartInstances = {};
  * @param {string} field - Feldname (z.B. 'Hersteller' oder 'Typ')
  * @param {string} canvasId - ID des Canvas-Elements
  * @param {string} title - Titel des Diagramms
+ */
+/**
+ * Creates or updates a horizontal bar chart for the aggregated purchase value of a field (e.g., brand or type).
+ * Only shows brands with more than one watch for 'brandValueChart'.
+ * @param {Array<Object>} watches - Array of watch objects
+ * @param {string} field - Field name (e.g., 'Hersteller' or 'Typ')
+ * @param {string} canvasId - ID of the canvas element
+ * @param {string} title - Chart title
  */
 function renderPieValueChart(watches, field, canvasId, title) {
   const canvas = replaceCanvas(canvasId);
@@ -409,6 +448,14 @@ function renderPieValueChart(watches, field, canvasId, title) {
  * @param {string} canvasId - ID des Canvas-Elements
  * @param {string} title - Titel des Diagramms
  */
+/**
+ * Creates or updates a horizontal bar chart for a categorical field (e.g., brand or type).
+ * Only shows brands with more than one watch for 'brandChart'.
+ * @param {Array<Object>} watches - Array of watch objects
+ * @param {string} field - Field name (e.g., 'Hersteller')
+ * @param {string} canvasId - ID of the canvas element
+ * @param {string} title - Chart title
+ */
 function renderPieChart(watches, field, canvasId, title) {
   const canvas = replaceCanvas(canvasId);
   console.log(`[DEBUG] renderPieChart(${canvasId}) aufgerufen.`);
@@ -473,6 +520,11 @@ function renderPieChart(watches, field, canvasId, title) {
  * Erstellt oder aktualisiert die Charts für Neuzugänge und kumulative Anzahl.
  * Zerstört alte Instanzen, falls vorhanden.
  * @param {Array} watches - Uhren-Objekte
+ */
+/**
+ * Creates or updates both the acquisition and cumulative count charts.
+ * Destroys old instances if present.
+ * @param {Array<Object>} watches - Array of watch objects
  */
 function renderAcquisitionCharts(watches) {
   acquisitionChartCanvas = replaceCanvas('acquisitionChart');
