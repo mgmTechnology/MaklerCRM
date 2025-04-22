@@ -81,9 +81,11 @@ function renderWatchTable(watches) {
     const localImg = `./img/${paddedId}.jpg`;
     const jsonImg = getValue(uhr.BildURL) && getValue(uhr.BildURL).trim() !== '' ? uhr.BildURL : svgFallback;
     // Das Bild wird zuerst lokal versucht, bei Fehler auf JSON oder Fallback gesetzt
-    const imgTag = `<img src='${localImg}' alt='${getValue(uhr.Name)}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;' onerror="this.onerror=null;this.src='${jsonImg.replace(/'/g, '\'')}'">`;
+    const imgTag = `<img src='${localImg}' alt='${getValue(uhr.Name)}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;cursor:pointer;' data-img-url='${localImg}' data-img-fallback='${jsonImg.replace(/'/g, "'")}' title='Bild vergrößern' onerror=\"this.onerror=null;this.src='${jsonImg.replace(/'/g, "'")}'\">`;
     const preisFormatted = uhr.Kaufpreis ? new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(parseFloat(uhr.Kaufpreis)) : '';
-    const videoLink = getValue(uhr.VideoURL).trim() !== '' ? `<a href='${uhr.VideoURL}' target='_blank'>🎥</a>` : '';
+    const videoLink = getValue(uhr.VideoURL).trim() !== ''
+      ? `<span class='video-link' data-video-url='${uhr.VideoURL}' style='cursor:pointer;font-size:1.3em;' title='Video ansehen'>🎥</span>`
+      : '';
     row.innerHTML = `
       <td>${getValue(uhr.ID)}</td>
       <td>${imgTag}</td>
@@ -104,14 +106,62 @@ function renderWatchTable(watches) {
   if ($.fn.DataTable.isDataTable('#watchTable')) {
     $('#watchTable').DataTable().destroy();
   }
-  new DataTable('#watchTable', {
-    pageLength: 25,
+  // Moment.js Datumsparser für DataTables aktivieren
+  if (window.moment && $.fn.dataTable.moment) {
+    $.fn.dataTable.moment('DD.MM.YYYY');
+  }
+  if ($.fn.DataTable.isDataTable('#watchTable')) {
+    $('#watchTable').DataTable().destroy();
+  }
+  $('#watchTable').DataTable({
+    pageLength: 50,
+    lengthMenu: [[50, 100, -1], [50, 100, 'Alle']],
     responsive: true,
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/de-DE.json'
     }
   });
 }
+
+// --- Modal-Logik für Bild- und Videoanzeige ---
+document.addEventListener('click', function(e) {
+  // Bild-Modal
+  if (e.target.matches('img[data-img-url]')) {
+    const imgUrl = e.target.getAttribute('data-img-url');
+    const fallback = e.target.getAttribute('data-img-fallback');
+    const modalContent = document.getElementById('mediaModalContent');
+    modalContent.innerHTML = `<img src='${imgUrl}' alt='Großansicht' class='img-fluid rounded shadow' style='max-height:80vh;max-width:100%;background:#222;' onerror=\"this.onerror=null;this.src='${fallback}'\">`;
+    const modal = new bootstrap.Modal(document.getElementById('mediaModal'));
+    modal.show();
+  }
+  // Video-Modal
+  if (e.target.matches('.video-link[data-video-url]')) {
+    const videoUrl = e.target.getAttribute('data-video-url');
+    let embedUrl = '';
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      // YouTube-Video-ID extrahieren
+      let vid = videoUrl.match(/[?&]v=([^&]+)/);
+      if (!vid) {
+        // youtu.be Kurzlink
+        vid = videoUrl.match(/youtu\.be\/([^?&]+)/);
+      }
+      if (vid && vid[1]) {
+        embedUrl = `https://www.youtube.com/embed/${vid[1]}?autoplay=1`;
+      }
+    }
+    if (embedUrl) {
+      document.getElementById('mediaModalContent').innerHTML = `<div class='ratio ratio-16x9 w-100'><iframe src='${embedUrl}' allowfullscreen allow='autoplay' style='border:0;'></iframe></div>`;
+      const modal = new bootstrap.Modal(document.getElementById('mediaModal'));
+      modal.show();
+    } else {
+      // Fallback: Link anzeigen
+      document.getElementById('mediaModalContent').innerHTML = `<a href='${videoUrl}' target='_blank' class='btn btn-primary'>Video öffnen</a>`;
+      const modal = new bootstrap.Modal(document.getElementById('mediaModal'));
+      modal.show();
+    }
+  }
+});
+
 
 /**
  * Erstellt oder aktualisiert die Wertzuwachs- und Kumulativ-Charts.

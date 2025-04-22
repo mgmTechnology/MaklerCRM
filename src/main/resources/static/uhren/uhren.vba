@@ -704,18 +704,35 @@ Sub ChangeTextOfShopAndVideoLinks()
 End Sub
 
 
-' Gibt einen gültigen Preis als Double zurück, sonst 0
-Function ParsePreis(val As Variant) As Double
+' Gibt den ganzzahligen Anteil eines Preises als Long zurück, ignoriert Nachkommastellen, sonst 0
+Function ParsePreis(val As Variant) As Long
     Dim s As String
     s = Trim(CStr(val))
     If s = "" Then
         ParsePreis = 0
-    ElseIf IsNumeric(Replace(s, ",", ".")) Then
-        ParsePreis = CDbl(Replace(s, ",", "."))
     Else
-        ParsePreis = 0
+        Dim decimalSeparatorPos As Long
+        decimalSeparatorPos = InStr(s, ",")
+        If decimalSeparatorPos = 0 Then
+            decimalSeparatorPos = InStr(s, ".")
+        End If
+
+        Dim integerPart As String
+        If decimalSeparatorPos > 0 Then
+            integerPart = Left(s, decimalSeparatorPos - 1)
+        Else
+            integerPart = s
+        End If
+
+        If IsNumeric(integerPart) Then
+            ParsePreis = CLng(integerPart)
+        Else
+            ParsePreis = 0
+        End If
     End If
 End Function
+
+
 
 Public Sub ExportDataToJson()
     Dim wb As Workbook
