@@ -75,12 +75,18 @@ function renderWatchTable(watches) {
   watches.forEach(uhr => {
     const row = document.createElement('tr');
     const getValue = v => (v === undefined || v === null) ? '' : v;
-    const imageUrl = getValue(uhr.BildURL) && getValue(uhr.BildURL).trim() !== '' ? uhr.BildURL : svgFallback;
+    // Dreistellige ID generieren
+    const paddedId = getValue(uhr.ID).toString().padStart(3, '0');
+    // Bildpfad im img-Verzeichnis
+    const localImg = `./img/${paddedId}.jpg`;
+    const jsonImg = getValue(uhr.BildURL) && getValue(uhr.BildURL).trim() !== '' ? uhr.BildURL : svgFallback;
+    // Das Bild wird zuerst lokal versucht, bei Fehler auf JSON oder Fallback gesetzt
+    const imgTag = `<img src='${localImg}' alt='${getValue(uhr.Name)}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;' onerror="this.onerror=null;this.src='${jsonImg.replace(/'/g, '\'')}'">`;
     const preisFormatted = uhr.Kaufpreis ? new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(parseFloat(uhr.Kaufpreis)) : '';
     const videoLink = getValue(uhr.VideoURL).trim() !== '' ? `<a href='${uhr.VideoURL}' target='_blank'>🎥</a>` : '';
     row.innerHTML = `
       <td>${getValue(uhr.ID)}</td>
-      <td><img src='${imageUrl}' alt='${getValue(uhr.Name)}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;'></td>
+      <td>${imgTag}</td>
       <td>${getValue(uhr.Name)}</td>
       <td>${getValue(uhr.Modell)}</td>
       <td>${getValue(uhr.Typ)}</td>
