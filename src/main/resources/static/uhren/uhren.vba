@@ -796,9 +796,9 @@ Public Sub ExportDataToJson()
         ' Fixwerte
 
         Dim waterproof As String: waterproof = "Unknown"
-        Dim caseSize As String: caseSize = CStr(ws.Range("D9").Value)
-        Dim movement As String: movement = CStr(ws.Range("D10").Value)
-        Dim glass As String: glass = CStr(ws.Range("D11").Value)
+        Dim caseSize As String: caseSize = CStr(ws.Range("E9").Value)
+        Dim movement As String: movement = CStr(ws.Range("E10").Value)
+        Dim glass As String: glass = CStr(ws.Range("E11").Value)
         Dim BildURL As String
         BildURL = "https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22"
 
