@@ -32,7 +32,7 @@
     }
   </style>
 </head>
-<body class="text-dark container py-4">
+<body class="text-dark container-fluid py-4">
   <header class="bg-primary text-white p-4 mb-4 rounded shadow">
     <h1 class="h3">ChronoFolio</h1>
     <p class="mb-0">Statistiken & Sammlungsauswertung</p>
@@ -81,7 +81,7 @@
 
     <section class="mb-5">
       <h2 class="h5">Uhrenübersicht</h2>
-      <div class="table-responsive">
+      <div class="table-responsive" style="overflow-x:auto;width:100vw;">
         <table id="watchTable" class="table table-striped w-100">
           <thead>
             <tr>
@@ -96,7 +96,7 @@
               <th>Herkunft</th>
               <th>Hommage</th>
               <th>Video</th>
-              <th>Bemerkungen</th>
+              <th style="min-width:180px;">Bemerkungen</th>
             </tr>
           </thead>
           <tbody></tbody>
