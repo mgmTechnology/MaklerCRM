@@ -108,6 +108,9 @@ function renderWatchTable(watches) {
       <td>${getValue(uhr.Name)}</td>
       <td>${getValue(uhr.Modell)}</td>
       <td>${getValue(uhr.Typ)}</td>
+      <td>${getValue(uhr.CaseSize)}</td>
+      <td>${getValue(uhr.Glass)}</td>
+      <td>${getValue(uhr.Movement)}</td>
       <td>${getValue(uhr.Kaufdatum)}</td>
       <td>${preisFormatted}</td>
       <td>${getValue(uhr.Hersteller)}</td>
