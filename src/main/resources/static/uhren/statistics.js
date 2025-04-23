@@ -686,14 +686,10 @@ function showSpecsCard(uhr) {
   const paddedId = (uhr.ID || '').toString().padStart(3, '0');
   const localImg = `./img/${paddedId}.jpg`;
   const fallbackImg = 'https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22';
-  let imgSrc = fallbackImg;
-  if (uhr.BildURL && uhr.BildURL.trim() !== '') {
-    imgSrc = uhr.BildURL;
-    console.log('[DEBUG] BildURL verwendet:', imgSrc);
-  } else {
-    imgSrc = localImg;
-    console.log('[DEBUG] localImg verwendet:', imgSrc);
-  }
+  // Bild-Logik: Zuerst lokal, dann BildURL, dann Fallback
+  let imgSrc = localImg;
+  console.log('[DEBUG] Versuche zuerst localImg:', localImg);
+  // Die Fehlerbehandlung erfolgt im onerror-Handler weiter unten
 
   // Kompakte dreispaltige Tabelle
   const specRows = [
@@ -714,26 +710,33 @@ function showSpecsCard(uhr) {
     { label: 'Shop', value: uhr.ShopURL ? `<a href="${uhr.ShopURL}" target="_blank">Shop</a>` : '-' }
   ];
   let col1 = '', col2 = '', col3 = '';
+  // Bemerkungen als eigenes Feld behandeln
+  let bemerkungRow = '';
   for (let i = 0; i < specRows.length; i++) {
-    const row = `<tr><th class='text-end text-nowrap'>${specRows[i].label}</th><td>${specRows[i].value}</td></tr>`;
-    if (i % 3 === 0) col1 += row;
-    else if (i % 3 === 1) col2 += row;
-    else col3 += row;
+    if (specRows[i].label === 'Bemerkungen') {
+      bemerkungRow = `<tr><th class='text-end text-nowrap'>${specRows[i].label}</th><td colspan="2"><textarea class='specs-bemerkung-field' readonly>${specRows[i].value.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ')}</textarea></td></tr>`;
+    } else {
+      const row = `<tr><th class='text-end text-nowrap'>${specRows[i].label}</th><td>${specRows[i].value}</td></tr>`;
+      if (i % 3 === 0) col1 += row;
+      else if (i % 3 === 1) col2 += row;
+      else col3 += row;
+    }
   }
 
   cardPane.innerHTML = `
-    <div class="card shadow" style="max-width:1000px; min-width:320px; width:100%;">
-      <div class="row g-0 align-items-center flex-nowrap">
-        <div class="col-lg-4 col-md-5 text-center">
-          <img id="specsCardImg" src="${imgSrc}" alt="Uhrenbild" class="img-fluid rounded mb-2 shadow-sm" style="max-height:220px;max-width:100%;background:#222;object-fit:contain;cursor:pointer" data-img-url="${imgSrc}" data-img-fallback="${fallbackImg}">
+    <div class="card shadow" style="max-width:100vw; min-width:320px; width:100%; height:320px;">
+      <div class="row g-0 align-items-stretch h-100 flex-nowrap">
+        <div class="col-lg-3 col-md-4 col-12 d-flex align-items-center justify-content-center bg-light p-2" style="height:320px;">
+          <img id="specsCardImg" src="${imgSrc}" alt="Uhrenbild" class="img-fluid rounded mb-2 shadow-sm" style="max-height:280px;max-width:100%;background:#222;object-fit:contain;cursor:pointer" data-img-url="${imgSrc}" data-img-fallback="${fallbackImg}">
         </div>
-        <div class="col-lg-8 col-md-7">
+        <div class="col-lg-9 col-md-8 col-12 d-flex flex-column justify-content-center" style="height:320px;">
           <h5 class="card-title mb-2">${uhr.Name || ''}</h5>
-          <div class="row">
-            <div class="col-12 col-md-4"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col1}</tbody></table></div>
-            <div class="col-12 col-md-4"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col2}</tbody></table></div>
-            <div class="col-12 col-md-4"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col3}</tbody></table></div>
+          <div class="row h-100">
+            <div class="col-12 col-md-4 d-flex align-items-start"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col1}</tbody></table></div>
+            <div class="col-12 col-md-4 d-flex align-items-start"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col2}</tbody></table></div>
+            <div class="col-12 col-md-4 d-flex align-items-start"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col3}</tbody></table></div>
           </div>
+          <div class="mt-2">${bemerkungRow}</div>
         </div>
       </div>
     </div>
@@ -748,9 +751,26 @@ function showSpecsCard(uhr) {
         word-break: break-word;
         font-size: 1rem;
         padding: 0.35rem 0.5rem 0.35rem 0.2rem;
+        vertical-align: top;
       }
       .specs-table tr {
         border-bottom: 1px solid #f0f0f0;
+      }
+      .specs-bemerkung-field {
+        width: 100%;
+        min-height: 60px;
+        max-height: 120px;
+        resize: vertical;
+        overflow: auto;
+        font-size: 1rem;
+        font-family: inherit;
+        background: #faf8f2;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 0.5em;
+      }
+      @media (max-width: 900px) {
+        .card.shadow { height: auto !important; }
       }
       @media (max-width: 700px) {
         .specs-table td { font-size: 0.95rem; }
@@ -761,12 +781,17 @@ function showSpecsCard(uhr) {
   // Bild robust nachladen und Fehler behandeln
   const imgEl = document.getElementById('specsCardImg');
   if (imgEl) {
+    let triedLocal = true;
+    let triedJson = false;
     imgEl.onerror = function() {
       console.log('[DEBUG] Bild konnte nicht geladen werden:', imgEl.src);
-      if (imgEl.src !== window.location.origin + '/' + localImg && imgEl.src !== localImg) {
-        imgEl.src = localImg;
-        console.log('[DEBUG] Versuche localImg:', localImg);
-      } else if (imgEl.src !== fallbackImg) {
+      // Wenn localImg nicht klappt, versuche BildURL aus JSON
+      if (triedLocal && uhr.BildURL && uhr.BildURL.trim() !== '' && imgEl.src !== uhr.BildURL) {
+        imgEl.src = uhr.BildURL;
+        triedLocal = false;
+        triedJson = true;
+        console.log('[DEBUG] Versuche BildURL aus JSON:', uhr.BildURL);
+      } else if (triedJson && imgEl.src !== fallbackImg) {
         imgEl.src = fallbackImg;
         console.log('[DEBUG] Fallback auf Platzhalter:', fallbackImg);
       }
