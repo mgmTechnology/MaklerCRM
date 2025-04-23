@@ -71,7 +71,7 @@ fetch('uhren.json')
     renderBarChart(watches, 'Typ', 'typeChart', 'Uhren pro Typ');
     renderBarChart(watches, 'CaseSize', 'caseSizeChart', 'Uhren nach Case Size');
     renderBarChart(watches, 'Movement', 'movementChart', 'Uhren nach Movement');
-    renderBarChart(watches, 'Glass', 'glassChart', 'Uhren nach Glass');
+    renderBarChart(watches, 'Glass', 'glassChart', 'Uhren nach Glas');
     renderBarValueChart(watches, 'Hersteller', 'brandValueChart', 'Wert nach Marke');
     renderBarValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ');
   });

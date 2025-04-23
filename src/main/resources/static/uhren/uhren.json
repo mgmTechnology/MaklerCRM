@@ -1,5 +1,5 @@
 ﻿{
-  "timestamp": "2025-04-23T11:23:12",
+  "timestamp": "2025-04-23T15:09:58",
   "Uhren": [
     {
       "ID": "1",
@@ -193,7 +193,7 @@
       "Herkunft": "Kleinanzeigen",
       "ShopURL": "",
       "Bemerkungen": "24 Stunden Uhr",
-      "Movement": "Handaufzug",
+      "Movement": "Handwinding",
       "Waterproof": "Unknown",
       "CaseSize": "",
       "Glass": "Mineral",
@@ -2437,7 +2437,7 @@
       "Herkunft": "Kleinanzeigen",
       "ShopURL": "",
       "Bemerkungen": "",
-      "Movement": "Quarz",
+      "Movement": "Quartz",
       "Waterproof": "Unknown",
       "CaseSize": "",
       "Glass": "Mineral",
@@ -3826,7 +3826,7 @@
       "Movement": "Automatic",
       "Waterproof": "Unknown",
       "CaseSize": "41",
-      "Glass": "Minreal",
+      "Glass": "Mineral",
       "BildURL": "https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22"
     },
     {
@@ -4725,7 +4725,7 @@
       "Herkunft": "Amazon",
       "ShopURL": "",
       "Bemerkungen": "Kaufpreis und Datum geschätzt, nicht mehr nachvollziehbar",
-      "Movement": "Automatik",
+      "Movement": "Automatic",
       "Waterproof": "Unknown",
       "CaseSize": "41",
       "Glass": "Mineral",
@@ -4857,7 +4857,7 @@
       "Herkunft": "Kleinanzeigen",
       "ShopURL": "",
       "Bemerkungen": "",
-      "Movement": "Automatik",
+      "Movement": "Automatic",
       "Waterproof": "Unknown",
       "CaseSize": "40",
       "Glass": "Sapphire",
@@ -6177,7 +6177,7 @@
       "Herkunft": "Aliexpress",
       "ShopURL": "Shop",
       "Bemerkungen": "VH31",
-      "Movement": "Automatick",
+      "Movement": "Automatic",
       "Waterproof": "Unknown",
       "CaseSize": "40",
       "Glass": "Sapphire",
