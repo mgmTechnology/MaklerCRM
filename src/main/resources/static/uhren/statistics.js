@@ -395,7 +395,7 @@ function renderBarValueChart(watches, field, canvasId, title) {
       maintainAspectRatio: true,
       aspectRatio: 1.2,
       plugins: {
-        legend: { position: 'right' },
+        legend: { display: false },
         animation: { duration: 0 },
         tooltip: {
           callbacks: {
@@ -443,6 +443,10 @@ function renderBarChart(watches, field, canvasId, title) {
   const map = {};
   watches.forEach(w => {
     let key = w[field] || 'Unbekannt';
+    // Konsolenwarnung für fehlenden Typ
+    if (field === 'Typ' && key === 'Unbekannt') {
+      console.log('[WARN] Typ unbekannt bei Uhr ID:', w.ID, ', Modell:', w.Modell || w.Name || '');
+    }
     // Für CaseSize auf Ganzzahl runden
     if (field === 'CaseSize') {
       // Ersetze Komma durch Punkt, um Dezimalzahlen aus JSON wie "42,6" korrekt zu parsen
@@ -489,7 +493,7 @@ function renderBarChart(watches, field, canvasId, title) {
       maintainAspectRatio: true,
       aspectRatio: 1.2,
       plugins: {
-        legend: { position: 'right' },
+        legend: { display: false },
         animation: { duration: 0 },
         tooltip: {
           callbacks: {
