@@ -490,7 +490,7 @@ function renderBarChart(watches, field, canvasId, title) {
     options: {
       indexAxis: 'y', // horizontal
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: (canvasId !== 'movementChart' && canvasId !== 'glassChart'),
       aspectRatio: 1.2,
       plugins: {
         legend: { display: false },

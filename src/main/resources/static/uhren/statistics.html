@@ -30,6 +30,11 @@
       min-height: 320px;
       margin: 0 auto;
     }
+    .half-height {
+      height: 160px !important;
+      min-height: 120px !important;
+      max-height: 180px !important;
+    }
   </style>
 </head>
 <body class="text-dark container-fluid py-4">
@@ -59,18 +64,20 @@
         <h2 class="h6">Uhren nach Typ</h2>
         <canvas id="typeChart" class="half-chart"></canvas>
       </div>
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Uhren nach Case Size</h2>
-        <canvas id="caseSizeChart" class="half-chart"></canvas>
-      </div>
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Uhren nach Movement</h2>
-        <canvas id="movementChart" class="half-chart"></canvas>
-      </div>
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Uhren nach Glass</h2>
-        <canvas id="glassChart" class="half-chart"></canvas>
-      </div>
+      <div class="row mb-4">
+  <div class="col-md-4 mb-4">
+    <h2 class="h6">Uhren nach Case Size</h2>
+    <canvas id="caseSizeChart" class="half-chart"></canvas>
+  </div>
+  <div class="col-md-4 mb-4">
+    <h2 class="h6">Uhren nach Movement</h2>
+    <canvas id="movementChart" class="half-chart"></canvas>
+  </div>
+  <div class="col-md-4 mb-4">
+    <h2 class="h6">Uhren nach Glass</h2>
+    <canvas id="glassChart" class="half-chart"></canvas>
+  </div>
+</div>
     </section>
 
     <section class="row text-center mb-5">
