@@ -165,6 +165,15 @@ fetch('uhren.json')
  * Initializes DataTable with sorting, search, and sum calculation.
  * @param {Array<Object>} watches - Array of watch objects
  */
+/**
+ * Rendert die Tabelle mit allen Uhren.
+ * Fügt für jede Uhr eine Zeile in die Tabelle ein und zeigt alle relevanten Informationen an,
+ * inklusive der ID der Uhr als erste Spalte. Die Spaltenreihenfolge und Anzahl entspricht exakt dem <thead>.
+ *
+ * Spalten: ID, Bild, Name, Modell, Typ, Case Size, Glass, Movement, Kaufdatum, Kaufpreis, Hersteller, Herkunft, Hommage, Video, Bemerkungen
+ *
+ * @param {Array<Object>} watches - Array von Uhrenobjekten
+ */
 function renderWatchTable(watches) {
   /**
    * Fügt Click-Listener für alle Specs-Trigger (ID/Steckbrief-Icon) hinzu.
@@ -255,7 +264,7 @@ function renderWatchTable(watches) {
     footerCallback: function ( row, data, start, end, display ) {
       var api = this.api();
       // Kaufpreis-Summe berechnen (nur sichtbare Zeilen)
-      var sum = api.column(6, {search:'applied'}).data().reduce(function(a, b) {
+      var sum = api.column(9, {search:'applied'}).data().reduce(function(a, b) {
         // b ist z.B. "175,00 €"; entferne alles außer Zahl und Komma
         var num = (typeof b === 'string') ? b.replace(/[^\d,.-]/g, '').replace(',', '.') : b;
         num = parseFloat(num) || 0;
