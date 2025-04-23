@@ -44,52 +44,80 @@
   </header>
 
   <main class="mb-5">
-    <section class="mb-5">
-      <h2 class="h5">Gesamtanzahl der Uhren über Zeit</h2>
+  <!-- Tab-Navigation -->
+  <ul class="nav nav-tabs mb-3" id="chartTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="cumulativeCount-tab" data-bs-toggle="tab" data-bs-target="#cumulativeCount" type="button" role="tab">Gesamtanzahl der Uhren</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="acquisition-tab" data-bs-toggle="tab" data-bs-target="#acquisition" type="button" role="tab">Neue Uhren pro Monat</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="growth-tab" data-bs-toggle="tab" data-bs-target="#growth" type="button" role="tab">Wertzuwachs pro Monat</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="total-tab" data-bs-toggle="tab" data-bs-target="#total" type="button" role="tab">Kumulativer Gesamtwert</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="brand-tab" data-bs-toggle="tab" data-bs-target="#brand" type="button" role="tab">Uhren nach Marke</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="type-tab" data-bs-toggle="tab" data-bs-target="#type" type="button" role="tab">Uhren nach Typ</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="caseSize-tab" data-bs-toggle="tab" data-bs-target="#caseSize" type="button" role="tab">Uhren nach Case Size</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="movement-tab" data-bs-toggle="tab" data-bs-target="#movement" type="button" role="tab">Uhren nach Movement</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="glass-tab" data-bs-toggle="tab" data-bs-target="#glass" type="button" role="tab">Uhren nach Glass</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="brandValue-tab" data-bs-toggle="tab" data-bs-target="#brandValue" type="button" role="tab">Wert nach Marke</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="typeValue-tab" data-bs-toggle="tab" data-bs-target="#typeValue" type="button" role="tab">Wert nach Typ</button>
+    </li>
+  </ul>
+
+  <!-- Tab-Inhalte -->
+  <div class="tab-content" id="chartTabsContent">
+    <div class="tab-pane fade show active" id="cumulativeCount" role="tabpanel">
       <canvas id="cumulativeCountChart" class="w-100 chart-canvas"></canvas>
-      <h2 class="h5 mt-4">Neue Uhren pro Monat</h2>
+    </div>
+    <div class="tab-pane fade" id="acquisition" role="tabpanel">
       <canvas id="acquisitionChart" class="w-100 chart-canvas"></canvas>
-      <h2 class="h5 mt-4">Wertzuwachs pro Monat</h2>
+    </div>
+    <div class="tab-pane fade" id="growth" role="tabpanel">
       <canvas id="growthChart" class="w-100 chart-canvas"></canvas>
-      <h2 class="h5 mt-4">Kumulativer Gesamtwert</h2>
+    </div>
+    <div class="tab-pane fade" id="total" role="tabpanel">
       <canvas id="totalChart" class="w-100 chart-canvas"></canvas>
-    </section>
+    </div>
+    <div class="tab-pane fade" id="brand" role="tabpanel">
+      <canvas id="brandChart" class="half-chart"></canvas>
+    </div>
+    <div class="tab-pane fade" id="type" role="tabpanel">
+      <canvas id="typeChart" class="half-chart"></canvas>
+    </div>
+    <div class="tab-pane fade" id="caseSize" role="tabpanel">
+      <canvas id="caseSizeChart" class="half-chart"></canvas>
+    </div>
+    <div class="tab-pane fade" id="movement" role="tabpanel">
+      <canvas id="movementChart" class="half-chart"></canvas>
+    </div>
+    <div class="tab-pane fade" id="glass" role="tabpanel">
+      <canvas id="glassChart" class="half-chart"></canvas>
+    </div>
+    <div class="tab-pane fade" id="brandValue" role="tabpanel">
+      <canvas id="brandValueChart" class="half-chart"></canvas>
+    </div>
+    <div class="tab-pane fade" id="typeValue" role="tabpanel">
+      <canvas id="typeValueChart" class="half-chart"></canvas>
+    </div>
+  </div>
 
-    <section class="row text-center mb-5">
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Uhren nach Marke</h2>
-        <canvas id="brandChart" class="half-chart"></canvas>
-      </div>
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Uhren nach Typ</h2>
-        <canvas id="typeChart" class="half-chart"></canvas>
-      </div>
-      <div class="row mb-4">
-  <div class="col-md-4 mb-4">
-    <h2 class="h6">Uhren nach Case Size</h2>
-    <canvas id="caseSizeChart" class="half-chart"></canvas>
-  </div>
-  <div class="col-md-4 mb-4">
-    <h2 class="h6">Uhren nach Movement</h2>
-    <canvas id="movementChart" class="half-chart"></canvas>
-  </div>
-  <div class="col-md-4 mb-4">
-    <h2 class="h6">Uhren nach Glass</h2>
-    <canvas id="glassChart" class="half-chart"></canvas>
-  </div>
-</div>
-    </section>
-
-    <section class="row text-center mb-5">
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Wert nach Marke</h2>
-        <canvas id="brandValueChart" class="half-chart"></canvas>
-      </div>
-      <div class="col-md-6 mb-4">
-        <h2 class="h6">Wert nach Typ</h2>
-        <canvas id="typeValueChart" class="half-chart"></canvas>
-      </div>
-    </section>
 
     <section class="mb-5">
       <h2 class="h5">Uhrenübersicht</h2>

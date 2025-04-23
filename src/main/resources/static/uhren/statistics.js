@@ -63,17 +63,95 @@ fetch('uhren.json')
   .then(json => {
     const watches = json.Uhren || [];
     renderWatchTable(watches);
-    renderCumulativeCountChart(watches);
-    renderAcquisitionChart(watches);
-    renderGrowthChart(watches);
-    renderTotalChart(watches);
-    renderBarChart(watches, 'Hersteller', 'brandChart', 'Uhren pro Marke');
-    renderBarChart(watches, 'Typ', 'typeChart', 'Uhren pro Typ');
-    renderBarChart(watches, 'CaseSize', 'caseSizeChart', 'Uhren nach Case Size');
-    renderBarChart(watches, 'Movement', 'movementChart', 'Uhren nach Movement');
-    renderBarChart(watches, 'Glass', 'glassChart', 'Uhren nach Glas');
-    renderBarValueChart(watches, 'Hersteller', 'brandValueChart', 'Wert nach Marke');
-    renderBarValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ');
+
+    /**
+     * Lazy-Initialization für alle Statistik-Charts in Bootstrap-Tabs.
+     * Charts werden erst beim ersten Öffnen ihres Tabs erzeugt.
+     * Dadurch werden Anzeigeprobleme mit Chart.js in unsichtbaren Tabs vermieden.
+     * Die Tabelle bleibt davon unberührt und wird immer sofort gerendert.
+     */
+    const chartInit = {
+      cumulativeCount: false, // Gesamtanzahl der Uhren über Zeit
+      acquisition: false,     // Neue Uhren pro Monat
+      growth: false,          // Wertzuwachs pro Monat
+      total: false,           // Kumulativer Gesamtwert
+      brand: false,           // Uhren nach Marke
+      type: false,            // Uhren nach Typ
+      caseSize: false,        // Uhren nach Case Size
+      movement: false,        // Uhren nach Movement
+      glass: false,           // Uhren nach Glass
+      brandValue: false,      // Wert nach Marke
+      typeValue: false        // Wert nach Typ
+    };
+
+    /**
+     * Initialisiert den jeweiligen Chart, falls noch nicht geschehen.
+     * @param {string} tabId - Die ID des Tab-Panels (ohne #)
+     */
+    function initChart(tabId) {
+      switch(tabId) {
+        case 'cumulativeCount':
+          if (!chartInit.cumulativeCount) { renderCumulativeCountChart(watches); chartInit.cumulativeCount = true; }
+          break;
+        case 'acquisition':
+          if (!chartInit.acquisition) { renderAcquisitionChart(watches); chartInit.acquisition = true; }
+          break;
+        case 'growth':
+          if (!chartInit.growth) { renderGrowthChart(watches); chartInit.growth = true; }
+          break;
+        case 'total':
+          if (!chartInit.total) { renderTotalChart(watches); chartInit.total = true; }
+          break;
+        case 'brand':
+          if (!chartInit.brand) { renderBarChart(watches, 'Hersteller', 'brandChart', 'Uhren pro Marke'); chartInit.brand = true; }
+          break;
+        case 'type':
+          if (!chartInit.type) { renderBarChart(watches, 'Typ', 'typeChart', 'Uhren pro Typ'); chartInit.type = true; }
+          break;
+        case 'caseSize':
+          if (!chartInit.caseSize) { renderBarChart(watches, 'CaseSize', 'caseSizeChart', 'Uhren nach Case Size'); chartInit.caseSize = true; }
+          break;
+        case 'movement':
+          if (!chartInit.movement) { renderBarChart(watches, 'Movement', 'movementChart', 'Uhren nach Movement'); chartInit.movement = true; }
+          break;
+        case 'glass':
+          if (!chartInit.glass) { renderBarChart(watches, 'Glass', 'glassChart', 'Uhren nach Glas'); chartInit.glass = true; }
+          break;
+        case 'brandValue':
+          if (!chartInit.brandValue) { renderBarValueChart(watches, 'Hersteller', 'brandValueChart', 'Wert nach Marke'); chartInit.brandValue = true; }
+          break;
+        case 'typeValue':
+          if (!chartInit.typeValue) { renderBarValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ'); chartInit.typeValue = true; }
+          break;
+      }
+    }
+
+    // Direkt initialisieren: erstes Tab (wichtig für sofort sichtbaren Chart)
+    initChart('cumulativeCount');
+
+    /**
+     * Bootstrap-Tab-Event: Beim Öffnen eines Tabs wird der zugehörige Chart erzeugt (falls noch nicht vorhanden)
+     * und per resize()/update() korrekt dargestellt.
+     */
+    document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(tabBtn => {
+      tabBtn.addEventListener('shown.bs.tab', function (event) {
+        const tabId = event.target.getAttribute('data-bs-target').replace('#','');
+        initChart(tabId);
+        // Chart ggf. nachträglich anpassen (z.B. bei Fenstergröße-Änderung)
+        const targetPane = document.querySelector(event.target.getAttribute('data-bs-target'));
+        if (!targetPane) return;
+        const canvas = targetPane.querySelector('canvas');
+        if (!canvas) return;
+        if (window.barChartInstances && window.barChartInstances[canvas.id]) {
+          window.barChartInstances[canvas.id].resize();
+          window.barChartInstances[canvas.id].update();
+        }
+        if (window.lineChartInstances && window.lineChartInstances[canvas.id]) {
+          window.lineChartInstances[canvas.id].resize();
+          window.lineChartInstances[canvas.id].update();
+        }
+      });
+    });
   });
 
 /**
