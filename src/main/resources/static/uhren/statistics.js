@@ -67,10 +67,13 @@ fetch('uhren.json')
     renderAcquisitionChart(watches);
     renderGrowthChart(watches);
     renderTotalChart(watches);
-    renderPieChart(watches, 'Hersteller', 'brandChart', 'Uhren pro Marke');
-    renderPieChart(watches, 'Typ', 'typeChart', 'Uhren pro Typ');
-    renderPieValueChart(watches, 'Hersteller', 'brandValueChart', 'Wert nach Marke');
-    renderPieValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ');
+    renderBarChart(watches, 'Hersteller', 'brandChart', 'Uhren pro Marke');
+    renderBarChart(watches, 'Typ', 'typeChart', 'Uhren pro Typ');
+    renderBarChart(watches, 'CaseSize', 'caseSizeChart', 'Uhren nach Case Size');
+    renderBarChart(watches, 'Movement', 'movementChart', 'Uhren nach Movement');
+    renderBarChart(watches, 'Glass', 'glassChart', 'Uhren nach Glass');
+    renderBarValueChart(watches, 'Hersteller', 'brandValueChart', 'Wert nach Marke');
+    renderBarValueChart(watches, 'Typ', 'typeValueChart', 'Wert nach Typ');
   });
 
 /**
@@ -197,16 +200,7 @@ document.addEventListener('click', function(e) {
 });
 
 
-/**
- * Erstellt oder aktualisiert die Wertzuwachs- und Kumulativ-Charts.
- * Zerstört alte Instanzen, falls vorhanden.
- * @param {Array} watches - Uhren-Objekte
- */
-/**
- * Erstellt oder aktualisiert die Wertzuwachs- und Kumulativ-Charts.
- * Zerstört alte Instanzen, falls vorhanden.
- * @param {Array} watches - Uhren-Objekte
- */
+
 /**
  * Erstellt oder aktualisiert das Linien-Diagramm für die Gesamtanzahl der Uhren über Zeit.
  * @param {Array} watches - Uhren-Objekte
@@ -333,35 +327,11 @@ function renderTotalChart(watches) {
   });
 }
 
-// --- Alte Kombifunktionen entfernen ---
-// function renderGrowthCharts(watches) { ... }
-// function renderAcquisitionCharts(watches) { ... }
+/**
+ * Globale Instanzen der Bar-Charts, um sie vor Neuanlage zerstören zu können
+ */
+const barChartInstances = {};
 
-
-/**
- * Erstellt oder aktualisiert ein Pie-Chart für das angegebene Feld.
- * Zerstört alte Instanz, falls vorhanden.
- * @param {Array} watches - Uhren-Objekte
- * @param {string} field - Feldname (z.B. 'Hersteller')
- * @param {string} canvasId - ID des Canvas-Elements
- * @param {string} title - Titel des Diagramms
- */
-const pieChartInstances = {};
-/**
- * Erstellt oder aktualisiert ein Pie-Chart für den aggregierten Kaufpreis eines Feldes (z.B. Marke oder Typ).
- * Zerstört alte Instanz, falls vorhanden.
- * @param {Array} watches - Uhren-Objekte
- * @param {string} field - Feldname (z.B. 'Hersteller' oder 'Typ')
- * @param {string} canvasId - ID des Canvas-Elements
- * @param {string} title - Titel des Diagramms
- */
-/**
- * Erstellt oder aktualisiert ein horizontales Balkendiagramm für die aggregierten Kaufpreise eines Feldes.
- * @param {Array<Object>} watches - Uhren-Objekte
- * @param {string} field - Feldname (z.B. 'Hersteller' oder 'Typ')
- * @param {string} canvasId - ID des Canvas-Elements
- * @param {string} title - Titel des Diagramms
- */
 /**
  * Creates or updates a horizontal bar chart for the aggregated purchase value of a field (e.g., brand or type).
  * Only shows brands with more than one watch for 'brandValueChart'.
@@ -370,13 +340,21 @@ const pieChartInstances = {};
  * @param {string} canvasId - ID of the canvas element
  * @param {string} title - Chart title
  */
-function renderPieValueChart(watches, field, canvasId, title) {
+/**
+ * Erstellt oder aktualisiert ein horizontales Balkendiagramm für den aggregierten Kaufwert eines Feldes (z.B. Marke oder Typ).
+ * Zeigt für 'brandValueChart' nur Marken mit mehr als einer Uhr an.
+ * @param {Array<Object>} watches - Array von Uhrenobjekten
+ * @param {string} field - Feldname (z.B. 'Hersteller' oder 'Typ')
+ * @param {string} canvasId - ID des Canvas-Elements
+ * @param {string} title - Diagrammtitel
+ */
+function renderBarValueChart(watches, field, canvasId, title) {
   const canvas = replaceCanvas(canvasId);
-  console.log(`[DEBUG] renderPieValueChart(${canvasId}) aufgerufen.`);
-  if (pieChartInstances[canvasId]) {
-    console.log(`[DEBUG] pieChartInstances[${canvasId}].destroy() wird ausgeführt.`);
-    pieChartInstances[canvasId].destroy();
-    pieChartInstances[canvasId] = null;
+  console.log(`[DEBUG] renderBarValueChart(${canvasId}) aufgerufen.`);
+  if (barChartInstances[canvasId]) {
+    console.log(`[DEBUG] barChartInstances[${canvasId}].destroy() wird ausgeführt.`);
+    barChartInstances[canvasId].destroy();
+    barChartInstances[canvasId] = null;
   }
   const map = {};
   watches.forEach(w => {
@@ -401,7 +379,7 @@ function renderPieValueChart(watches, field, canvasId, title) {
   pairs = pairs.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const labels = pairs.map(([k]) => k);
   const values = pairs.map(([_, v]) => v);
-  pieChartInstances[canvasId] = new Chart(canvas, {
+  barChartInstances[canvasId] = new Chart(canvas, {
     type: 'bar',
     data: {
       labels: labels,
@@ -436,21 +414,7 @@ function renderPieValueChart(watches, field, canvasId, title) {
   });
 }
 
-/**
- * Erstellt oder aktualisiert ein horizontales Balkendiagramm (statt Pie-Chart) für ein kategorisches Feld.
- * @param {Array<Object>} watches - Uhren-Objekte
- * @param {string} field - Feldname (z.B. 'Hersteller')
- * @param {string} canvasId - ID des Canvas-Elements
- * @param {string} title - Titel des Diagramms
- */
-/**
- * Erstellt oder aktualisiert ein horizontales Balkendiagramm (statt Pie-Chart) für ein kategorisches Feld.
- * Zeigt bei Marken nur Marken mit mehr als einer Uhr an.
- * @param {Array<Object>} watches - Uhren-Objekte
- * @param {string} field - Feldname (z.B. 'Hersteller')
- * @param {string} canvasId - ID des Canvas-Elements
- * @param {string} title - Titel des Diagramms
- */
+
 /**
  * Creates or updates a horizontal bar chart for a categorical field (e.g., brand or type).
  * Only shows brands with more than one watch for 'brandChart'.
@@ -459,13 +423,21 @@ function renderPieValueChart(watches, field, canvasId, title) {
  * @param {string} canvasId - ID of the canvas element
  * @param {string} title - Chart title
  */
-function renderPieChart(watches, field, canvasId, title) {
+/**
+ * Erstellt oder aktualisiert ein horizontales Balkendiagramm für ein kategorisches Feld (z.B. Marke oder Typ).
+ * Zeigt für 'brandChart' nur Marken mit mehr als einer Uhr an.
+ * @param {Array<Object>} watches - Array von Uhrenobjekten
+ * @param {string} field - Feldname (z.B. 'Hersteller')
+ * @param {string} canvasId - ID des Canvas-Elements
+ * @param {string} title - Diagrammtitel
+ */
+function renderBarChart(watches, field, canvasId, title) {
   const canvas = replaceCanvas(canvasId);
-  console.log(`[DEBUG] renderPieChart(${canvasId}) aufgerufen.`);
-  if (pieChartInstances[canvasId]) {
-    console.log(`[DEBUG] pieChartInstances[${canvasId}].destroy() wird ausgeführt.`);
-    pieChartInstances[canvasId].destroy();
-    pieChartInstances[canvasId] = null;
+  console.log(`[DEBUG] renderBarChart(${canvasId}) aufgerufen.`);
+  if (barChartInstances[canvasId]) {
+    console.log(`[DEBUG] barChartInstances[${canvasId}].destroy() wird ausgeführt.`);
+    barChartInstances[canvasId].destroy();
+    barChartInstances[canvasId] = null;
   }
   const map = {};
   watches.forEach(w => {
@@ -481,10 +453,10 @@ function renderPieChart(watches, field, canvasId, title) {
   let labels = pairs.map(([k]) => k);
   let values = pairs.map(([_, v]) => v);
   // Vorherige Instanz zerstören, falls vorhanden
-  if (pieChartInstances[canvasId]) {
-    pieChartInstances[canvasId].destroy();
+  if (barChartInstances[canvasId]) {
+    barChartInstances[canvasId].destroy();
   }
-  pieChartInstances[canvasId] = new Chart(canvas, {
+  barChartInstances[canvasId] = new Chart(canvas, {
     type: 'bar',
     data: {
       labels: labels,
@@ -519,11 +491,7 @@ function renderPieChart(watches, field, canvasId, title) {
   });
 }
 
-/**
- * Erstellt oder aktualisiert die Charts für Neuzugänge und kumulative Anzahl.
- * Zerstört alte Instanzen, falls vorhanden.
- * @param {Array} watches - Uhren-Objekte
- */
+
 /**
  * Creates or updates both the acquisition and cumulative count charts.
  * Destroys old instances if present.
