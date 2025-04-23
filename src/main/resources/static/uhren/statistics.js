@@ -425,9 +425,10 @@ function renderBarValueChart(watches, field, canvasId, title) {
  */
 /**
  * Erstellt oder aktualisiert ein horizontales Balkendiagramm für ein kategorisches Feld (z.B. Marke oder Typ).
+ * Für das Feld 'CaseSize' werden die Werte vor der Auswertung auf Ganzzahlen gerundet.
  * Zeigt für 'brandChart' nur Marken mit mehr als einer Uhr an.
  * @param {Array<Object>} watches - Array von Uhrenobjekten
- * @param {string} field - Feldname (z.B. 'Hersteller')
+ * @param {string} field - Feldname (z.B. 'Hersteller' oder 'CaseSize')
  * @param {string} canvasId - ID des Canvas-Elements
  * @param {string} title - Diagrammtitel
  */
@@ -441,9 +442,25 @@ function renderBarChart(watches, field, canvasId, title) {
   }
   const map = {};
   watches.forEach(w => {
-    const key = w[field] || 'Unbekannt';
+    let key = w[field] || 'Unbekannt';
+    // Für CaseSize auf Ganzzahl runden
+    if (field === 'CaseSize') {
+      // Ersetze Komma durch Punkt, um Dezimalzahlen aus JSON wie "42,6" korrekt zu parsen
+      const rawValue = (w[field] + '').replace(',', '.');
+      const num = Number(rawValue);
+      if (isNaN(num) || w[field] === undefined || w[field] === null || w[field] === '' || w[field] === 'Unbekannt') {
+        console.log('[WARN] CaseSize unbekannt bei Uhr ID:', w.ID);
+        key = 'Unbekannt';
+      } else if (num === 0) {
+        console.log('[WARN] CaseSize 0 bei Uhr ID:', w.ID);
+        key = '0';
+      } else {
+        key = Math.round(num).toString();
+      }
+    }
     map[key] = (map[key] || 0) + 1;
   });
+
   let pairs = Object.entries(map);
   if (canvasId === 'brandChart') {
     pairs = pairs.filter(([k, v]) => v > 1);
