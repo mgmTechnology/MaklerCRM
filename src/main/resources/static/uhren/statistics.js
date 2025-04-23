@@ -682,37 +682,94 @@ function showSpecsCard(uhr) {
   console.log('[DEBUG] showSpecsCard wird aufgerufen', uhr);
   const cardPane = document.getElementById('specsCardPane');
   if (!cardPane) return;
+  // Bild-Logik mit Debug-Ausgaben
+  const paddedId = (uhr.ID || '').toString().padStart(3, '0');
+  const localImg = `./img/${paddedId}.jpg`;
+  const fallbackImg = 'https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22';
+  let imgSrc = fallbackImg;
+  if (uhr.BildURL && uhr.BildURL.trim() !== '') {
+    imgSrc = uhr.BildURL;
+    console.log('[DEBUG] BildURL verwendet:', imgSrc);
+  } else {
+    imgSrc = localImg;
+    console.log('[DEBUG] localImg verwendet:', imgSrc);
+  }
+
+  // Kompakte dreispaltige Tabelle
+  const specRows = [
+    { label: 'ID', value: uhr.ID || '-' },
+    { label: 'Hersteller', value: uhr.Hersteller || '-' },
+    { label: 'Typ', value: uhr.Typ || '-' },
+    { label: 'Case Size', value: uhr.CaseSize || '-' },
+    { label: 'Glass', value: uhr.Glass || '-' },
+    { label: 'Movement', value: uhr.Movement || '-' },
+    { label: 'Kaufdatum', value: uhr.Kaufdatum || '-' },
+    { label: 'Kaufpreis', value: uhr.Kaufpreis || '-' },
+    { label: 'Herkunft', value: uhr.Herkunft || '-' },
+    { label: 'AKA', value: uhr.AKA || '-' },
+    { label: 'Hommage', value: uhr.Hommage || '-' },
+    { label: 'Wasserdicht', value: uhr.Waterproof || '-' },
+    { label: 'Bemerkungen', value: uhr.Bemerkungen || '-' },
+    { label: 'Video', value: uhr.VideoURL ? `<a href="${uhr.VideoURL}" target="_blank">Video</a>` : '-' },
+    { label: 'Shop', value: uhr.ShopURL ? `<a href="${uhr.ShopURL}" target="_blank">Shop</a>` : '-' }
+  ];
+  let col1 = '', col2 = '', col3 = '';
+  for (let i = 0; i < specRows.length; i++) {
+    const row = `<tr><th class='text-end text-nowrap'>${specRows[i].label}</th><td>${specRows[i].value}</td></tr>`;
+    if (i % 3 === 0) col1 += row;
+    else if (i % 3 === 1) col2 += row;
+    else col3 += row;
+  }
+
   cardPane.innerHTML = `
-    <div class="card shadow" style="max-width: 540px; min-width: 300px;">
-      <div class="row g-0">
-        <div class="col-md-5 d-flex align-items-center justify-content-center bg-light">
-          <img src="${uhr.BildURL || './img/' + (uhr.ID || '').toString().padStart(3, '0') + '.jpg'}" class="img-fluid rounded-start" style="max-height:180px;max-width:100%;object-fit:contain;" alt="${uhr.Name || uhr.Modell || 'Uhr'}">
+    <div class="card shadow" style="max-width:1000px; min-width:320px; width:100%;">
+      <div class="row g-0 align-items-center flex-nowrap">
+        <div class="col-lg-4 col-md-5 text-center">
+          <img id="specsCardImg" src="${imgSrc}" alt="Uhrenbild" class="img-fluid rounded mb-2 shadow-sm" style="max-height:220px;max-width:100%;background:#222;object-fit:contain;cursor:pointer" data-img-url="${imgSrc}" data-img-fallback="${fallbackImg}">
         </div>
-        <div class="col-md-7">
-          <div class="card-body p-2">
-            <h5 class="card-title mb-1">${uhr.Name || '-'} <span class="text-muted small">(${uhr.Modell || '-'})</span></h5>
-            <table class="table table-sm mb-0">
-              <tbody>
-                <tr><th scope="row">ID</th><td>${uhr.ID || '-'}</td></tr>
-                <tr><th scope="row">Hersteller</th><td>${uhr.Hersteller || '-'}</td></tr>
-                <tr><th scope="row">Typ</th><td>${uhr.Typ || '-'}</td></tr>
-                <tr><th scope="row">Case Size</th><td>${uhr.CaseSize || '-'}</td></tr>
-                <tr><th scope="row">Glass</th><td>${uhr.Glass || '-'}</td></tr>
-                <tr><th scope="row">Movement</th><td>${uhr.Movement || '-'}</td></tr>
-                <tr><th scope="row">Kaufdatum</th><td>${uhr.Kaufdatum || '-'}</td></tr>
-                <tr><th scope="row">Kaufpreis</th><td>${uhr.Kaufpreis || '-'}</td></tr>
-                <tr><th scope="row">Herkunft</th><td>${uhr.Herkunft || '-'}</td></tr>
-                <tr><th scope="row">AKA</th><td>${uhr.AKA || '-'}</td></tr>
-                <tr><th scope="row">Hommage</th><td>${uhr.Hommage || '-'}</td></tr>
-                <tr><th scope="row">Wasserdicht</th><td>${uhr.Waterproof || '-'}</td></tr>
-                <tr><th scope="row">Bemerkungen</th><td>${uhr.Bemerkungen || '-'}</td></tr>
-                <tr><th scope="row">Video</th><td>${uhr.VideoURL ? `<a href="${uhr.VideoURL}" target="_blank">Video</a>` : '-'}</td></tr>
-                <tr><th scope="row">Shop</th><td>${uhr.ShopURL ? `<a href="${uhr.ShopURL}" target="_blank">Shop</a>` : '-'}</td></tr>
-              </tbody>
-            </table>
+        <div class="col-lg-8 col-md-7">
+          <h5 class="card-title mb-2">${uhr.Name || ''}</h5>
+          <div class="row">
+            <div class="col-12 col-md-4"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col1}</tbody></table></div>
+            <div class="col-12 col-md-4"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col2}</tbody></table></div>
+            <div class="col-12 col-md-4"><table class="table table-sm table-borderless mb-0 specs-table w-100" style="table-layout:fixed;"><tbody>${col3}</tbody></table></div>
           </div>
         </div>
       </div>
     </div>
+    <style>
+      /* Specs-Tabellen-Optimierung */
+      .specs-table {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .specs-table td {
+        white-space: normal;
+        word-break: break-word;
+        font-size: 1rem;
+        padding: 0.35rem 0.5rem 0.35rem 0.2rem;
+      }
+      .specs-table tr {
+        border-bottom: 1px solid #f0f0f0;
+      }
+      @media (max-width: 700px) {
+        .specs-table td { font-size: 0.95rem; }
+      }
+    </style>
   `;
+
+  // Bild robust nachladen und Fehler behandeln
+  const imgEl = document.getElementById('specsCardImg');
+  if (imgEl) {
+    imgEl.onerror = function() {
+      console.log('[DEBUG] Bild konnte nicht geladen werden:', imgEl.src);
+      if (imgEl.src !== window.location.origin + '/' + localImg && imgEl.src !== localImg) {
+        imgEl.src = localImg;
+        console.log('[DEBUG] Versuche localImg:', localImg);
+      } else if (imgEl.src !== fallbackImg) {
+        imgEl.src = fallbackImg;
+        console.log('[DEBUG] Fallback auf Platzhalter:', fallbackImg);
+      }
+    };
+  }
 }
