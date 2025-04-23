@@ -166,6 +166,38 @@ fetch('uhren.json')
  * @param {Array<Object>} watches - Array of watch objects
  */
 function renderWatchTable(watches) {
+  /**
+   * Fügt Click-Listener für alle Specs-Trigger (ID/Steckbrief-Icon) hinzu.
+   * @param {Array<Object>} watches - Array aller Uhrenobjekte
+   */
+  function setupSpecsTriggers(watches) {
+    console.log('[DEBUG] setupSpecsTriggers initialisiert');
+    document.querySelectorAll('.specs-trigger').forEach(el => {
+      el.addEventListener('click', function() {
+        console.log('[DEBUG] specs-trigger geklickt, data-id:', this.getAttribute('data-id'));
+        const id = this.getAttribute('data-id');
+        const uhr = watches.find(u => (u.ID || '').toString() === id);
+        if (uhr) {
+            console.log('[DEBUG] Uhr gefunden:', uhr);
+            console.log('[DEBUG] typeof showSpecsCard:', typeof showSpecsCard);
+            if (typeof showSpecsCard !== 'function') {
+              console.error('[FEHLER] showSpecsCard ist nicht definiert oder keine Funktion!');
+              return;
+            }
+          showSpecsCard(uhr);
+          // Specs-Tab aktivieren, falls nicht sichtbar
+          const specsTab = document.querySelector('button#specs-tab');
+          if (specsTab && !specsTab.classList.contains('active')) {
+            new bootstrap.Tab(specsTab).show();
+          }
+        }
+      });
+    });
+  }
+
+  // Nach dem Rendern der Tabelle Specs-Trigger setzen
+  setTimeout(() => setupSpecsTriggers(watches), 0);
+
   const svgFallback = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100%' height='100%' fill='%23e0e7f0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%235c7185' font-family='Arial' font-size='12'>Kein Bild</text></svg>`;
   const tableBody = document.querySelector('#watchTable tbody');
   tableBody.innerHTML = '';
@@ -184,7 +216,7 @@ function renderWatchTable(watches) {
       ? `<span class='video-link' data-video-url='${uhr.VideoURL}' style='cursor:pointer;font-size:1.3em;' title='Video ansehen'>🎥</span>`
       : '';
     row.innerHTML = `
-      <td>${getValue(uhr.ID)}</td>
+      <td><span class="specs-trigger text-primary" data-id="${getValue(uhr.ID)}" style="cursor:pointer;">${getValue(uhr.ID)} <i class="bi bi-person-vcard" title="Specs anzeigen"></i></span></td>
       <td>${imgTag}</td>
       <td>${getValue(uhr.Name)}</td>
       <td>${getValue(uhr.Modell)}</td>
@@ -636,4 +668,51 @@ function renderAcquisitionCharts(watches) {
     data: { labels: keys, datasets: [{ label: 'Kumulative Anzahl', data: cumulative, borderColor: '#198754', fill: false }] },
     options: fixedChartHeight(400)
   });
+
+
+
+}
+
+
+/**
+ * Zeigt die Specs-Karte für eine einzelne Uhr im Specs-Tab an.
+ * @param {Object} uhr - Das Uhrenobjekt
+ */
+function showSpecsCard(uhr) {
+  console.log('[DEBUG] showSpecsCard wird aufgerufen', uhr);
+  const cardPane = document.getElementById('specsCardPane');
+  if (!cardPane) return;
+  cardPane.innerHTML = `
+    <div class="card shadow" style="max-width: 540px; min-width: 300px;">
+      <div class="row g-0">
+        <div class="col-md-5 d-flex align-items-center justify-content-center bg-light">
+          <img src="${uhr.BildURL || './img/' + (uhr.ID || '').toString().padStart(3, '0') + '.jpg'}" class="img-fluid rounded-start" style="max-height:180px;max-width:100%;object-fit:contain;" alt="${uhr.Name || uhr.Modell || 'Uhr'}">
+        </div>
+        <div class="col-md-7">
+          <div class="card-body p-2">
+            <h5 class="card-title mb-1">${uhr.Name || '-'} <span class="text-muted small">(${uhr.Modell || '-'})</span></h5>
+            <table class="table table-sm mb-0">
+              <tbody>
+                <tr><th scope="row">ID</th><td>${uhr.ID || '-'}</td></tr>
+                <tr><th scope="row">Hersteller</th><td>${uhr.Hersteller || '-'}</td></tr>
+                <tr><th scope="row">Typ</th><td>${uhr.Typ || '-'}</td></tr>
+                <tr><th scope="row">Case Size</th><td>${uhr.CaseSize || '-'}</td></tr>
+                <tr><th scope="row">Glass</th><td>${uhr.Glass || '-'}</td></tr>
+                <tr><th scope="row">Movement</th><td>${uhr.Movement || '-'}</td></tr>
+                <tr><th scope="row">Kaufdatum</th><td>${uhr.Kaufdatum || '-'}</td></tr>
+                <tr><th scope="row">Kaufpreis</th><td>${uhr.Kaufpreis || '-'}</td></tr>
+                <tr><th scope="row">Herkunft</th><td>${uhr.Herkunft || '-'}</td></tr>
+                <tr><th scope="row">AKA</th><td>${uhr.AKA || '-'}</td></tr>
+                <tr><th scope="row">Hommage</th><td>${uhr.Hommage || '-'}</td></tr>
+                <tr><th scope="row">Wasserdicht</th><td>${uhr.Waterproof || '-'}</td></tr>
+                <tr><th scope="row">Bemerkungen</th><td>${uhr.Bemerkungen || '-'}</td></tr>
+                <tr><th scope="row">Video</th><td>${uhr.VideoURL ? `<a href="${uhr.VideoURL}" target="_blank">Video</a>` : '-'}</td></tr>
+                <tr><th scope="row">Shop</th><td>${uhr.ShopURL ? `<a href="${uhr.ShopURL}" target="_blank">Shop</a>` : '-'}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 }
