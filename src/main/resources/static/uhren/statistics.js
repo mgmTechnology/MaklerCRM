@@ -189,13 +189,50 @@ function renderWatchTable(watches) {
         document.getElementById('specs-tab')?.click();
       });
     });
-    tableBody.querySelectorAll('.aiinfo-trigger').forEach((btn, idx) => {
-      btn.addEventListener('click', () => {
-        document.getElementById('aiinfo-tab')?.click();
-        fetchAndShowAiInfo(watches[idx]);
-      });
-    });
+    // Remove individual aiinfo-trigger listeners and use event delegation
   }
+
+  // Event delegation for aiinfo-trigger clicks
+  document.querySelector('#watchTable tbody').addEventListener('click', function(event) {
+    const target = event.target.closest('.aiinfo-trigger');
+    if (target) {
+      console.log('[DEBUG] aiinfo-trigger clicked');
+      const row = target.closest('tr');
+      if (!row) return;
+      const index = Array.from(row.parentNode.children).indexOf(row);
+      if (index === -1) return;
+      document.getElementById('aiinfo-tab')?.click();
+      fetchAndShowAiInfo(watches[index]);
+    }
+  });
+
+  // Add event delegation for video-link clicks to ensure click works on icon and span
+  document.querySelector('#watchTable tbody').addEventListener('click', function(event) {
+    const target = event.target.closest('.video-link');
+    if (target) {
+      console.log('[DEBUG] video-link clicked');
+      const videoUrl = target.getAttribute('data-video-url');
+      if (!videoUrl) return;
+      const modal = new bootstrap.Modal(document.getElementById('mediaModal'));
+      let embedUrl = '';
+      if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+        let vid = videoUrl.match(/[?&]v=([^&]+)/);
+        if (!vid) {
+          vid = videoUrl.match(/youtu\.be\/([^?&]+)/);
+        }
+        if (vid && vid[1]) {
+          embedUrl = `https://www.youtube.com/embed/${vid[1]}?autoplay=1`;
+        }
+      }
+      const modalContent = document.getElementById('mediaModalContent');
+      if (embedUrl) {
+        modalContent.innerHTML = `<div class='ratio ratio-16x9 w-100'><iframe src='${embedUrl}' allowfullscreen allow='autoplay' style='border:0;'></iframe></div>`;
+      } else {
+        modalContent.innerHTML = `<a href='${videoUrl}' target='_blank' class='btn btn-primary'>Video öffnen</a>`;
+      }
+      modal.show();
+    }
+  });
 
   // Nach dem Rendern der Tabelle Specs-Trigger setzen
   setTimeout(() => setupSpecsTriggers(watches), 0);
@@ -218,8 +255,15 @@ function renderWatchTable(watches) {
       ? `<span class='video-link' data-video-url='${uhr.VideoURL}' style='cursor:pointer;font-size:1.3em;' title='Video ansehen'>🎥</span>`
       : '';
     row.innerHTML = `
-      <td><span class="specs-trigger text-primary" data-id="${getValue(uhr.ID)}" style="cursor:pointer;">${getValue(uhr.ID)} <i class="bi bi-person-vcard" title="Specs anzeigen"></i></span>
-        <button class="btn btn-outline-info btn-sm aiinfo-trigger ms-1" title="KI-Info anzeigen"><i class="bi bi-robot"></i></button>
+      <td>
+        <div class="d-flex flex-column align-items-center">
+          <div>${getValue(uhr.ID)}</div>
+          <div class="d-flex gap-2 mt-1">
+            <span class="specs-trigger text-primary" data-id="${getValue(uhr.ID)}" style="cursor:pointer;" title="Specs anzeigen"><i class="bi bi-person-vcard"></i></span>
+            <span class="aiinfo-trigger text-primary" title="KI-Info anzeigen" style="cursor:pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;"><i class="bi bi-robot"></i></span>
+            ${videoLink ? `<span class="video-link text-primary" data-video-url="${uhr.VideoURL}" style="cursor:pointer; font-size: 1.2rem;" title="Video ansehen"><i class="bi bi-camera-video"></i></span>` : ''}
+          </div>
+        </div>
       </td>
       <td>${imgTag}</td>
       <td>${getValue(uhr.Name)}</td>
@@ -233,7 +277,6 @@ function renderWatchTable(watches) {
       <td>${getValue(uhr.Hersteller)}</td>
       <td>${getValue(uhr.Herkunft)}</td>
       <td>${getValue(uhr.Hommage)}</td>
-      <td>${videoLink}</td>
       <td>${getValue(uhr.Bemerkungen)}</td>
     `;
     tableBody.appendChild(row);
@@ -259,7 +302,7 @@ function renderWatchTable(watches) {
     footerCallback: function ( row, data, start, end, display ) {
       var api = this.api();
       // Kaufpreis-Summe berechnen (nur sichtbare Zeilen)
-      var sum = api.column(9, {search:'applied'}).data().reduce(function(a, b) {
+      var sum = api.column(8, {search:'applied'}).data().reduce(function(a, b) {
         // b ist z.B. "175,00 €"; entferne alles außer Zahl und Komma
         var num = (typeof b === 'string') ? b.replace(/[^\d,.-]/g, '').replace(',', '.') : b;
         num = parseFloat(num) || 0;
@@ -268,7 +311,7 @@ function renderWatchTable(watches) {
       // Anzahl sichtbare Zeilen
       var count = api.column(0, {search:'applied'}).data().length;
       // Ausgabe formatieren
-      $(api.column(6).footer()).html(sum.toLocaleString('de-DE', {style:'currency', currency:'EUR'}));
+      $(api.column(5).footer()).html(sum.toLocaleString('de-DE', {style:'currency', currency:'EUR'}));
       $('#sumCount').html(count + ' Uhren');
     }
   });
@@ -374,6 +417,17 @@ document.addEventListener('click', function(e) {
     }
   }
 });
+
+// Stoppe Video beim Schließen des Modals
+const mediaModalEl = document.getElementById('mediaModal');
+if (mediaModalEl) {
+  mediaModalEl.addEventListener('hidden.bs.modal', function () {
+    const modalContent = document.getElementById('mediaModalContent');
+    if (modalContent) {
+      modalContent.innerHTML = '';
+    }
+  });
+}
 
 
 
