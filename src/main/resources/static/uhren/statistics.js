@@ -181,25 +181,18 @@ function renderWatchTable(watches) {
    */
   function setupSpecsTriggers(watches) {
     console.log('[DEBUG] setupSpecsTriggers initialisiert');
-    document.querySelectorAll('.specs-trigger').forEach(el => {
-      el.addEventListener('click', function() {
-        console.log('[DEBUG] specs-trigger geklickt, data-id:', this.getAttribute('data-id'));
-        const id = this.getAttribute('data-id');
-        const uhr = watches.find(u => (u.ID || '').toString() === id);
-        if (uhr) {
-            console.log('[DEBUG] Uhr gefunden:', uhr);
-            console.log('[DEBUG] typeof showSpecsCard:', typeof showSpecsCard);
-            if (typeof showSpecsCard !== 'function') {
-              console.error('[FEHLER] showSpecsCard ist nicht definiert oder keine Funktion!');
-              return;
-            }
-          showSpecsCard(uhr);
-          // Specs-Tab aktivieren, falls nicht sichtbar
-          const specsTab = document.querySelector('button#specs-tab');
-          if (specsTab && !specsTab.classList.contains('active')) {
-            new bootstrap.Tab(specsTab).show();
-          }
-        }
+    const tableBody = document.querySelector('#watchTable tbody');
+    tableBody.querySelectorAll('.specs-trigger').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        showSpecsCard(watches[idx]);
+        // Optional: Tab wechseln
+        document.getElementById('specs-tab')?.click();
+      });
+    });
+    tableBody.querySelectorAll('.aiinfo-trigger').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        document.getElementById('aiinfo-tab')?.click();
+        fetchAndShowAiInfo(watches[idx]);
       });
     });
   }
@@ -225,7 +218,9 @@ function renderWatchTable(watches) {
       ? `<span class='video-link' data-video-url='${uhr.VideoURL}' style='cursor:pointer;font-size:1.3em;' title='Video ansehen'>🎥</span>`
       : '';
     row.innerHTML = `
-      <td><span class="specs-trigger text-primary" data-id="${getValue(uhr.ID)}" style="cursor:pointer;">${getValue(uhr.ID)} <i class="bi bi-person-vcard" title="Specs anzeigen"></i></span></td>
+      <td><span class="specs-trigger text-primary" data-id="${getValue(uhr.ID)}" style="cursor:pointer;">${getValue(uhr.ID)} <i class="bi bi-person-vcard" title="Specs anzeigen"></i></span>
+        <button class="btn btn-outline-info btn-sm aiinfo-trigger ms-1" title="KI-Info anzeigen"><i class="bi bi-robot"></i></button>
+      </td>
       <td>${imgTag}</td>
       <td>${getValue(uhr.Name)}</td>
       <td>${getValue(uhr.Modell)}</td>
@@ -277,6 +272,68 @@ function renderWatchTable(watches) {
       $('#sumCount').html(count + ' Uhren');
     }
   });
+}
+
+/**
+ * Holt KI-Informationen zu einer Uhr von OpenAI und zeigt sie im #aiInfoPane an.
+ * @param {Object} uhr - Das Uhrenobjekt
+ */
+/**
+ * Holt das OpenAI-Token aus localStorage oder fordert es per Modal vom User an.
+ * Gibt ein Promise zurück, das das Token liefert.
+ */
+function getOpenAiToken() {
+  return new Promise((resolve) => {
+    let token = localStorage.getItem('open_ai_token');
+    if (token && token.trim() !== '') {
+      console.log('[DEBUG] OpenAI Token aus localStorage gefunden.');
+      resolve(token);
+      return;
+    }
+    console.log('[DEBUG] Kein Token im localStorage, Eingabeaufforderung wird angezeigt.');
+    // Alternative Eingabeaufforderung statt Modal
+    let inputToken = prompt('Bitte gib dein OpenAI API-Token ein (wird lokal gespeichert):', '');
+    if (inputToken && inputToken.trim() !== '') {
+      localStorage.setItem('open_ai_token', inputToken.trim());
+      console.log('[DEBUG] Token eingegeben und gespeichert via prompt.');
+      resolve(inputToken.trim());
+    } else {
+      alert('OpenAI API-Token ist erforderlich, um fortzufahren.');
+      // Wiederhole die Eingabeaufforderung rekursiv
+      resolve(getOpenAiToken());
+    }
+  });
+}
+
+async function fetchAndShowAiInfo(uhr) {
+  const pane = document.getElementById('aiInfoPane');
+  if (pane) pane.innerHTML = '<div class="card shadow"><div class="card-body text-center text-muted"><span class="spinner-border"></span> Lade KI-Informationen ...</div></div>';
+  try {
+    const OPENAI_API_KEY = await getOpenAiToken();
+    const prompt = `Gib mir eine ausführliche, aber kompakte Beschreibung dieser Uhr für einen Uhrenliebhaber, inklusive Besonderheiten, Geschichte und Bewertung. Antworte auf Deutsch und max. 1200 Zeichen.\n\nUhrendaten: ${JSON.stringify(uhr)}`;
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          { role: 'system', content: 'Du bist ein Uhrenexperte und erklärst Uhrenmodelle für Sammler.' },
+          { role: 'user', content: prompt }
+        ],
+        max_tokens: 700,
+        temperature: 0.7
+      })
+    });
+    if (!response.ok) throw new Error('Fehler beim Abrufen der KI-Infos');
+    const data = await response.json();
+    const aiText = data.choices?.[0]?.message?.content || 'Keine KI-Antwort erhalten.';
+    if (pane) pane.innerHTML = `<div class="card shadow"><div class="card-body">${aiText.replace(/\n/g, '<br>')}</div></div>`;
+  } catch (err) {
+    if (pane) pane.innerHTML = `<div class='alert alert-danger'>Fehler beim Laden der KI-Informationen: ${err.message}</div>`;
+  }
 }
 
 // --- Modal-Logik für Bild- und Videoanzeige ---
