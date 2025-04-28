@@ -310,7 +310,7 @@ async function fetchAndShowAiInfo(uhr) {
   if (pane) pane.innerHTML = '<div class="card shadow"><div class="card-body text-center text-muted"><span class="spinner-border"></span> Lade KI-Informationen ...</div></div>';
   try {
     const OPENAI_API_KEY = await getOpenAiToken();
-    const prompt = `Gib mir eine ausführliche, aber kompakte Beschreibung dieser Uhr für einen Uhrenliebhaber, inklusive Besonderheiten, Geschichte und Bewertung. Antworte auf Deutsch und max. 1200 Zeichen.\n\nUhrendaten: ${JSON.stringify(uhr)}`;
+    const prompt = `Gib mir eine ausführliche, aber kompakte Beschreibung dieser Uhr für einen Uhrenliebhaber, inklusive Besonderheiten, Geschichte und Bewertung. Antworte auf Deutsch. Keine Inhalte, die schon bekannt sind. Keine Bewertungen oder Meinungen äußern. Verweise nicht auf Bilder oder Videos.\n\nUhrendaten: ${JSON.stringify(uhr)}`;
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
