@@ -169,18 +169,22 @@ function renderWatchTable(watches) {
    * Fügt Click-Listener für alle Specs-Trigger (ID/Steckbrief-Icon) hinzu.
    * @param {Array<Object>} watches - Array aller Uhrenobjekte
    */
-  function setupSpecsTriggers(watches) {
-    console.log('[DEBUG] setupSpecsTriggers initialisiert');
-    const tableBody = document.querySelector('#watchTable tbody');
-    tableBody.querySelectorAll('.specs-trigger').forEach((btn, idx) => {
-      btn.addEventListener('click', () => {
-        showSpecsCard(watches[idx]);
-        // Optional: Tab wechseln
-        document.getElementById('specs-tab')?.click();
-      });
+/**
+ * Adds click listeners for all specs triggers (ID/profile icon).
+ * @param {Array<Object>} watches - Array of all watch objects
+ */
+function setupSpecsTriggers(watches) {
+  console.log('[DEBUG] setupSpecsTriggers initialisiert');
+  const tableBody = document.querySelector('#watchTable tbody');
+  tableBody.querySelectorAll('.specs-trigger').forEach((btn, idx) => {
+    btn.addEventListener('click', () => {
+      showSpecsCard(watches[idx]);
+      // Optional: Switch tab
+      document.getElementById('specs-tab')?.click();
     });
-    // Remove individual aiinfo-trigger listeners and use event delegation
-  }
+  });
+  // Remove individual aiinfo-trigger listeners and use event delegation
+}
 
   // Event delegation for aiinfo-trigger clicks
   document.querySelector('#watchTable tbody').addEventListener('click', function(event) {
@@ -338,6 +342,10 @@ function getOpenAiToken() {
   });
 }
 
+/**
+ * Fetches AI information for a watch from OpenAI and displays it in the #aiInfoPane.
+ * @param {Object} uhr - The watch object
+ */
 async function fetchAndShowAiInfo(uhr) {
   const pane = document.getElementById('aiInfoPane');
   if (pane) pane.innerHTML = '<div class="card shadow"><div class="card-body text-center text-muted"><span class="spinner-border"></span> Lade KI-Informationen ...</div></div>';
