@@ -28,7 +28,7 @@
     .half-chart {
       max-width: 800px;
       max-height: 500px;
-      min-height: 320px;
+      min-height: 360px;
       margin: 0 auto;
     }
     .half-height {
@@ -53,6 +53,14 @@
   top: 56px; /* Höhe der Tabs */
   z-index: 1040;
   background: #fff;
+}
+
+/* Fixierter Tabellen-Header */
+#watchTable thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
 }
 </style>
 </head>

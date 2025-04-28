@@ -154,17 +154,7 @@ fetch('uhren.json')
     });
   });
 
-/**
- * Rendert die Tabelle mit allen Uhren.
- * Fügt für jede Uhr eine Zeile in die Tabelle ein und zeigt alle relevanten Informationen an,
- * inklusive der ID der Uhr als erste Spalte.
- * @param {Array<Object>} watches - Array von Uhrenobjekten
- */
-/**
- * Renders the table of all watches, including images, prices, manufacturer, type, and more.
- * Initializes DataTable with sorting, search, and sum calculation.
- * @param {Array<Object>} watches - Array of watch objects
- */
+
 /**
  * Rendert die Tabelle mit allen Uhren.
  * Fügt für jede Uhr eine Zeile in die Tabelle ein und zeigt alle relevanten Informationen an,
@@ -199,10 +189,12 @@ function renderWatchTable(watches) {
       console.log('[DEBUG] aiinfo-trigger clicked');
       const row = target.closest('tr');
       if (!row) return;
-      const index = Array.from(row.parentNode.children).indexOf(row);
-      if (index === -1) return;
+      // Use DataTables API to get row data
+      const table = $('#watchTable').DataTable();
+      const rowData = table.row(row).data();
+      if (!rowData) return;
       document.getElementById('aiinfo-tab')?.click();
-      fetchAndShowAiInfo(watches[index]);
+      fetchAndShowAiInfo(rowData);
     }
   });
 
@@ -293,6 +285,7 @@ function renderWatchTable(watches) {
     $('#watchTable').DataTable().destroy();
   }
   $('#watchTable').DataTable({
+    paging: true,
     pageLength: 50,
     lengthMenu: [[50, 100, -1], [50, 100, 'Alle']],
     responsive: true,
@@ -311,16 +304,13 @@ function renderWatchTable(watches) {
       // Anzahl sichtbare Zeilen
       var count = api.column(0, {search:'applied'}).data().length;
       // Ausgabe formatieren
-      $(api.column(5).footer()).html(sum.toLocaleString('de-DE', {style:'currency', currency:'EUR'}));
+      $(api.column(5).footer()).html(sum.toLocaleString('de-DE', {style: 'currency', currency: 'EUR'}));
       $('#sumCount').html(count + ' Uhren');
     }
   });
 }
 
-/**
- * Holt KI-Informationen zu einer Uhr von OpenAI und zeigt sie im #aiInfoPane an.
- * @param {Object} uhr - Das Uhrenobjekt
- */
+
 /**
  * Holt das OpenAI-Token aus localStorage oder fordert es per Modal vom User an.
  * Gibt ein Promise zurück, das das Token liefert.
@@ -353,7 +343,7 @@ async function fetchAndShowAiInfo(uhr) {
   if (pane) pane.innerHTML = '<div class="card shadow"><div class="card-body text-center text-muted"><span class="spinner-border"></span> Lade KI-Informationen ...</div></div>';
   try {
     const OPENAI_API_KEY = await getOpenAiToken();
-    const prompt = `Gib mir eine ausführliche, aber kompakte Beschreibung dieser Uhr für einen Uhrenliebhaber, inklusive Besonderheiten, Geschichte und Bewertung. Antworte auf Deutsch. Keine Inhalte, die schon bekannt sind. Keine Bewertungen oder Meinungen äußern. Verweise nicht auf Bilder oder Videos.\n\nUhrendaten: ${JSON.stringify(uhr)}`;
+    const prompt = `Gib mir eine ausführliche, aber kompakte Beschreibung dieser Uhr. Nur objektive Fakten darstellen, inklusive Besonderheiten, Geschichte und Bewertung. Antworte auf Deutsch. Keine Inhalte, die schon bekannt sind. Keine Bewertungen oder Meinungen äußern. Verweise nicht auf Bilder oder Videos.\n\nUhrendaten: ${JSON.stringify(uhr)}`;
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
