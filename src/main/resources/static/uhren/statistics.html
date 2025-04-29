@@ -7,62 +7,13 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./css/statistics.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.3/build/global/luxon.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <style>
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: #f9fafb;
-    }
-    .half-chart {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .chart-canvas {
-      max-height: 350px;
-      min-height: 220px;
-    }
-    .half-chart {
-      max-width: 800px;
-      max-height: 500px;
-      min-height: 360px;
-      margin: 0 auto;
-    }
-    .half-height {
-      height: 160px !important;
-      min-height: 120px !important;
-      max-height: 180px !important;
-    }
-  .header-custom {
-  background: #23272a;
-  color: #eaeaea;
-}
-
-/* Sticky Tabs & Content */
-.sticky-tabs {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-  background: #fff;
-}
-.sticky-content {
-  position: sticky;
-  top: 56px; /* Höhe der Tabs */
-  z-index: 1040;
-  background: #fff;
-}
-
-/* Fixierter Tabellen-Header */
-#watchTable thead th {
-  position: sticky;
-  top: 0;
-  background: #fff;
-  z-index: 10;
-}
-</style>
+ 
 </head>
 <body class="text-dark container-fluid py-4">
   <header class="header-custom text-white p-4 mb-4 rounded shadow">
@@ -230,34 +181,7 @@
     </div>
   </div>
 
-  <script src="statistics.js"></script>
-  <script>
-    // Sticky Toggle Script
-    document.addEventListener("DOMContentLoaded", function() {
-      const stickyToggle = document.getElementById("stickyToggle");
-      const navTabs = document.querySelector("ul.nav.nav-tabs.mb-3");
-      const tabContent = document.getElementById("chartTabsContent");
-
-      function updateSticky() {
-        if (stickyToggle.checked) {
-          navTabs.classList.add("sticky-tabs");
-          tabContent.classList.add("sticky-content");
-        } else {
-          navTabs.classList.remove("sticky-tabs");
-          tabContent.classList.remove("sticky-content");
-        }
-      }
-
-      stickyToggle.addEventListener("change", updateSticky);
-      // Optional: Zustand merken (localStorage)
-      if (localStorage.getItem("stickyTabs") === "true") {
-        stickyToggle.checked = true;
-        updateSticky();
-      }
-      stickyToggle.addEventListener("change", function() {
-        localStorage.setItem("stickyTabs", stickyToggle.checked);
-      });
-    });
-  </script>
+  <script src="./js/statistics.js"></script>
+  <script src="./js/util.js"></script>
 </body>
 </html>

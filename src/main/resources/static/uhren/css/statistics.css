@@ -1,0 +1,50 @@
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f9fafb;
+}
+.half-chart {
+  max-width: 400px;
+  margin: 0 auto;
+}
+.chart-canvas {
+  max-height: 350px;
+  min-height: 220px;
+}
+.half-chart {
+  max-width: 800px;
+  max-height: 500px;
+  min-height: 360px;
+  margin: 0 auto;
+}
+.half-height {
+  height: 160px !important;
+  min-height: 120px !important;
+  max-height: 180px !important;
+}
+.header-custom {
+background: #23272a;
+color: #eaeaea;
+}
+
+/* Sticky Tabs & Content */
+.sticky-tabs {
+position: sticky;
+top: 0;
+z-index: 1050;
+background: #fff;
+}
+.sticky-content {
+position: sticky;
+top: 56px; /* Höhe der Tabs */
+z-index: 1040;
+background: #fff;
+}
+
+/* Fixierter Tabellen-Header */
+#watchTable thead th {
+position: sticky;
+top: 0;
+background: #fff;
+z-index: 10;
+}
