@@ -1,4 +1,3 @@
-// ChronoFolio Statistik-Skript mit festen Chart-Höhen
 /**
  * Globale Chart-Instanzen, damit sie vor Neuanlage zerstört werden können
  * Dadurch wird das Anwachsen der Charts verhindert.
