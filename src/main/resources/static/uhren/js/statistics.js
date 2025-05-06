@@ -69,6 +69,18 @@ function fixedChartHeight(height = 400) {
   };
 }
 
+/**
+ * Bild-Error-Handler: versucht mehrere lokale Varianten, JSON-Feld und Fallback.
+ */
+function handleImgError(imgEl, id, jsonUrl, svgFallback) {
+  if (!imgEl._tries) imgEl._tries = 0;
+  imgEl._tries++;
+  if (imgEl._tries === 1) imgEl.src = `./img/${id}-b.jpg`;
+  else if (imgEl._tries === 2) imgEl.src = `./img/${id}-c.jpg`;
+  else if (imgEl._tries === 3) imgEl.src = jsonUrl;
+  else imgEl.src = svgFallback;
+}
+
 fetch("uhren.json")
   .then((res) => res.json())
   .then((json) => {
@@ -316,7 +328,7 @@ function renderWatchTable(watches) {
   // Nach dem Rendern der Tabelle Specs-Trigger setzen
   setTimeout(() => setupSpecsTriggers(watches), 0);
 
-  const svgFallback = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100%' height='100%' fill='%23e0e7f0'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%235c7185' font-family='Arial' font-size='12'>Kein Bild</text></svg>`;
+  const svgFallback = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><rect width='100%' height='100%' fill='%23f8f9fa'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%236c757d' font-family='Arial' font-size='14'>Kein Bild</text></svg>`;
   const tableBody = document.querySelector("#watchTable tbody");
   tableBody.innerHTML = "";
   watches.forEach((uhr) => {
@@ -331,7 +343,18 @@ function renderWatchTable(watches) {
         ? uhr.BildURL
         : svgFallback;
     // Das Bild wird zuerst lokal versucht, bei Fehler auf JSON oder Fallback gesetzt
-    const imgTag = `<img src='${localImg}' alt='${getValue(uhr.Name)}' style='width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;cursor:pointer;' data-img-url='${localImg}' data-img-fallback='${jsonImg.replace(/'/g, "'")}' title='Bild vergrößern' onerror=\"this.onerror=null;this.src='${jsonImg.replace(/'/g, "'")}'\">`;
+    const imgTag = `
+      <img 
+        src="${localImg}" 
+        alt="${getValue(uhr.Name)}" 
+        style="width:80px;height:80px;object-fit:contain;border:1px solid #ccc;border-radius:5px;cursor:pointer;" 
+        data-img-id="${paddedId}" 
+        data-json-img="${jsonImg.replace(/'/g, "\\'")}" 
+        data-fallback-img="${svgFallback.replace(/'/g, "\\'")}" 
+        title="Bild vergrößern" 
+        onerror="handleImgError(this,'${paddedId}','${jsonImg.replace(/'/g, "\\'")}','${svgFallback.replace(/'/g, "\\'")}')"
+      >
+    `;
     const preisFormatted = uhr.Kaufpreis
       ? new Intl.NumberFormat("de-DE", {
           style: "currency",
@@ -495,14 +518,145 @@ async function fetchAndShowAiInfo(uhr) {
 
 // --- Modal-Logik für Bild- und Videoanzeige ---
 document.addEventListener("click", function (e) {
-  // Bild-Modal
-  if (e.target.matches("img[data-img-url]")) {
-    const imgUrl = e.target.getAttribute("data-img-url");
-    const fallback = e.target.getAttribute("data-img-fallback");
-    const modalContent = document.getElementById("mediaModalContent");
-    modalContent.innerHTML = `<img src='${imgUrl}' alt='Großansicht' class='img-fluid rounded shadow' style='max-height:80vh;max-width:100%;background:#222;' onerror=\"this.onerror=null;this.src='${fallback}'\">`;
-    const modal = new bootstrap.Modal(document.getElementById("mediaModal"));
-    modal.show();
+  // Bild-Galerie mit LightGallery.js
+  if (e.target.matches("img[data-img-id]")) {
+    const imgId = e.target.dataset.imgId;
+    function showSpecsCard(uhr) {
+      const specsCard = document.getElementById("specsCardPane");
+      if (!specsCard) return;
+
+      // Hole alle verfügbaren Bildpfade
+      const paddedId = (uhr.ID || "").toString().padStart(3, "0");
+      const imagePaths = [
+        `./img/${paddedId}.jpg`,
+        `./img/${paddedId}-b.jpg`,
+        `./img/${paddedId}-c.jpg`,
+        `./img/${paddedId}-d.jpg`
+      ];
+
+      // Erstelle Galerie-Container
+      const galleryContainer = document.createElement('div');
+      galleryContainer.className = 'lightGallery';
+      
+      // Array für erfolgreich geladene Bilder
+      const loadedImages = [];
+
+      // Warte auf das Laden der LightGallery-Bibliothek
+      let attempts = 0;
+      function waitForLightGallery() {
+        if (typeof window.lightGallery === 'undefined') {
+          if (attempts < 5) {
+            attempts++;
+            console.log('[DEBUG] Warte auf LightGallery... (Versuch ' + attempts + ')');
+            setTimeout(waitForLightGallery, 100);
+          } else {
+            console.error('[ERROR] LightGallery konnte nicht geladen werden');
+          }
+          return;
+        }
+
+        // Initialisiere LightGallery
+        window.lightGallery(galleryContainer, {
+          selector: '.gallery-item',
+          thumbnail: true,
+          download: false,
+          share: false,
+          zoom: true,
+          fullscreen: true,
+          counter: true,
+          thumbnailWidth: 100,
+          thumbnailHeight: 100,
+          thumbnailOpacity: 0.8,
+          thumbnailMargin: 10,
+          thumbnailExternal: false,
+          thumbnailViewClass: 'lg-thumb-item',
+          thumbnailItemClass: 'lg-thumb-item',
+          thumbnailContainerClass: 'lg-thumb-outer',
+          thumbnailActiveClass: 'lg-thumb-active',
+          getCaptionFromTitleOrAlt: true,
+          dynamic: true,
+          dynamicEl: loadedImages.map(path => ({
+            src: path,
+            thumb: path
+          }))
+        });
+
+        // Plugins manuell initialisieren
+        if (typeof window.lgThumbnail !== 'undefined') {
+          galleryContainer.lgThumbnail();
+        }
+        if (typeof window.lgFullscreen !== 'undefined') {
+          galleryContainer.lgFullscreen();
+        }
+
+        // Nach der Initialisierung das erste Bild anzeigen
+        setTimeout(() => {
+          const firstImage = galleryContainer.querySelector('.gallery-item');
+          if (firstImage) {
+            firstImage.click();
+          }
+        }, 100);
+      }
+
+      // Funktion zum Überprüfen eines Bildes
+      function checkImage(path) {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => {
+            loadedImages.push(path);
+            resolve(true);
+          };
+          img.onerror = () => {
+            console.log(`[DEBUG] Bild nicht gefunden: ${path}`);
+            resolve(false);
+          };
+          img.src = path;
+        });
+      }
+
+      // Prüfe alle Bilder
+      async function checkAllImages() {
+        for (const path of imagePaths) {
+          await checkImage(path);
+        }
+        
+        // Erstelle Galerie-Elemente für alle geladenen Bilder
+        if (loadedImages.length > 0) {
+          const galleryHtml = loadedImages.map(path => 
+            `<a href="${path}"><img src="${path}" class="img-fluid rounded" style="width:80px;height:80px;object-fit:contain;"></a>`
+          ).join('');
+          
+          // Setze das HTML direkt in den Container
+          galleryContainer.innerHTML = galleryHtml;
+          document.body.appendChild(galleryContainer);
+          
+          // Starte das Warten auf LightGallery
+          waitForLightGallery();
+        }
+      }
+
+      // Starte die Bildprüfung
+      checkAllImages();
+
+      // Video-URL aus JSON laden
+      fetch(`./json/${paddedId}.json`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.videoUrl) {
+            const videoContainer = document.createElement('div');
+            videoContainer.className = 'video-container';
+            videoContainer.innerHTML = `
+              <video controls>
+                <source src="${data.videoUrl}" type="video/mp4">
+                Ihr Browser unterstützt kein Video.
+              </video>
+            `;
+            galleryContainer.appendChild(videoContainer);
+          }
+        })
+        .catch(() => {});
+    }
+    showSpecsCard({ ID: imgId });
   }
   // Video-Modal
   if (e.target.matches(".video-link[data-video-url]")) {
@@ -1036,9 +1190,9 @@ function showSpecsCard(uhr) {
   cardPane.innerHTML = `
     <div class="card shadow" style="max-width:100vw; min-width:320px; width:100%; height:320px;">
       <div class="row g-0 align-items-stretch h-100 flex-nowrap">
-        <div class="col-lg-3 col-md-4 col-12 d-flex align-items-center justify-content-center bg-light p-2" style="height:320px;">
-          <img id="specsCardImg" src="${imgSrc}" alt="Uhrenbild" class="img-fluid rounded mb-2 shadow-sm" style="max-height:280px;max-width:100%;background:#222;object-fit:contain;cursor:pointer" data-img-url="${imgSrc}" data-img-fallback="${fallbackImg}">
-        </div>
+          <div class="col-lg-3 col-md-4 col-12 d-flex align-items-center justify-content-center bg-light p-2" style="height:320px;">
+            <div id="specsGallery" class="gallery d-flex flex-wrap gap-2 p-2"></div>
+          </div>
         <div class="col-lg-9 col-md-8 col-12 d-flex flex-column justify-content-center" style="height:320px;">
           <h5 class="card-title mb-2">${uhr.Name || ""}</h5>
           <div class="row h-100">
@@ -1088,28 +1242,33 @@ function showSpecsCard(uhr) {
     </style>
   `;
 
-  // Bild robust nachladen und Fehler behandeln
-  const imgEl = document.getElementById("specsCardImg");
-  if (imgEl) {
-    let triedLocal = true;
-    let triedJson = false;
-    imgEl.onerror = function () {
-      console.log("[DEBUG] Bild konnte nicht geladen werden:", imgEl.src);
-      // Wenn localImg nicht klappt, versuche BildURL aus JSON
-      if (
-        triedLocal &&
-        uhr.BildURL &&
-        uhr.BildURL.trim() !== "" &&
-        imgEl.src !== uhr.BildURL
-      ) {
-        imgEl.src = uhr.BildURL;
-        triedLocal = false;
-        triedJson = true;
-        console.log("[DEBUG] Versuche BildURL aus JSON:", uhr.BildURL);
-      } else if (triedJson && imgEl.src !== fallbackImg) {
-        imgEl.src = fallbackImg;
-        console.log("[DEBUG] Fallback auf Platzhalter:", fallbackImg);
-      }
-    };
-  }
+  // Galerie im Detail-Tab befüllen: nu inxdutieieseTumbni
+  const galleryDiv = document.getElementById("specsGallery");
+  if (galleryDiv) {
+    galleryDiv.innerHTML = "";
+    // Nur lakale Bildvarialeenr(fills vorhanden) anzeiv.n
+    const vnriannrHTML = "";
+    // Nur lokale Bildvarianten (falls vorhanden) anzeigen
+    const variants = [
+      `./img/${paddedId}.jpg`,
+      `./img/${paddedId}-b.jpg`,
+    v i/aats.foeEach(src-c>.{`
+      ];Nuxstindt B/ldur anzshgcn();
+      heck.src Check= src;
+      hecCheckksrcd =rc
+      nstCheck lil=addocument.{"a");
+        constllnnk = docukenthceerteElemenc("a")nst imgEl = document.createElement("img");
+        link  Elfe.ssrc;Text = "width:80px;height:80px;object-fit:contain;";
+          imgEimgEl= sdocumcncreaEkimElt("vg");
+ // BFlnEl.Name  ;
+       imgEl.e.cssTxt  ;
+        imgEl.src = src;
+    });link.appendChild(imgEl;
+    // LgalleryDiviappendChild(ltGke;
+      }r
+      // Bei Fehler nichts tuny initialisieren
+    });
+  lightGallery(galleryDiv, { selector: "a", download: false });
 }
+}
+
