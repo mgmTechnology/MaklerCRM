@@ -1,0 +1,38 @@
+{
+    "c34846983e148cb5beae17539ff5baac": {
+        "id": "c34846983e148cb5beae17539ff5baac",
+        "url": "https:\/\/familiengarten.nrw",
+        "name": "Familiengarten NRW",
+        "interval": 2,
+        "content_check_string": "ddd",
+        "last_check": "2025-05-19 10:23:36",
+        "next_check": "2025-05-19 10:25:36"
+    },
+    "8cd1ac8a03f1cdc61e7eee03e21009d8": {
+        "id": "8cd1ac8a03f1cdc61e7eee03e21009d8",
+        "url": "https:\/\/kinderstube-birgit-scholz.de",
+        "name": "Kinderstube Birgit Scholz",
+        "interval": 2,
+        "content_check_string": "Birgit",
+        "last_check": "2025-05-19 10:23:39",
+        "next_check": "2025-05-19 10:25:39"
+    },
+    "68660931ec21dab1eb2c10c801bd0a78": {
+        "id": "68660931ec21dab1eb2c10c801bd0a78",
+        "url": "https:\/\/resume.mgm.technology",
+        "name": "MGM Technology",
+        "interval": 1,
+        "content_check_string": "fullstack",
+        "last_check": "2025-05-19 10:23:40",
+        "next_check": "2025-05-19 10:24:40"
+    },
+    "eb58c294eb5c0b6cc1b50acd903f19ed": {
+        "id": "eb58c294eb5c0b6cc1b50acd903f19ed",
+        "url": "https:\/\/google.com",
+        "name": "google",
+        "interval": 5,
+        "content_check_string": "Google",
+        "last_check": "2025-05-19 10:23:41",
+        "next_check": "2025-05-19 10:28:41"
+    }
+}

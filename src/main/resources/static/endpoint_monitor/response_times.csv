@@ -1,0 +1,41 @@
+Timestamp,URL,Status,"Response Time (ms)",Success,"Content Check String","Content Check Success"
+"2025-05-19 09:32:12",https://familiengarten.nrw,200,2454.22,Yes,ddd,No
+"2025-05-19 09:32:12",https://kinderstube-birgit-scholz.de,200,460.72,Yes,Birgit,Yes
+"2025-05-19 09:32:12",https://mgm.technology,200,292.13,Yes,"Remember password",No
+"2025-05-19 09:32:13",https://google.com,200,494.76,Yes,Google,Yes
+"2025-05-19 09:32:56",https://familiengarten.nrw,200,2500.75,Yes,ddd,No
+"2025-05-19 09:32:57",https://kinderstube-birgit-scholz.de,200,519.93,Yes,Birgit,Yes
+"2025-05-19 09:32:57",https://mgm.technology,200,298.77,Yes,"Remember password",No
+"2025-05-19 09:32:57",https://google.com,200,477.36,Yes,Google,Yes
+"2025-05-19 09:33:21",https://familiengarten.nrw,200,2605.01,Yes,ddd,No
+"2025-05-19 09:33:21",https://kinderstube-birgit-scholz.de,200,444.79,Yes,Birgit,Yes
+"2025-05-19 09:33:22",https://mgm.technology,200,284.83,Yes,"Remember password",No
+"2025-05-19 09:33:22",https://google.com,200,374.68,Yes,Google,Yes
+"2025-05-19 09:49:18",https://familiengarten.nrw,200,7252.4,Yes,ddd,No
+"2025-05-19 09:49:19",https://kinderstube-birgit-scholz.de,200,541.53,Yes,Birgit,Yes
+"2025-05-19 09:49:19",https://mgm.technology,200,448.38,Yes,"Remember password",No
+"2025-05-19 09:49:20",https://google.com,200,611.82,Yes,Google,Yes
+"2025-05-19 09:58:31",https://familiengarten.nrw,200,2911.03,Yes,ddd,No
+"2025-05-19 09:58:32",https://kinderstube-birgit-scholz.de,200,602.29,Yes,Birgit,Yes
+"2025-05-19 09:58:33",https://mgm.technology,200,442.28,Yes,"Remember password",No
+"2025-05-19 09:58:34",https://google.com,200,544.52,Yes,Google,Yes
+"2025-05-19 10:03:33",https://familiengarten.nrw,200,5051.14,Yes,ddd,No
+"2025-05-19 10:03:36",https://kinderstube-birgit-scholz.de,200,2105.97,Yes,Birgit,Yes
+"2025-05-19 10:03:38",https://mgm.technology,200,997.68,Yes,"Remember password",No
+"2025-05-19 10:03:40",https://google.com,200,1493.11,Yes,Google,Yes
+"2025-05-19 10:08:32",https://familiengarten.nrw,200,3770.52,Yes,ddd,No
+"2025-05-19 10:08:33",https://kinderstube-birgit-scholz.de,200,392.86,Yes,Birgit,Yes
+"2025-05-19 10:08:34",https://mgm.technology,200,310.43,Yes,"Remember password",No
+"2025-05-19 10:08:35",https://google.com,200,469.1,Yes,Google,Yes
+"2025-05-19 10:13:31",https://familiengarten.nrw,200,2592.11,Yes,ddd,No
+"2025-05-19 10:13:32",https://kinderstube-birgit-scholz.de,200,437.69,Yes,Birgit,Yes
+"2025-05-19 10:13:33",https://mgm.technology,200,310.49,Yes,"Remember password",No
+"2025-05-19 10:13:34",https://google.com,200,433.83,Yes,Google,Yes
+"2025-05-19 10:18:31",https://familiengarten.nrw,200,3141.22,Yes,ddd,No
+"2025-05-19 10:18:33",https://kinderstube-birgit-scholz.de,200,914.94,Yes,Birgit,Yes
+"2025-05-19 10:18:34",https://mgm.technology,200,720.94,Yes,"Remember password",No
+"2025-05-19 10:18:35",https://google.com,200,695.39,Yes,Google,Yes
+"2025-05-19 10:23:36",https://familiengarten.nrw,200,7789.22,Yes,ddd,No
+"2025-05-19 10:23:39",https://kinderstube-birgit-scholz.de,200,2204.55,Yes,Birgit,Yes
+"2025-05-19 10:23:40",https://mgm.technology,200,389.75,Yes,"Remember password",No
+"2025-05-19 10:23:41",https://google.com,200,539.15,Yes,Google,Yes
