@@ -45,6 +45,13 @@ $logData = readLogData();
 
 // Eindeutige URLs extrahieren
 $urls = array_unique(array_column($logData, 'URL'));
+
+// Zeitbereich für die letzten 8 Stunden berechnen
+$now = new DateTime();
+$eightHoursAgo = clone $now;
+$eightHoursAgo->modify('-8 hours');
+$defaultStartDate = $eightHoursAgo->format('Y-m-d\TH:i');
+$defaultEndDate = $now->format('Y-m-d\TH:i');
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +59,7 @@ $urls = array_unique(array_column($logData, 'URL'));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Run Chart</title>
+    <title>Endpoint Monitoring - Run Chart</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -62,9 +69,12 @@ $urls = array_unique(array_column($logData, 'URL'));
     
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css" rel="stylesheet">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
     
     <style>
         .chart-container {
@@ -109,6 +119,32 @@ $urls = array_unique(array_column($logData, 'URL'));
             right: 20px;
             z-index: 1000;
         }
+        
+        .custom-filter {
+            margin-bottom: 15px;
+        }
+        
+        .custom-filter .btn-group {
+            margin-right: 10px;
+        }
+        
+        .response-time-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .response-time-filter input {
+            width: 100px;
+        }
+        
+        .date-time-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +158,7 @@ $urls = array_unique(array_column($logData, 'URL'));
     <div class="container py-4">
         <header class="pb-3 mb-4 border-bottom">
             <h1 class="display-5 fw-bold">
-                <i class="bi bi-graph-up"></i>Run Chart
+                <i class="bi bi-graph-up"></i> Endpoint Monitoring - Run Chart
             </h1>
             <p class="lead">Visualisierung der Antwortzeiten</p>
         </header>
@@ -145,13 +181,28 @@ $urls = array_unique(array_column($logData, 'URL'));
                         </div>
                         
                         <div class="mb-3">
-                            <label for="time-range" class="form-label">Zeitraum:</label>
+                            <label for="time-range" class="form-label">Vordefinierter Zeitraum:</label>
                             <select class="form-select" id="time-range">
+                                <option value="8h" selected>Letzte 8 Stunden</option>
                                 <option value="24h">Letzte 24 Stunden</option>
                                 <option value="7d">Letzte 7 Tage</option>
                                 <option value="30d">Letzte 30 Tage</option>
-                                <option value="all" selected>Alle Daten</option>
+                                <option value="custom">Benutzerdefiniert</option>
+                                <option value="all">Alle Daten</option>
                             </select>
+                        </div>
+                        
+                        <div id="custom-time-range" class="mb-3" style="display: none;">
+                            <div class="date-time-filter">
+                                <div>
+                                    <label for="start-date" class="form-label">Von:</label>
+                                    <input type="datetime-local" id="start-date" class="form-control" value="<?php echo $defaultStartDate; ?>">
+                                </div>
+                                <div>
+                                    <label for="end-date" class="form-label">Bis:</label>
+                                    <input type="datetime-local" id="end-date" class="form-control" value="<?php echo $defaultEndDate; ?>">
+                                </div>
+                            </div>
                         </div>
                         
                         <button id="apply-filter" class="btn btn-primary">
@@ -203,6 +254,35 @@ $urls = array_unique(array_column($logData, 'URL'));
                 <h5 class="card-title mb-0">Daten</h5>
             </div>
             <div class="card-body">
+                <!-- Erweiterte Filtermöglichkeiten -->
+                <div class="custom-filter">
+                    <h6>Erweiterte Filter:</h6>
+                    <div class="btn-group" role="group" aria-label="HTTP-Status Filter">
+                        <button type="button" class="btn btn-outline-secondary active" data-filter="all">Alle</button>
+                        <button type="button" class="btn btn-outline-success" data-filter="success">Erfolgreich</button>
+                        <button type="button" class="btn btn-outline-danger" data-filter="failed">Fehlgeschlagen</button>
+                    </div>
+                    
+                    <div class="btn-group ms-2" role="group" aria-label="Content-Check Filter">
+                        <button type="button" class="btn btn-outline-secondary active" data-content-filter="all">Alle Content-Checks</button>
+                        <button type="button" class="btn btn-outline-success" data-content-filter="success">Content gefunden</button>
+                        <button type="button" class="btn btn-outline-danger" data-content-filter="failed">Content nicht gefunden</button>
+                    </div>
+                </div>
+                
+                <div class="response-time-filter">
+                    <label>Antwortzeit (ms):</label>
+                    <input type="number" id="min-response-time-filter" class="form-control" placeholder="Min" min="0">
+                    <span>bis</span>
+                    <input type="number" id="max-response-time-filter" class="form-control" placeholder="Max" min="0">
+                    <button id="apply-response-time-filter" class="btn btn-outline-primary">
+                        <i class="bi bi-funnel"></i> Filtern
+                    </button>
+                    <button id="reset-response-time-filter" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle"></i> Zurücksetzen
+                    </button>
+                </div>
+                
                 <div class="table-responsive">
                     <table class="table table-striped table-hover" id="data-table">
                         <thead>
@@ -237,6 +317,13 @@ $urls = array_unique(array_column($logData, 'URL'));
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
     
     <!-- Bootstrap JS Bundle mit Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -245,25 +332,39 @@ $urls = array_unique(array_column($logData, 'URL'));
         // Daten aus PHP in JavaScript verfügbar machen
         const logData = <?php echo json_encode($logData); ?>;
         let dataTable;
-
-        // Warte auf DOM-Loaded
+        let currentFilter = 'all';
+        let currentContentFilter = 'all';
+        let minResponseTime = null;
+        let maxResponseTime = null;
+        
+        // Theme-Switcher
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-bs-theme', newTheme);
+            
+            // Button-Text und Icon aktualisieren
+            const button = document.getElementById('theme-toggle');
+            if (newTheme === 'dark') {
+                button.innerHTML = '<i class="bi bi-sun"></i> Light Mode';
+            } else {
+                button.innerHTML = '<i class="bi bi-moon-stars"></i> Dark Mode';
+            }
+            
+            // Theme in localStorage speichern
+            localStorage.setItem('theme', newTheme);
+            
+            // DataTable neu initialisieren, um Styling anzupassen
+            if (dataTable) {
+                dataTable.destroy();
+                updateTable(filterData());
+            }
+        });
+        
+        // Gespeichertes Theme beim Laden anwenden
         document.addEventListener('DOMContentLoaded', function() {
-            // Theme-Switcher
-            document.getElementById('theme-toggle').addEventListener('click', function() {
-                const html = document.documentElement;
-                const currentTheme = html.getAttribute('data-bs-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                
-                html.setAttribute('data-bs-theme', newTheme);
-                
-                // DataTable neu initialisieren, um Styling anzupassen
-                if (dataTable) {
-                    dataTable.destroy();
-                    updateTable(filterData());
-                }
-            });
-
-            // Gespeichertes Theme beim Laden anwenden
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 document.documentElement.setAttribute('data-bs-theme', savedTheme);
@@ -274,15 +375,86 @@ $urls = array_unique(array_column($logData, 'URL'));
                     button.innerHTML = '<i class="bi bi-sun"></i> Light Mode';
                 }
             }
-
-            // Filter-Button
-            const filterButton = document.getElementById('apply-filter');
-            if (filterButton) {
-                filterButton.addEventListener('click', updateViews);
+            
+            // Zeige/verstecke benutzerdefinierte Zeitauswahl
+            document.getElementById('time-range').addEventListener('change', function() {
+                const customTimeRange = document.getElementById('custom-time-range');
+                if (this.value === 'custom') {
+                    customTimeRange.style.display = 'block';
+                } else {
+                    customTimeRange.style.display = 'none';
+                }
+            });
+        });
+        
+        // HTTP-Status Filter
+        document.querySelectorAll('[data-filter]').forEach(button => {
+            button.addEventListener('click', function() {
+                // Aktiven Button markieren
+                document.querySelectorAll('[data-filter]').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Filter setzen
+                currentFilter = this.getAttribute('data-filter');
+                
+                // Tabelle aktualisieren
+                if (dataTable) {
+                    dataTable.destroy();
+                }
+                updateTable(filterData());
+            });
+        });
+        
+        // Content-Check Filter
+        document.querySelectorAll('[data-content-filter]').forEach(button => {
+            button.addEventListener('click', function() {
+                // Aktiven Button markieren
+                document.querySelectorAll('[data-content-filter]').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Filter setzen
+                currentContentFilter = this.getAttribute('data-content-filter');
+                
+                // Tabelle aktualisieren
+                if (dataTable) {
+                    dataTable.destroy();
+                }
+                updateTable(filterData());
+            });
+        });
+        
+        // Antwortzeit Filter anwenden
+        document.getElementById('apply-response-time-filter').addEventListener('click', function() {
+            const minInput = document.getElementById('min-response-time-filter');
+            const maxInput = document.getElementById('max-response-time-filter');
+            
+            minResponseTime = minInput.value ? parseFloat(minInput.value) : null;
+            maxResponseTime = maxInput.value ? parseFloat(maxInput.value) : null;
+            
+            // Tabelle aktualisieren
+            if (dataTable) {
+                dataTable.destroy();
             }
-
-            // Initialisierung
-            updateViews();
+            updateTable(filterData());
+        });
+        
+        // Antwortzeit Filter zurücksetzen
+        document.getElementById('reset-response-time-filter').addEventListener('click', function() {
+            document.getElementById('min-response-time-filter').value = '';
+            document.getElementById('max-response-time-filter').value = '';
+            
+            minResponseTime = null;
+            maxResponseTime = null;
+            
+            // Tabelle aktualisieren
+            if (dataTable) {
+                dataTable.destroy();
+            }
+            updateTable(filterData());
         });
         
         // Funktion zum Filtern der Daten
@@ -299,19 +471,87 @@ $urls = array_unique(array_column($logData, 'URL'));
             // Daten nach Zeitraum filtern
             const now = new Date();
             if (timeRange !== 'all') {
-                let cutoffDate;
+                let startDate, endDate;
                 
-                if (timeRange === '24h') {
-                    cutoffDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-                } else if (timeRange === '7d') {
-                    cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                } else if (timeRange === '30d') {
-                    cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                if (timeRange === 'custom') {
+                    // Benutzerdefinierter Zeitraum
+                    const startDateInput = document.getElementById('start-date').value;
+                    const endDateInput = document.getElementById('end-date').value;
+                    
+                    startDate = startDateInput ? new Date(startDateInput) : null;
+                    endDate = endDateInput ? new Date(endDateInput) : null;
+                } else {
+                    // Vordefinierter Zeitraum
+                    endDate = now;
+                    
+                    if (timeRange === '8h') {
+                        startDate = new Date(now.getTime() - 8 * 60 * 60 * 1000);
+                    } else if (timeRange === '24h') {
+                        startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                    } else if (timeRange === '7d') {
+                        startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    } else if (timeRange === '30d') {
+                        startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    }
                 }
                 
+                if (startDate) {
+                    filteredData = filteredData.filter(item => {
+                        const itemDate = new Date(item.Timestamp);
+                        return itemDate >= startDate;
+                    });
+                }
+                
+                if (endDate) {
+                    filteredData = filteredData.filter(item => {
+                        const itemDate = new Date(item.Timestamp);
+                        return itemDate <= endDate;
+                    });
+                }
+            }
+            
+            // Nach HTTP-Status filtern
+            if (currentFilter !== 'all') {
                 filteredData = filteredData.filter(item => {
-                    const itemDate = new Date(item.Timestamp);
-                    return itemDate >= cutoffDate;
+                    if (currentFilter === 'success') {
+                        return item.Success === 'Yes';
+                    } else if (currentFilter === 'failed') {
+                        return item.Success === 'No';
+                    }
+                    return true;
+                });
+            }
+            
+            // Nach Content-Check filtern
+            if (currentContentFilter !== 'all') {
+                filteredData = filteredData.filter(item => {
+                    // Nur Einträge mit Content-Check berücksichtigen
+                    if (item['Content Check String'] && item['Content Check String'].trim() !== '') {
+                        if (currentContentFilter === 'success') {
+                            return item['Content Check Success'] === 'Yes';
+                        } else if (currentContentFilter === 'failed') {
+                            return item['Content Check Success'] === 'No';
+                        }
+                    }
+                    // Wenn kein Content-Check definiert ist und "all" ausgewählt wurde, zeige den Eintrag an
+                    return currentContentFilter === 'all';
+                });
+            }
+            
+            // Nach Antwortzeit filtern
+            if (minResponseTime !== null || maxResponseTime !== null) {
+                filteredData = filteredData.filter(item => {
+                    const responseTime = parseFloat(item['Response Time (ms)']);
+                    
+                    if (minResponseTime !== null && maxResponseTime !== null) {
+                        return responseTime >= minResponseTime && responseTime <= maxResponseTime;
+                    } else if (minResponseTime !== null) {
+                        return responseTime >= minResponseTime;
+                    } else if (maxResponseTime !== null) {
+                        return responseTime <= maxResponseTime;
+                    }
+                    
+                    return true;
                 });
             }
             
@@ -414,10 +654,6 @@ $urls = array_unique(array_column($logData, 'URL'));
             });
             
             // DataTable initialisieren oder aktualisieren
-            if (dataTable) {
-                dataTable.destroy();
-            }
-            
             dataTable = new DataTable('#data-table', {
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/de-DE.json',
@@ -425,33 +661,52 @@ $urls = array_unique(array_column($logData, 'URL'));
                 order: [[0, 'desc']], // Sortiere nach Zeitstempel absteigend
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50, 100],
-                responsive: true
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        text: '<i class="bi bi-clipboard"></i> Kopieren',
+                        className: 'btn btn-sm btn-outline-secondary'
+                    },
+                    {
+                        extend: 'csv',
+                        text: '<i class="bi bi-file-earmark-spreadsheet"></i> CSV',
+                        className: 'btn btn-sm btn-outline-secondary'
+                    },
+                    {
+                        extend: 'excel',
+                        text: '<i class="bi bi-file-earmark-excel"></i> Excel',
+                        className: 'btn btn-sm btn-outline-secondary'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="bi bi-file-earmark-pdf"></i> PDF',
+                        className: 'btn btn-sm btn-outline-secondary'
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="bi bi-printer"></i> Drucken',
+                        className: 'btn btn-sm btn-outline-secondary'
+                    }
+                ]
             });
         }
         
         // Funktion zum Erstellen oder Aktualisieren des Charts
         function updateChart(data) {
-            // Chart-Kontext holen
-            const ctx = document.getElementById('responseTimeChart').getContext('2d');
-            
-            // Chart zerstören, wenn bereits vorhanden
-            if (window.responseChart) {
-                window.responseChart.destroy();
-            }
-            
-            // Daten nach URL gruppieren
+            // Daten nach URL gruppieren und für Chart.js vorbereiten
             const urlGroups = {};
             
-            // Daten nach Zeitstempel absteigend sortieren
-            const sortedData = [...data].sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
+            // Sortiere Daten nach Zeitstempel
+            data.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
             
-            // Alle URLs initialisieren
-            sortedData.forEach(item => {
+            data.forEach(item => {
                 const url = item.URL;
+                
                 if (!urlGroups[url]) {
                     urlGroups[url] = {
                         label: url,
-                        labels: [],
                         data: [],
                         borderColor: getRandomColor(),
                         fill: false,
@@ -462,12 +717,19 @@ $urls = array_unique(array_column($logData, 'URL'));
                     };
                 }
                 
-                // Daten für aktuelle URL hinzufügen
-                urlGroups[url].labels.push(item.Timestamp);
-                urlGroups[url].data.push(parseFloat(item['Response Time (ms)']));
+                // Datenpunkt mit x (Zeitstempel) und y (Antwortzeit) erstellen
+                urlGroups[url].data.push({
+                    x: new Date(item.Timestamp),
+                    y: parseFloat(item['Response Time (ms)'])
+                });
                 
                 // Markiere fehlgeschlagene Prüfungen
-                if (item.Success === 'No' || (item['Content Check String'] && item['Content Check String'].trim() !== '' && item['Content Check Success'] === 'No')) {
+                const isFailedCheck = item.Success === 'No' || 
+                                     (item['Content Check String'] && 
+                                      item['Content Check String'].trim() !== '' && 
+                                      item['Content Check Success'] === 'No');
+                
+                if (isFailedCheck) {
                     urlGroups[url].pointBackgroundColor.push('rgba(255, 0, 0, 0.2)');
                     urlGroups[url].pointBorderColor.push('red');
                     urlGroups[url].pointRadius.push(6);
@@ -479,16 +741,10 @@ $urls = array_unique(array_column($logData, 'URL'));
             });
             
             // Datasets erstellen
-            const datasets = Object.values(urlGroups).map(group => ({
-                label: group.label,
-                data: group.data,
-                borderColor: group.borderColor,
-                fill: false,
-                tension: 0.1,
-                pointBackgroundColor: group.pointBackgroundColor,
-                pointBorderColor: group.pointBorderColor,
-                pointRadius: group.pointRadius
-            }));
+            const datasets = Object.values(urlGroups);
+            
+            // Chart erstellen oder aktualisieren
+            const ctx = document.getElementById('responseTimeChart').getContext('2d');
             
             if (window.responseChart) {
                 window.responseChart.destroy();
@@ -497,7 +753,6 @@ $urls = array_unique(array_column($logData, 'URL'));
             window.responseChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.map(item => item.Timestamp),
                     datasets: datasets
                 },
                 options: {
@@ -505,6 +760,15 @@ $urls = array_unique(array_column($logData, 'URL'));
                     maintainAspectRatio: false,
                     scales: {
                         x: {
+                            type: 'time',
+                            time: {
+                                unit: 'minute',
+                                displayFormats: {
+                                    minute: 'HH:mm',
+                                    hour: 'HH:mm',
+                                    day: 'dd.MM'
+                                }
+                            },
                             title: {
                                 display: true,
                                 text: 'Zeitstempel'
@@ -539,7 +803,13 @@ $urls = array_unique(array_column($logData, 'URL'));
                                     // Füge Statusinformation hinzu
                                     const dataIndex = context.dataIndex;
                                     const url = context.dataset.label;
-                                    const item = data.find(i => i.URL === url && i.Timestamp === context.label);
+                                    const timestamp = context.parsed.x;
+                                    
+                                    // Finde den entsprechenden Datenpunkt
+                                    const item = data.find(i => {
+                                        return i.URL === url && 
+                                               Math.abs(new Date(i.Timestamp).getTime() - timestamp) < 1000; // Toleranz von 1 Sekunde
+                                    });
                                     
                                     if (item) {
                                         label += ' | HTTP: ' + (item.Success === 'Yes' ? 'Erfolg' : 'Fehler');
