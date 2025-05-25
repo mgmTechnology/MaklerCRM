@@ -1,9 +1,9 @@
 ﻿{
-  "timestamp": "2025-05-14T19:35:53",
+  "timestamp": "2025-05-25T18:46:47",
   "Uhren": [
     {
       "ID": "1",
-      "Name": "Heimdallr-HMCE21-",
+      "Name": "Heimdallr-HMCE21",
       "Kaufdatum": "18.02.2022",
       "Kaufpreis": 175,
       "Hersteller": "Heimdallr",
@@ -25,7 +25,7 @@
     },
     {
       "ID": "2",
-      "Name": "Yelang-1029-",
+      "Name": "Yelang-1029",
       "Kaufdatum": "01.03.2022",
       "Kaufpreis": 172,
       "Hersteller": "Yelang",
@@ -47,7 +47,7 @@
     },
     {
       "ID": "4",
-      "Name": "Addies-MY-H3-",
+      "Name": "Addies-MY-H3",
       "Kaufdatum": "01.02.2022",
       "Kaufpreis": 43,
       "Hersteller": "Addies",
@@ -69,7 +69,7 @@
     },
     {
       "ID": "5",
-      "Name": "Escapement Time-Type-B",
+      "Name": "Escapement Time-Type-B-",
       "Kaufdatum": "01.02.2022",
       "Kaufpreis": 128,
       "Hersteller": "Escapement Time",
@@ -91,7 +91,7 @@
     },
     {
       "ID": "8",
-      "Name": "Citizen-BN0150-28E-",
+      "Name": "Citizen-BN0150-28E",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 95,
       "Hersteller": "Citizen",
@@ -113,7 +113,7 @@
     },
     {
       "ID": "9",
-      "Name": "Steeldive-Allbai-1936NEW-",
+      "Name": "Steeldive-Allbai-1936NEW",
       "Kaufdatum": "13.01.2022",
       "Kaufpreis": 143,
       "Hersteller": "Steeldive",
@@ -135,7 +135,7 @@
     },
     {
       "ID": "10",
-      "Name": "Steeldive-SD8107-",
+      "Name": "Steeldive-SD8107",
       "Kaufdatum": "10.01.2022",
       "Kaufpreis": 81,
       "Hersteller": "Steeldive",
@@ -157,7 +157,7 @@
     },
     {
       "ID": "11",
-      "Name": "Aristo-ME5021-44",
+      "Name": "Aristo-ME5021-44-",
       "Kaufdatum": "01.01.2022",
       "Kaufpreis": 80,
       "Hersteller": "Aristo",
@@ -179,7 +179,7 @@
     },
     {
       "ID": "12",
-      "Name": "Poljot-Traveler 24",
+      "Name": "Poljot-Traveler 24-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 160,
       "Hersteller": "Poljot",
@@ -201,7 +201,7 @@
     },
     {
       "ID": "13",
-      "Name": "Roter Stern-Traveller",
+      "Name": "Roter Stern-Traveller-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 125,
       "Hersteller": "Roter Stern",
@@ -223,7 +223,7 @@
     },
     {
       "ID": "14",
-      "Name": "Addiesdive-SD-1975-",
+      "Name": "Addiesdive-SD-1975",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 134,
       "Hersteller": "Addiesdive",
@@ -245,7 +245,7 @@
     },
     {
       "ID": "15",
-      "Name": "Citizen-AW1365-19P-",
+      "Name": "Citizen-AW1365-19P",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 55,
       "Hersteller": "Citizen",
@@ -267,7 +267,7 @@
     },
     {
       "ID": "16",
-      "Name": "Steeldive-SD1975T-",
+      "Name": "Steeldive-SD1975T",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 136,
       "Hersteller": "Steeldive",
@@ -289,7 +289,7 @@
     },
     {
       "ID": "17",
-      "Name": "Addiesdive-AD2104-",
+      "Name": "Addiesdive-AD2104",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 150,
       "Hersteller": "Addiesdive",
@@ -311,7 +311,7 @@
     },
     {
       "ID": "18",
-      "Name": "Pagani Design-PD-1679",
+      "Name": "Pagani Design-PD-1679-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 137,
       "Hersteller": "Pagani Design",
@@ -333,7 +333,7 @@
     },
     {
       "ID": "19",
-      "Name": "North Edge-Evoque",
+      "Name": "North Edge-Evoque-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 68,
       "Hersteller": "North Edge",
@@ -355,7 +355,7 @@
     },
     {
       "ID": "20",
-      "Name": "Yazole-CQ57",
+      "Name": "Yazole-CQ57-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 10,
       "Hersteller": "Yazole",
@@ -399,7 +399,7 @@
     },
     {
       "ID": "22",
-      "Name": "Guanqin-GS19101-",
+      "Name": "Guanqin-GS19101",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 29,
       "Hersteller": "Guanqin",
@@ -421,7 +421,7 @@
     },
     {
       "ID": "25",
-      "Name": "Bering- 10540-404",
+      "Name": "Bering- 10540-404-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 35,
       "Hersteller": "Bering",
@@ -465,7 +465,7 @@
     },
     {
       "ID": "27",
-      "Name": "Sugess-Panda40",
+      "Name": "Sugess-Panda40-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 220,
       "Hersteller": "Sugess",
@@ -487,7 +487,7 @@
     },
     {
       "ID": "28",
-      "Name": "Casio-EFS-S570",
+      "Name": "Casio-EFS-S570-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 250,
       "Hersteller": "Casio",
@@ -509,7 +509,7 @@
     },
     {
       "ID": "29",
-      "Name": "Zeppelin-Typhon 7298-5",
+      "Name": "Zeppelin-Typhon 7298-5-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 349,
       "Hersteller": "Zeppelin",
@@ -531,7 +531,7 @@
     },
     {
       "ID": "30",
-      "Name": "Luobin-LB9002",
+      "Name": "Luobin-LB9002-",
       "Kaufdatum": "25.03.2022",
       "Kaufpreis": 108,
       "Hersteller": "Luobin",
@@ -553,7 +553,7 @@
     },
     {
       "ID": "32",
-      "Name": "Timex-T2B971 Perpetual",
+      "Name": "Timex-T2B971 Perpetual-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 20,
       "Hersteller": "Timex",
@@ -575,7 +575,7 @@
     },
     {
       "ID": "34",
-      "Name": "Sekado-2732 Orange",
+      "Name": "Sekado-2732 Orange-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 85,
       "Hersteller": "Sekado",
@@ -597,7 +597,7 @@
     },
     {
       "ID": "35",
-      "Name": "Sekado-2732 Schwarz",
+      "Name": "Sekado-2732 Schwarz-",
       "Kaufdatum": "01.05.2022",
       "Kaufpreis": 66,
       "Hersteller": "Sekado",
@@ -619,7 +619,7 @@
     },
     {
       "ID": "37",
-      "Name": "Bliger-GMT40",
+      "Name": "Bliger-GMT40-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 95,
       "Hersteller": "Bliger",
@@ -641,7 +641,7 @@
     },
     {
       "ID": "38",
-      "Name": "Pagani Design-PD-5080",
+      "Name": "Pagani Design-PD-5080-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 57,
       "Hersteller": "Pagani Design",
@@ -685,7 +685,7 @@
     },
     {
       "ID": "40",
-      "Name": "Baltany-S182019",
+      "Name": "Baltany-S182019-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 124,
       "Hersteller": "Baltany",
@@ -707,7 +707,7 @@
     },
     {
       "ID": "41",
-      "Name": "Aidis-49",
+      "Name": "Aidis-49-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 36,
       "Hersteller": "Aidis",
@@ -729,7 +729,7 @@
     },
     {
       "ID": "42",
-      "Name": "Benyar-BY-5189",
+      "Name": "Benyar-BY-5189-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 53,
       "Hersteller": "Benyar",
@@ -773,7 +773,7 @@
     },
     {
       "ID": "45",
-      "Name": "Cadisen-C9056M",
+      "Name": "Cadisen-C9056M-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 24,
       "Hersteller": "Cadisen",
@@ -795,7 +795,7 @@
     },
     {
       "ID": "47",
-      "Name": "Detomaso-Partenza D01-03-02",
+      "Name": "Detomaso-Partenza D01-03-02-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 55,
       "Hersteller": "Detomaso",
@@ -817,7 +817,7 @@
     },
     {
       "ID": "48",
-      "Name": "Nautica-N18523G",
+      "Name": "Nautica-N18523G-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 35,
       "Hersteller": "Nautica",
@@ -839,7 +839,7 @@
     },
     {
       "ID": "49",
-      "Name": "Ruili-SKX 6105 6309",
+      "Name": "Ruili-SKX 6105 6309-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 89,
       "Hersteller": "Ruili",
@@ -883,7 +883,7 @@
     },
     {
       "ID": "51",
-      "Name": "Dugena-4460679",
+      "Name": "Dugena-4460679-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 42,
       "Hersteller": "Dugena",
@@ -905,7 +905,7 @@
     },
     {
       "ID": "52",
-      "Name": "Megir-MS2137-BK-3",
+      "Name": "Megir-MS2137-BK-3-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 16,
       "Hersteller": "Megir",
@@ -927,7 +927,7 @@
     },
     {
       "ID": "53",
-      "Name": "Sinobi-9809",
+      "Name": "Sinobi-9809-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 13,
       "Hersteller": "Sinobi",
@@ -949,7 +949,7 @@
     },
     {
       "ID": "55",
-      "Name": "Gustav Becker-GUNH001V2",
+      "Name": "Gustav Becker-GUNH001V2-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 116,
       "Hersteller": "Gustav Becker",
@@ -971,7 +971,7 @@
     },
     {
       "ID": "56",
-      "Name": "Parnsrpe-Green",
+      "Name": "Parnsrpe-Green-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 92,
       "Hersteller": "Parnsrpe",
@@ -993,7 +993,7 @@
     },
     {
       "ID": "57",
-      "Name": "Tauchmeister-T0047",
+      "Name": "Tauchmeister-T0047-",
       "Kaufdatum": "01.06.2022",
       "Kaufpreis": 70,
       "Hersteller": "Tauchmeister",
@@ -1015,7 +1015,7 @@
     },
     {
       "ID": "59",
-      "Name": "Steeldive-SD1954C",
+      "Name": "Steeldive-SD1954C-",
       "Kaufdatum": "01.07.2022",
       "Kaufpreis": 143,
       "Hersteller": "Steeldive",
@@ -1081,7 +1081,7 @@
     },
     {
       "ID": "63",
-      "Name": "Berny-AM7081M",
+      "Name": "Berny-AM7081M-",
       "Kaufdatum": "01.07.2022",
       "Kaufpreis": 96,
       "Hersteller": "Berny",
@@ -1103,7 +1103,7 @@
     },
     {
       "ID": "64",
-      "Name": "Pagani Design-PD-1733",
+      "Name": "Pagani Design-PD-1733-",
       "Kaufdatum": "01.07.2022",
       "Kaufpreis": 108,
       "Hersteller": "Pagani Design",
@@ -1125,7 +1125,7 @@
     },
     {
       "ID": "65",
-      "Name": "Carnival-Circula",
+      "Name": "Carnival-Circula-",
       "Kaufdatum": "01.07.2022",
       "Kaufpreis": 95,
       "Hersteller": "Carnival",
@@ -1147,7 +1147,7 @@
     },
     {
       "ID": "66",
-      "Name": "Paulareis-SuperOcean",
+      "Name": "Paulareis-SuperOcean-",
       "Kaufdatum": "01.07.2022",
       "Kaufpreis": 32,
       "Hersteller": "Paulareis",
@@ -1169,7 +1169,7 @@
     },
     {
       "ID": "68",
-      "Name": "Timex-TW2R60800",
+      "Name": "Timex-TW2R60800-",
       "Kaufdatum": "01.08.2022",
       "Kaufpreis": 44,
       "Hersteller": "Timex",
@@ -1191,7 +1191,7 @@
     },
     {
       "ID": "69",
-      "Name": "Seagull Roter Stern-1963-brz-s",
+      "Name": "Seagull Roter Stern-1963-brz-s-",
       "Kaufdatum": "01.08.2022",
       "Kaufpreis": 209,
       "Hersteller": "Seagull Roter Stern",
@@ -1213,7 +1213,7 @@
     },
     {
       "ID": "70",
-      "Name": "Tandorio-62mas",
+      "Name": "Tandorio-62mas-",
       "Kaufdatum": "01.08.2022",
       "Kaufpreis": 105,
       "Hersteller": "Tandorio",
@@ -1235,7 +1235,7 @@
     },
     {
       "ID": "71",
-      "Name": "Tandorio-m1",
+      "Name": "Tandorio-m1-",
       "Kaufdatum": "01.08.2022",
       "Kaufpreis": 75,
       "Hersteller": "Tandorio",
@@ -1257,7 +1257,7 @@
     },
     {
       "ID": "72",
-      "Name": "Citizen-AW5000-24E",
+      "Name": "Citizen-AW5000-24E-",
       "Kaufdatum": "01.08.2022",
       "Kaufpreis": 60,
       "Hersteller": "Citizen",
@@ -1279,7 +1279,7 @@
     },
     {
       "ID": "73",
-      "Name": "Spinnaker-Bradner Green",
+      "Name": "Spinnaker-Bradner Green-",
       "Kaufdatum": "01.09.2022",
       "Kaufpreis": 150,
       "Hersteller": "Spinnaker",
@@ -1301,7 +1301,7 @@
     },
     {
       "ID": "74",
-      "Name": "Paul Hewitt-PH004014",
+      "Name": "Paul Hewitt-PH004014-",
       "Kaufdatum": "01.09.2022",
       "Kaufpreis": 99,
       "Hersteller": "Paul Hewitt",
@@ -1367,7 +1367,7 @@
     },
     {
       "ID": "77",
-      "Name": "Iron Annie-F13 Tempelhof",
+      "Name": "Iron Annie-F13 Tempelhof-",
       "Kaufdatum": "01.09.2022",
       "Kaufpreis": 140,
       "Hersteller": "Iron Annie",
@@ -1389,7 +1389,7 @@
     },
     {
       "ID": "78",
-      "Name": "Orient-Mako schwarz",
+      "Name": "Orient-Mako schwarz-",
       "Kaufdatum": "01.09.2022",
       "Kaufpreis": 70,
       "Hersteller": "Orient",
@@ -1433,7 +1433,7 @@
     },
     {
       "ID": "80",
-      "Name": "Heimdallr-Sharkmaster-",
+      "Name": "Heimdallr-Sharkmaster",
       "Kaufdatum": "01.10.2022",
       "Kaufpreis": 130,
       "Hersteller": "Heimdallr",
@@ -1477,7 +1477,7 @@
     },
     {
       "ID": "82",
-      "Name": "Roamer--",
+      "Name": "Roamer-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 47,
       "Hersteller": "Roamer",
@@ -1499,7 +1499,7 @@
     },
     {
       "ID": "83",
-      "Name": "Corgeut-2010C-SLW-",
+      "Name": "Corgeut-2010C-SLW",
       "Kaufdatum": "01.10.2022",
       "Kaufpreis": 50,
       "Hersteller": "Corgeut",
@@ -1521,7 +1521,7 @@
     },
     {
       "ID": "84",
-      "Name": "Citizen-AW0110-82LE-",
+      "Name": "Citizen-AW0110-82LE",
       "Kaufdatum": "01.10.2022",
       "Kaufpreis": 119,
       "Hersteller": "Citizen",
@@ -1543,7 +1543,7 @@
     },
     {
       "ID": "85",
-      "Name": "Timex-T2N721-",
+      "Name": "Timex-T2N721",
       "Kaufdatum": "01.09.2022",
       "Kaufpreis": 50,
       "Hersteller": "Timex",
@@ -1587,7 +1587,7 @@
     },
     {
       "ID": "87",
-      "Name": "Skagen-SKW6668-",
+      "Name": "Skagen-SKW6668",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 55,
       "Hersteller": "Skagen",
@@ -1609,7 +1609,7 @@
     },
     {
       "ID": "88",
-      "Name": "Gigandet-G7-002 Speed Timer ",
+      "Name": "Gigandet-G7-002 Speed Timer -",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 26,
       "Hersteller": "Gigandet",
@@ -1631,7 +1631,7 @@
     },
     {
       "ID": "89",
-      "Name": "Orient-FAG00001T0-",
+      "Name": "Orient-FAG00001T0",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 140,
       "Hersteller": "Orient",
@@ -1653,7 +1653,7 @@
     },
     {
       "ID": "90",
-      "Name": "Pagani Design-PD-1758",
+      "Name": "Pagani Design-PD-1758-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 155,
       "Hersteller": "Pagani Design",
@@ -1675,7 +1675,7 @@
     },
     {
       "ID": "91",
-      "Name": "Addiesdive-AD2103-",
+      "Name": "Addiesdive-AD2103",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 149,
       "Hersteller": "Addiesdive",
@@ -1697,7 +1697,7 @@
     },
     {
       "ID": "92",
-      "Name": "Parnis-GMT w2994",
+      "Name": "Parnis-GMT w2994-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 69,
       "Hersteller": "Parnis",
@@ -1719,7 +1719,7 @@
     },
     {
       "ID": "93",
-      "Name": "Jinadun-J37304",
+      "Name": "Jinadun-J37304-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 76,
       "Hersteller": "Jinadun",
@@ -1741,7 +1741,7 @@
     },
     {
       "ID": "94",
-      "Name": "Tandorio-m2-",
+      "Name": "Tandorio-m2",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 67,
       "Hersteller": "Tandorio",
@@ -1763,7 +1763,7 @@
     },
     {
       "ID": "95",
-      "Name": "Merkur-Red Army",
+      "Name": "Merkur-Red Army-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 92,
       "Hersteller": "Merkur",
@@ -1785,7 +1785,7 @@
     },
     {
       "ID": "96",
-      "Name": "Berny-AM138MS-L-",
+      "Name": "Berny-AM138MS-L",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 77,
       "Hersteller": "Berny",
@@ -1807,7 +1807,7 @@
     },
     {
       "ID": "97",
-      "Name": "Beha-Dienstuhr",
+      "Name": "Beha-Dienstuhr-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 100,
       "Hersteller": "Beha",
@@ -1829,7 +1829,7 @@
     },
     {
       "ID": "98",
-      "Name": "Czoka-Holz",
+      "Name": "Czoka-Holz-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 39,
       "Hersteller": "Czoka",
@@ -1851,7 +1851,7 @@
     },
     {
       "ID": "99",
-      "Name": "Arctos-NOS 36mm",
+      "Name": "Arctos-NOS 36mm-",
       "Kaufdatum": "01.12.2022",
       "Kaufpreis": 175,
       "Hersteller": "Arctos",
@@ -1873,7 +1873,7 @@
     },
     {
       "ID": "102",
-      "Name": "Orient-Marine FEM7R005B9",
+      "Name": "Orient-Marine FEM7R005B9-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 85,
       "Hersteller": "Orient",
@@ -1895,7 +1895,7 @@
     },
     {
       "ID": "103",
-      "Name": "Proxima-Tuna Scuba Master",
+      "Name": "Proxima-Tuna Scuba Master-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 135,
       "Hersteller": "Proxima",
@@ -1917,7 +1917,7 @@
     },
     {
       "ID": "104",
-      "Name": "Luminox-SEA XS.8903.ECO 8900",
+      "Name": "Luminox-SEA XS.8903.ECO 8900-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 164,
       "Hersteller": "Luminox",
@@ -1939,7 +1939,7 @@
     },
     {
       "ID": "107",
-      "Name": "Hofit--",
+      "Name": "Hofit-",
       "Kaufdatum": "01.11.2022",
       "Kaufpreis": 69,
       "Hersteller": "Hofit",
@@ -1961,7 +1961,7 @@
     },
     {
       "ID": "108",
-      "Name": "Kiqulov--",
+      "Name": "Kiqulov-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 58,
       "Hersteller": "Kiqulov",
@@ -1983,7 +1983,7 @@
     },
     {
       "ID": "109",
-      "Name": "Terami--",
+      "Name": "Terami-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 53,
       "Hersteller": "Terami",
@@ -2005,7 +2005,7 @@
     },
     {
       "ID": "110",
-      "Name": "Orient-RA-AC0L01B00B-",
+      "Name": "Orient-RA-AC0L01B00B",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 182,
       "Hersteller": "Orient",
@@ -2027,7 +2027,7 @@
     },
     {
       "ID": "111",
-      "Name": "Citizen-CB0010-02E-",
+      "Name": "Citizen-CB0010-02E",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 180,
       "Hersteller": "Citizen",
@@ -2049,7 +2049,7 @@
     },
     {
       "ID": "112",
-      "Name": "Timex-TW2P75400-",
+      "Name": "Timex-TW2P75400",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 50,
       "Hersteller": "Timex",
@@ -2071,7 +2071,7 @@
     },
     {
       "ID": "113",
-      "Name": "Casio-Casio GAW-100B-1AER",
+      "Name": "Casio-Casio GAW-100B-1AER-",
       "Kaufdatum": "01.02.2023",
       "Kaufpreis": 55,
       "Hersteller": "Casio",
@@ -2093,7 +2093,7 @@
     },
     {
       "ID": "114",
-      "Name": "Ruiyli-1701-",
+      "Name": "Ruiyli-1701",
       "Kaufdatum": "01.02.2023",
       "Kaufpreis": 105,
       "Hersteller": "Ruiyli",
@@ -2115,7 +2115,7 @@
     },
     {
       "ID": "116",
-      "Name": "Citizen-CA4420-13L-",
+      "Name": "Citizen-CA4420-13L",
       "Kaufdatum": "01.02.2023",
       "Kaufpreis": 144,
       "Hersteller": "Citizen",
@@ -2137,7 +2137,7 @@
     },
     {
       "ID": "117",
-      "Name": "Elysee-98015-",
+      "Name": "Elysee-98015",
       "Kaufdatum": "01.02.2023",
       "Kaufpreis": 135,
       "Hersteller": "Elysee",
@@ -2159,7 +2159,7 @@
     },
     {
       "ID": "118",
-      "Name": "Iron Annie-5994-5",
+      "Name": "Iron Annie-5994-5-",
       "Kaufdatum": "01.02.2023",
       "Kaufpreis": 168,
       "Hersteller": "Iron Annie",
@@ -2181,7 +2181,7 @@
     },
     {
       "ID": "119",
-      "Name": "Orient-RA-BA0002E-",
+      "Name": "Orient-RA-BA0002E",
       "Kaufdatum": "01.02.2023",
       "Kaufpreis": 148,
       "Hersteller": "Orient",
@@ -2203,7 +2203,7 @@
     },
     {
       "ID": "120",
-      "Name": "Iron Annie-5372-2",
+      "Name": "Iron Annie-5372-2-",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 138,
       "Hersteller": "Iron Annie",
@@ -2225,7 +2225,7 @@
     },
     {
       "ID": "121",
-      "Name": "Baltany-S184036C-",
+      "Name": "Baltany-S184036C",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 153,
       "Hersteller": "Baltany",
@@ -2247,7 +2247,7 @@
     },
     {
       "ID": "122",
-      "Name": "Duka-110",
+      "Name": "Duka-110-",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 64,
       "Hersteller": "Duka",
@@ -2291,7 +2291,7 @@
     },
     {
       "ID": "124",
-      "Name": "Berny-AM139M-",
+      "Name": "Berny-AM139M",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 136,
       "Hersteller": "Berny",
@@ -2313,7 +2313,7 @@
     },
     {
       "ID": "125",
-      "Name": "Bee Sting-Ultra 8",
+      "Name": "Bee Sting-Ultra 8-",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 41,
       "Hersteller": "Bee Sting",
@@ -2335,7 +2335,7 @@
     },
     {
       "ID": "126",
-      "Name": "Baltany-S205033",
+      "Name": "Baltany-S205033-",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 146,
       "Hersteller": "Baltany",
@@ -2357,7 +2357,7 @@
     },
     {
       "ID": "127",
-      "Name": "Iron Annie-5168-2",
+      "Name": "Iron Annie-5168-2-",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 146,
       "Hersteller": "Iron Annie",
@@ -2379,7 +2379,7 @@
     },
     {
       "ID": "129",
-      "Name": "Orient-RA-AP0003S10A",
+      "Name": "Orient-RA-AP0003S10A-",
       "Kaufdatum": "01.04.2023",
       "Kaufpreis": 80,
       "Hersteller": "Orient",
@@ -2401,7 +2401,7 @@
     },
     {
       "ID": "130",
-      "Name": "Iron Annie-5840-1",
+      "Name": "Iron Annie-5840-1-",
       "Kaufdatum": "01.04.2023",
       "Kaufpreis": 75,
       "Hersteller": "Iron Annie",
@@ -2423,7 +2423,7 @@
     },
     {
       "ID": "133",
-      "Name": "Zeno--",
+      "Name": "Zeno-",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 85,
       "Hersteller": "Zeno",
@@ -2445,7 +2445,7 @@
     },
     {
       "ID": "134",
-      "Name": "Bering-15433-377-",
+      "Name": "Bering-15433-377",
       "Kaufdatum": "01.03.2023",
       "Kaufpreis": 125,
       "Hersteller": "Bering",
@@ -2467,7 +2467,7 @@
     },
     {
       "ID": "135",
-      "Name": "Timex-T45501-",
+      "Name": "Timex-T45501",
       "Kaufdatum": "01.04.2023",
       "Kaufpreis": 32,
       "Hersteller": "Timex",
@@ -2489,7 +2489,7 @@
     },
     {
       "ID": "136",
-      "Name": "Timex-T2N930-",
+      "Name": "Timex-T2N930",
       "Kaufdatum": "01.05.2023",
       "Kaufpreis": 35,
       "Hersteller": "Timex",
@@ -2511,7 +2511,7 @@
     },
     {
       "ID": "137",
-      "Name": "Lilienthal Berlin-L01-106-B004",
+      "Name": "Lilienthal Berlin-L01-106-B004-",
       "Kaufdatum": "01.05.2023",
       "Kaufpreis": 53,
       "Hersteller": "Lilienthal Berlin",
@@ -2533,7 +2533,7 @@
     },
     {
       "ID": "138",
-      "Name": "Iron Annie-5368-5",
+      "Name": "Iron Annie-5368-5-",
       "Kaufdatum": "01.05.2023",
       "Kaufpreis": 168,
       "Hersteller": "Iron Annie",
@@ -2555,7 +2555,7 @@
     },
     {
       "ID": "139",
-      "Name": "Zodvboz--",
+      "Name": "Zodvboz-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 44,
       "Hersteller": "Zodvboz",
@@ -2577,7 +2577,7 @@
     },
     {
       "ID": "140",
-      "Name": "Zeppelin-atlantic 8470-5",
+      "Name": "Zeppelin-atlantic 8470-5-",
       "Kaufdatum": "01.04.2023",
       "Kaufpreis": 130,
       "Hersteller": "Zeppelin",
@@ -2599,7 +2599,7 @@
     },
     {
       "ID": "142",
-      "Name": "Lilienthal Berlin-",
+      "Name": "Lilienthal Berlin--",
       "Kaufdatum": "01.05.2023",
       "Kaufpreis": 35,
       "Hersteller": "Lilienthal Berlin",
@@ -2621,7 +2621,7 @@
     },
     {
       "ID": "143",
-      "Name": "Swiss Military Hanova-06-4330.",
+      "Name": "Swiss Military Hanova-06-4330.-",
       "Kaufdatum": "01.05.2023",
       "Kaufpreis": 60,
       "Hersteller": "Swiss Military Hanova",
@@ -2643,7 +2643,7 @@
     },
     {
       "ID": "144",
-      "Name": "Seestern-Sub600T-",
+      "Name": "Seestern-Sub600T",
       "Kaufdatum": "01.05.2023",
       "Kaufpreis": 126,
       "Hersteller": "Seestern",
@@ -2665,7 +2665,7 @@
     },
     {
       "ID": "145",
-      "Name": "Baltany-S205045-",
+      "Name": "Baltany-S205045",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 140,
       "Hersteller": "Baltany",
@@ -2687,7 +2687,7 @@
     },
     {
       "ID": "146",
-      "Name": "Ruili-SKX009-",
+      "Name": "Ruili-SKX009",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 102,
       "Hersteller": "Ruili",
@@ -2709,7 +2709,7 @@
     },
     {
       "ID": "147",
-      "Name": "Ingersoll-1892 The Catalina I1",
+      "Name": "Ingersoll-1892 The Catalina I1-",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 145,
       "Hersteller": "Ingersoll",
@@ -2731,7 +2731,7 @@
     },
     {
       "ID": "148",
-      "Name": "Thorn-MI-01-",
+      "Name": "Thorn-MI-01",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 125,
       "Hersteller": "Thorn",
@@ -2753,7 +2753,7 @@
     },
     {
       "ID": "149",
-      "Name": "Orient-RA-AC0L04L00B-",
+      "Name": "Orient-RA-AC0L04L00B",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 160,
       "Hersteller": "Orient",
@@ -2775,7 +2775,7 @@
     },
     {
       "ID": "150",
-      "Name": "Cronos-L6012-",
+      "Name": "Cronos-L6012",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 133,
       "Hersteller": "Cronos",
@@ -2797,7 +2797,7 @@
     },
     {
       "ID": "151",
-      "Name": "Citizen-WR 200 Titanium",
+      "Name": "Citizen-WR 200 Titanium-",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 80,
       "Hersteller": "Citizen",
@@ -2819,7 +2819,7 @@
     },
     {
       "ID": "152",
-      "Name": "Citizen-NH8383-17E-",
+      "Name": "Citizen-NH8383-17E",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 90,
       "Hersteller": "Citizen",
@@ -2841,7 +2841,7 @@
     },
     {
       "ID": "153",
-      "Name": "Spinnaker-SP-5089-01-",
+      "Name": "Spinnaker-SP-5089-01",
       "Kaufdatum": "01.06.2023",
       "Kaufpreis": 143,
       "Hersteller": "Spinnaker",
@@ -2863,7 +2863,7 @@
     },
     {
       "ID": "154",
-      "Name": "Berny-T2566M-",
+      "Name": "Berny-T2566M",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 76,
       "Hersteller": "Berny",
@@ -2885,7 +2885,7 @@
     },
     {
       "ID": "155",
-      "Name": "Pagani Design-PD-1734",
+      "Name": "Pagani Design-PD-1734-",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 42,
       "Hersteller": "Pagani Design",
@@ -2907,7 +2907,7 @@
     },
     {
       "ID": "157",
-      "Name": "Zeppelin-Night Cruise 16227",
+      "Name": "Zeppelin-Night Cruise 16227-",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 190,
       "Hersteller": "Zeppelin",
@@ -2929,7 +2929,7 @@
     },
     {
       "ID": "158",
-      "Name": "Benyar-BY-5185-",
+      "Name": "Benyar-BY-5185",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 22,
       "Hersteller": "Benyar",
@@ -2951,7 +2951,7 @@
     },
     {
       "ID": "159",
-      "Name": "Berny-2938msc-",
+      "Name": "Berny-2938msc",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 33,
       "Hersteller": "Berny",
@@ -2973,7 +2973,7 @@
     },
     {
       "ID": "160",
-      "Name": "Heimdallr-HMSF05-5L-",
+      "Name": "Heimdallr-HMSF05-5L",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 151,
       "Hersteller": "Heimdallr",
@@ -2995,7 +2995,7 @@
     },
     {
       "ID": "161",
-      "Name": "North Edge-Cross Fit 3",
+      "Name": "North Edge-Cross Fit 3-",
       "Kaufdatum": "01.07.2023",
       "Kaufpreis": 59,
       "Hersteller": "North Edge",
@@ -3017,7 +3017,7 @@
     },
     {
       "ID": "162",
-      "Name": "Skmei--",
+      "Name": "Skmei-",
       "Kaufdatum": "01.08.2023",
       "Kaufpreis": 15,
       "Hersteller": "Skmei",
@@ -3039,7 +3039,7 @@
     },
     {
       "ID": "163",
-      "Name": "Hruodland-F016",
+      "Name": "Hruodland-F016-",
       "Kaufdatum": "01.08.2023",
       "Kaufpreis": 160,
       "Hersteller": "Hruodland",
@@ -3061,7 +3061,7 @@
     },
     {
       "ID": "164",
-      "Name": "Merkur-Pierre Paulin",
+      "Name": "Merkur-Pierre Paulin-",
       "Kaufdatum": "01.08.2023",
       "Kaufpreis": 109,
       "Hersteller": "Merkur",
@@ -3083,7 +3083,7 @@
     },
     {
       "ID": "165",
-      "Name": "Seizenn--",
+      "Name": "Seizenn-",
       "Kaufdatum": "01.08.2023",
       "Kaufpreis": 119,
       "Hersteller": "Seizenn",
@@ -3105,7 +3105,7 @@
     },
     {
       "ID": "166",
-      "Name": "Steelflier-SF741-",
+      "Name": "Steelflier-SF741",
       "Kaufdatum": "01.08.2023",
       "Kaufpreis": 60,
       "Hersteller": "Steelflier",
@@ -3127,7 +3127,7 @@
     },
     {
       "ID": "167",
-      "Name": "Rdunae-R6TR-",
+      "Name": "Rdunae-R6TR",
       "Kaufdatum": "01.08.2023",
       "Kaufpreis": 114,
       "Hersteller": "Rdunae",
@@ -3149,7 +3149,7 @@
     },
     {
       "ID": "168",
-      "Name": "Orient-FAC0000DD0-",
+      "Name": "Orient-FAC0000DD0",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 79,
       "Hersteller": "Orient",
@@ -3171,7 +3171,7 @@
     },
     {
       "ID": "169",
-      "Name": "Casio-GA-2100-1A2ER-",
+      "Name": "Casio-GA-2100-1A2ER",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 50,
       "Hersteller": "Casio",
@@ -3193,7 +3193,7 @@
     },
     {
       "ID": "170",
-      "Name": "Citizen-NY0040-09EE-",
+      "Name": "Citizen-NY0040-09EE",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 85,
       "Hersteller": "Citizen",
@@ -3215,7 +3215,7 @@
     },
     {
       "ID": "172",
-      "Name": "Pagani Design-PD-1644",
+      "Name": "Pagani Design-PD-1644-",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 70,
       "Hersteller": "Pagani Design",
@@ -3237,7 +3237,7 @@
     },
     {
       "ID": "173",
-      "Name": "Replika-HISTORIQUES AMERICAN 1",
+      "Name": "Replika-HISTORIQUES AMERICAN 1-",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 36,
       "Hersteller": "Replika",
@@ -3259,7 +3259,7 @@
     },
     {
       "ID": "174",
-      "Name": "Baltany-S204030-",
+      "Name": "Baltany-S204030",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 163,
       "Hersteller": "Baltany",
@@ -3281,7 +3281,7 @@
     },
     {
       "ID": "176",
-      "Name": "Forsining-FSG 207",
+      "Name": "Forsining-FSG 207-",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 45,
       "Hersteller": "Forsining",
@@ -3303,7 +3303,7 @@
     },
     {
       "ID": "178",
-      "Name": "Orient-RA-AK0405Y10B-",
+      "Name": "Orient-RA-AK0405Y10B",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 135,
       "Hersteller": "Orient",
@@ -3325,7 +3325,7 @@
     },
     {
       "ID": "179",
-      "Name": "Seizenn-W10B-",
+      "Name": "Seizenn-W10B",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 125,
       "Hersteller": "Seizenn",
@@ -3369,7 +3369,7 @@
     },
     {
       "ID": "181",
-      "Name": "Iron Annie-U96",
+      "Name": "Iron Annie-U96-",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 155,
       "Hersteller": "Iron Annie",
@@ -3391,7 +3391,7 @@
     },
     {
       "ID": "182",
-      "Name": "Cestrian-Dive Series CD111B077",
+      "Name": "Cestrian-Dive Series CD111B077-",
       "Kaufdatum": "01.09.2023",
       "Kaufpreis": 132,
       "Hersteller": "Cestrian",
@@ -3413,7 +3413,7 @@
     },
     {
       "ID": "183",
-      "Name": "Escapement Time-H0300",
+      "Name": "Escapement Time-H0300-",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 57,
       "Hersteller": "Escapement Time",
@@ -3435,7 +3435,7 @@
     },
     {
       "ID": "184",
-      "Name": "Skagen-SKW6872-",
+      "Name": "Skagen-SKW6872",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 75,
       "Hersteller": "Skagen",
@@ -3457,7 +3457,7 @@
     },
     {
       "ID": "185",
-      "Name": "Spinnaker-SP-5062-03-",
+      "Name": "Spinnaker-SP-5062-03",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 158,
       "Hersteller": "Spinnaker",
@@ -3479,7 +3479,7 @@
     },
     {
       "ID": "186",
-      "Name": "Orient-RA-AS0102S10B-",
+      "Name": "Orient-RA-AS0102S10B",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 185,
       "Hersteller": "Orient",
@@ -3501,7 +3501,7 @@
     },
     {
       "ID": "187",
-      "Name": "Orient-RA-AA0011B19B-",
+      "Name": "Orient-RA-AA0011B19B",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 135,
       "Hersteller": "Orient",
@@ -3523,7 +3523,7 @@
     },
     {
       "ID": "188",
-      "Name": "San Martin-SN0117-Q",
+      "Name": "San Martin-SN0117-Q-",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 135,
       "Hersteller": "San Martin",
@@ -3545,7 +3545,7 @@
     },
     {
       "ID": "189",
-      "Name": "Laco-Bielefeld-",
+      "Name": "Laco-Bielefeld",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 180,
       "Hersteller": "Laco",
@@ -3567,7 +3567,7 @@
     },
     {
       "ID": "190",
-      "Name": "Geckota-K1 Pilot",
+      "Name": "Geckota-K1 Pilot-",
       "Kaufdatum": "01.10.2023",
       "Kaufpreis": 200,
       "Hersteller": "Geckota",
@@ -3589,7 +3589,7 @@
     },
     {
       "ID": "192",
-      "Name": "Heimdallr-HMSA-21 Monster",
+      "Name": "Heimdallr-HMSA-21 Monster-",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 134,
       "Hersteller": "Heimdallr",
@@ -3611,7 +3611,7 @@
     },
     {
       "ID": "193",
-      "Name": "Hruodland-F0180-",
+      "Name": "Hruodland-F0180",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 108,
       "Hersteller": "Hruodland",
@@ -3633,7 +3633,7 @@
     },
     {
       "ID": "194",
-      "Name": "Berny-AM229M-",
+      "Name": "Berny-AM229M",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 81,
       "Hersteller": "Berny",
@@ -3655,7 +3655,7 @@
     },
     {
       "ID": "198",
-      "Name": "Synoke-6105-",
+      "Name": "Synoke-6105",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 9,
       "Hersteller": "Synoke",
@@ -3677,7 +3677,7 @@
     },
     {
       "ID": "199",
-      "Name": "Berny-AM330M-",
+      "Name": "Berny-AM330M",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 117,
       "Hersteller": "Berny",
@@ -3721,7 +3721,7 @@
     },
     {
       "ID": "201",
-      "Name": "Sugess-Swanneck Version",
+      "Name": "Sugess-Swanneck Version-",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 141,
       "Hersteller": "Sugess",
@@ -3787,7 +3787,7 @@
     },
     {
       "ID": "205",
-      "Name": "Tandorio-SBDX001",
+      "Name": "Tandorio-SBDX001-",
       "Kaufdatum": "01.11.2023",
       "Kaufpreis": 62,
       "Hersteller": "Tandorio",
@@ -3809,7 +3809,7 @@
     },
     {
       "ID": "206",
-      "Name": "Zeppelin-LZ127 Graf Zeppelin",
+      "Name": "Zeppelin-LZ127 Graf Zeppelin-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 108,
       "Hersteller": "Zeppelin",
@@ -3831,7 +3831,7 @@
     },
     {
       "ID": "207",
-      "Name": "Heimdallr-HMSA-21-",
+      "Name": "Heimdallr-HMSA-21",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 137,
       "Hersteller": "Heimdallr",
@@ -3853,7 +3853,7 @@
     },
     {
       "ID": "209",
-      "Name": "Drnata-Shanghai",
+      "Name": "Drnata-Shanghai-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 34,
       "Hersteller": "Drnata",
@@ -3875,7 +3875,7 @@
     },
     {
       "ID": "210",
-      "Name": "Tactical Frog-H24 olive",
+      "Name": "Tactical Frog-H24 olive-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 125,
       "Hersteller": "Tactical Frog",
@@ -3897,7 +3897,7 @@
     },
     {
       "ID": "211",
-      "Name": "Tandorio-37mm",
+      "Name": "Tandorio-37mm-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 55,
       "Hersteller": "Tandorio",
@@ -3919,7 +3919,7 @@
     },
     {
       "ID": "212",
-      "Name": "Tandorio-Serica",
+      "Name": "Tandorio-Serica-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 79,
       "Hersteller": "Tandorio",
@@ -3941,7 +3941,7 @@
     },
     {
       "ID": "214",
-      "Name": "Iron Annie-5070-5 air",
+      "Name": "Iron Annie-5070-5 air-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 82,
       "Hersteller": "Iron Annie",
@@ -3963,7 +3963,7 @@
     },
     {
       "ID": "215",
-      "Name": "UMF Ruhla-NVA Kampfschwimmer",
+      "Name": "UMF Ruhla-NVA Kampfschwimmer-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 354,
       "Hersteller": "UMF Ruhla",
@@ -3985,7 +3985,7 @@
     },
     {
       "ID": "216",
-      "Name": "Laco-Laco electric",
+      "Name": "Laco-Laco electric-",
       "Kaufdatum": "01.01.2024",
       "Kaufpreis": 110,
       "Hersteller": "Laco",
@@ -4007,7 +4007,7 @@
     },
     {
       "ID": "217",
-      "Name": "Orient-RA-AC0K04E10B-",
+      "Name": "Orient-RA-AC0K04E10B",
       "Kaufdatum": "01.02.2024",
       "Kaufpreis": 156,
       "Hersteller": "Orient",
@@ -4029,7 +4029,7 @@
     },
     {
       "ID": "218",
-      "Name": "UMF Ruhla-1924-M2",
+      "Name": "UMF Ruhla-1924-M2-",
       "Kaufdatum": "01.02.2024",
       "Kaufpreis": 280,
       "Hersteller": "UMF Ruhla",
@@ -4051,7 +4051,7 @@
     },
     {
       "ID": "219",
-      "Name": "Orient-RA-AA0005B19B-",
+      "Name": "Orient-RA-AA0005B19B",
       "Kaufdatum": "01.02.2024",
       "Kaufpreis": 150,
       "Hersteller": "Orient",
@@ -4073,7 +4073,7 @@
     },
     {
       "ID": "220",
-      "Name": "Citizen-EP6051-14L-",
+      "Name": "Citizen-EP6051-14L",
       "Kaufdatum": "03.02.2024",
       "Kaufpreis": 115,
       "Hersteller": "Citizen",
@@ -4095,7 +4095,7 @@
     },
     {
       "ID": "221",
-      "Name": "Seiko-SRPE80K1-",
+      "Name": "Seiko-SRPE80K1",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 200,
       "Hersteller": "Seiko",
@@ -4117,7 +4117,7 @@
     },
     {
       "ID": "222",
-      "Name": "Tactical Frog-FXD seahorse tit",
+      "Name": "Tactical Frog-FXD seahorse tit-",
       "Kaufdatum": "10.02.2024",
       "Kaufpreis": 167,
       "Hersteller": "Tactical Frog",
@@ -4139,7 +4139,7 @@
     },
     {
       "ID": "224",
-      "Name": "Skmei-9288",
+      "Name": "Skmei-9288-",
       "Kaufdatum": "10.02.2024",
       "Kaufpreis": 15,
       "Hersteller": "Skmei",
@@ -4161,7 +4161,7 @@
     },
     {
       "ID": "225",
-      "Name": "Replika-Oris",
+      "Name": "Replika-Oris-",
       "Kaufdatum": "19.10.2023",
       "Kaufpreis": 33,
       "Hersteller": "Replika",
@@ -4183,7 +4183,7 @@
     },
     {
       "ID": "226",
-      "Name": "Merkur-W10B",
+      "Name": "Merkur-W10B-",
       "Kaufdatum": "20.09.2023",
       "Kaufpreis": 126,
       "Hersteller": "Merkur",
@@ -4227,7 +4227,7 @@
     },
     {
       "ID": "228",
-      "Name": "North Edge-Cyber Tank",
+      "Name": "North Edge-Cyber Tank-",
       "Kaufdatum": "15.04.2023",
       "Kaufpreis": 31,
       "Hersteller": "North Edge",
@@ -4249,7 +4249,7 @@
     },
     {
       "ID": "229",
-      "Name": "Pagani Design-1772",
+      "Name": "Pagani Design-1772-",
       "Kaufdatum": "10.02.2024",
       "Kaufpreis": 95,
       "Hersteller": "Pagani Design",
@@ -4271,7 +4271,7 @@
     },
     {
       "ID": "230",
-      "Name": "Aesop-8848",
+      "Name": "Aesop-8848-",
       "Kaufdatum": "07.06.2022",
       "Kaufpreis": 35,
       "Hersteller": "Aesop",
@@ -4293,7 +4293,7 @@
     },
     {
       "ID": "231",
-      "Name": "Replika-Pilot Mark XVIII",
+      "Name": "Replika-Pilot Mark XVIII-",
       "Kaufdatum": "13.02.2024",
       "Kaufpreis": 30,
       "Hersteller": "Replika",
@@ -4315,7 +4315,7 @@
     },
     {
       "ID": "232",
-      "Name": "Sugess-S408.02",
+      "Name": "Sugess-S408.02-",
       "Kaufdatum": "01.01.2023",
       "Kaufpreis": 150,
       "Hersteller": "Sugess",
@@ -4337,7 +4337,7 @@
     },
     {
       "ID": "233",
-      "Name": "Pagani Design-PD-2770",
+      "Name": "Pagani Design-PD-2770-",
       "Kaufdatum": "12.02.2024",
       "Kaufpreis": 42,
       "Hersteller": "Pagani Design",
@@ -4359,7 +4359,7 @@
     },
     {
       "ID": "234",
-      "Name": "Orient-RA-AC0N01B10B-",
+      "Name": "Orient-RA-AC0N01B10B",
       "Kaufdatum": "19.02.2024",
       "Kaufpreis": 191,
       "Hersteller": "Orient",
@@ -4381,7 +4381,7 @@
     },
     {
       "ID": "236",
-      "Name": "Orient-CEVAC001B-",
+      "Name": "Orient-CEVAC001B",
       "Kaufdatum": "25.02.2024",
       "Kaufpreis": 89,
       "Hersteller": "Orient",
@@ -4425,7 +4425,7 @@
     },
     {
       "ID": "239",
-      "Name": "UMF Ruhla-Sport-Linie Ostsee I",
+      "Name": "UMF Ruhla-Sport-Linie Ostsee I-",
       "Kaufdatum": "04.03.2024",
       "Kaufpreis": 339,
       "Hersteller": "UMF Ruhla",
@@ -4447,7 +4447,7 @@
     },
     {
       "ID": "240",
-      "Name": "Iron Annie-Bauhaus 5042-3",
+      "Name": "Iron Annie-Bauhaus 5042-3-",
       "Kaufdatum": "12.03.2024",
       "Kaufpreis": 115,
       "Hersteller": "Iron Annie",
@@ -4469,7 +4469,7 @@
     },
     {
       "ID": "241",
-      "Name": "Iron Annie-Flight Control 5148",
+      "Name": "Iron Annie-Flight Control 5148-",
       "Kaufdatum": "13.03.2024",
       "Kaufpreis": 129,
       "Hersteller": "Iron Annie",
@@ -4491,7 +4491,7 @@
     },
     {
       "ID": "242",
-      "Name": "Junghans-Mega1-",
+      "Name": "Junghans-Mega1",
       "Kaufdatum": "15.03.2024",
       "Kaufpreis": 85,
       "Hersteller": "Junghans",
@@ -4513,7 +4513,7 @@
     },
     {
       "ID": "243",
-      "Name": "Ruhla--",
+      "Name": "Ruhla-",
       "Kaufdatum": "15.03.2024",
       "Kaufpreis": 70,
       "Hersteller": "Ruhla",
@@ -4535,7 +4535,7 @@
     },
     {
       "ID": "245",
-      "Name": "Deep Blue-1000M II ",
+      "Name": "Deep Blue-1000M II -",
       "Kaufdatum": "17.03.2024",
       "Kaufpreis": 145,
       "Hersteller": "Deep Blue",
@@ -4557,7 +4557,7 @@
     },
     {
       "ID": "246",
-      "Name": "Sugess-S401B V3",
+      "Name": "Sugess-S401B V3-",
       "Kaufdatum": "19.03.2024",
       "Kaufpreis": 121,
       "Hersteller": "Sugess",
@@ -4579,7 +4579,7 @@
     },
     {
       "ID": "247",
-      "Name": "Tactical Frog-H24 blue",
+      "Name": "Tactical Frog-H24 blue-",
       "Kaufdatum": "19.03.2024",
       "Kaufpreis": 108,
       "Hersteller": "Tactical Frog",
@@ -4601,7 +4601,7 @@
     },
     {
       "ID": "248",
-      "Name": "Cadisen-C8227M-",
+      "Name": "Cadisen-C8227M",
       "Kaufdatum": "21.03.2024",
       "Kaufpreis": 62,
       "Hersteller": "Cadisen",
@@ -4623,7 +4623,7 @@
     },
     {
       "ID": "249",
-      "Name": "Sternglas-Taiga GMT",
+      "Name": "Sternglas-Taiga GMT-",
       "Kaufdatum": "24.03.2024",
       "Kaufpreis": 142,
       "Hersteller": "Sternglas",
@@ -4645,7 +4645,7 @@
     },
     {
       "ID": "250",
-      "Name": "Raketa-2623 Polar Antarctic-",
+      "Name": "Raketa-2623 Polar Antarctic",
       "Kaufdatum": "02.04.2024",
       "Kaufpreis": 140,
       "Hersteller": "Raketa",
@@ -4667,7 +4667,7 @@
     },
     {
       "ID": "251",
-      "Name": "Tactical Frog-vs75 Solar Chron",
+      "Name": "Tactical Frog-vs75 Solar Chron-",
       "Kaufdatum": "22.03.2024",
       "Kaufpreis": 135,
       "Hersteller": "Tactical Frog",
@@ -4689,7 +4689,7 @@
     },
     {
       "ID": "252",
-      "Name": "Zeppelin-76146",
+      "Name": "Zeppelin-76146-",
       "Kaufdatum": "12.04.2024",
       "Kaufpreis": 80,
       "Hersteller": "Zeppelin",
@@ -4711,7 +4711,7 @@
     },
     {
       "ID": "253",
-      "Name": "Iron Annie-5960-5-",
+      "Name": "Iron Annie-5960-5",
       "Kaufdatum": "13.04.2022",
       "Kaufpreis": 250,
       "Hersteller": "Iron Annie",
@@ -4733,7 +4733,7 @@
     },
     {
       "ID": "254",
-      "Name": "Zeppelin-7333-1",
+      "Name": "Zeppelin-7333-1-",
       "Kaufdatum": "18.04.2024",
       "Kaufpreis": 75,
       "Hersteller": "Zeppelin",
@@ -4755,7 +4755,7 @@
     },
     {
       "ID": "255",
-      "Name": "Baltany-S182027",
+      "Name": "Baltany-S182027-",
       "Kaufdatum": "18.04.2024",
       "Kaufpreis": 76,
       "Hersteller": "Baltany",
@@ -4777,7 +4777,7 @@
     },
     {
       "ID": "256",
-      "Name": "Laco-Valencia Marine",
+      "Name": "Laco-Valencia Marine-",
       "Kaufdatum": "18.04.2024",
       "Kaufpreis": 235,
       "Hersteller": "Laco",
@@ -4799,7 +4799,7 @@
     },
     {
       "ID": "257",
-      "Name": "Orient-EU00002W-",
+      "Name": "Orient-EU00002W",
       "Kaufdatum": "23.04.2024",
       "Kaufpreis": 86,
       "Hersteller": "Orient",
@@ -4821,7 +4821,7 @@
     },
     {
       "ID": "258",
-      "Name": "Zeppelin-\\n8086-5n-",
+      "Name": "Zeppelin-\\n8086-5n",
       "Kaufdatum": "27.04.2024",
       "Kaufpreis": 134,
       "Hersteller": "Zeppelin",
@@ -4843,7 +4843,7 @@
     },
     {
       "ID": "259",
-      "Name": "Cestrian-Master Series I",
+      "Name": "Cestrian-Master Series I-",
       "Kaufdatum": "11.05.2024",
       "Kaufpreis": 50,
       "Hersteller": "Cestrian",
@@ -4865,7 +4865,7 @@
     },
     {
       "ID": "260",
-      "Name": "Junghans-",
+      "Name": "Junghans--",
       "Kaufdatum": "11.05.2024",
       "Kaufpreis": 65,
       "Hersteller": "Junghans",
@@ -4887,7 +4887,7 @@
     },
     {
       "ID": "261",
-      "Name": "NTH-Todaro-",
+      "Name": "NTH-Todaro",
       "Kaufdatum": "13.05.2024",
       "Kaufpreis": 275,
       "Hersteller": "NTH",
@@ -4909,7 +4909,7 @@
     },
     {
       "ID": "262",
-      "Name": "Seiko-SKA791P1",
+      "Name": "Seiko-SKA791P1-",
       "Kaufdatum": "21.05.2024",
       "Kaufpreis": 200,
       "Hersteller": "Seiko",
@@ -4931,7 +4931,7 @@
     },
     {
       "ID": "263",
-      "Name": "Spinnaker-Dumas SP-5081-AA-",
+      "Name": "Spinnaker-Dumas SP-5081-AA",
       "Kaufdatum": "26.05.2024",
       "Kaufpreis": 142,
       "Hersteller": "Spinnaker",
@@ -4953,7 +4953,7 @@
     },
     {
       "ID": "265",
-      "Name": "Pagani Design-PD1708",
+      "Name": "Pagani Design-PD1708-",
       "Kaufdatum": "04.06.2024",
       "Kaufpreis": 35,
       "Hersteller": "Pagani Design",
@@ -4975,7 +4975,7 @@
     },
     {
       "ID": "266",
-      "Name": "Sea-Gull-811.93.6109",
+      "Name": "Sea-Gull-811.93.6109-",
       "Kaufdatum": "04.06.2024",
       "Kaufpreis": 215,
       "Hersteller": "Sea-Gull",
@@ -4997,7 +4997,7 @@
     },
     {
       "ID": "267",
-      "Name": "San Martin-SN0118",
+      "Name": "San Martin-SN0118-",
       "Kaufdatum": "04.06.2024",
       "Kaufpreis": 207,
       "Hersteller": "San Martin",
@@ -5019,7 +5019,7 @@
     },
     {
       "ID": "268",
-      "Name": "Pagani Design-1788-",
+      "Name": "Pagani Design-1788",
       "Kaufdatum": "07.06.2024",
       "Kaufpreis": 95,
       "Hersteller": "Pagani Design",
@@ -5041,7 +5041,7 @@
     },
     {
       "ID": "269",
-      "Name": "Fullgear-Claymore Ivory",
+      "Name": "Fullgear-Claymore Ivory-",
       "Kaufdatum": "08.06.2024",
       "Kaufpreis": 120,
       "Hersteller": "Fullgear",
@@ -5063,7 +5063,7 @@
     },
     {
       "ID": "270",
-      "Name": "UMF Ruhla-Titan",
+      "Name": "UMF Ruhla-Titan-",
       "Kaufdatum": "18.06.2024",
       "Kaufpreis": 185,
       "Hersteller": "UMF Ruhla",
@@ -5107,7 +5107,7 @@
     },
     {
       "ID": "275",
-      "Name": "Vakuy Rigas-VR1003",
+      "Name": "Vakuy Rigas-VR1003-",
       "Kaufdatum": "17.07.2024",
       "Kaufpreis": 83,
       "Hersteller": "Vakuy Rigas",
@@ -5129,7 +5129,7 @@
     },
     {
       "ID": "276",
-      "Name": "Tactical Frog-TF-003-",
+      "Name": "Tactical Frog-TF-003",
       "Kaufdatum": "20.07.2024",
       "Kaufpreis": 105,
       "Hersteller": "Tactical Frog",
@@ -5173,7 +5173,7 @@
     },
     {
       "ID": "278",
-      "Name": "Steeldive-SD1975XT",
+      "Name": "Steeldive-SD1975XT-",
       "Kaufdatum": "21.08.2024",
       "Kaufpreis": 130,
       "Hersteller": "Steeldive",
@@ -5217,7 +5217,7 @@
     },
     {
       "ID": "280",
-      "Name": "Zeppelin-Luna 7631-1-",
+      "Name": "Zeppelin-Luna 7631-1",
       "Kaufdatum": "22.08.2024",
       "Kaufpreis": 58,
       "Hersteller": "Zeppelin",
@@ -5239,7 +5239,7 @@
     },
     {
       "ID": "281",
-      "Name": "Cronos-L6013",
+      "Name": "Cronos-L6013-",
       "Kaufdatum": "24.08.2024",
       "Kaufpreis": 110,
       "Hersteller": "Cronos",
@@ -5261,7 +5261,7 @@
     },
     {
       "ID": "282",
-      "Name": "Mysterious Code-82506",
+      "Name": "Mysterious Code-82506-",
       "Kaufdatum": "01.09.2024",
       "Kaufpreis": 70,
       "Hersteller": "Mysterious Code",
@@ -5283,7 +5283,7 @@
     },
     {
       "ID": "283",
-      "Name": "Addiesdive-AD2055",
+      "Name": "Addiesdive-AD2055-",
       "Kaufdatum": "17.09.2024",
       "Kaufpreis": 62,
       "Hersteller": "Addiesdive",
@@ -5305,7 +5305,7 @@
     },
     {
       "ID": "284",
-      "Name": "Steeldive-SD1944",
+      "Name": "Steeldive-SD1944-",
       "Kaufdatum": "17.09.2024",
       "Kaufpreis": 122,
       "Hersteller": "Steeldive",
@@ -5327,7 +5327,7 @@
     },
     {
       "ID": "285",
-      "Name": "Nixon-A1320-5106-00-",
+      "Name": "Nixon-A1320-5106-00",
       "Kaufdatum": "25.09.2024",
       "Kaufpreis": 60,
       "Hersteller": "Nixon",
@@ -5349,7 +5349,7 @@
     },
     {
       "ID": "286",
-      "Name": "Baltany-S2204030 -",
+      "Name": "Baltany-S2204030 ",
       "Kaufdatum": "01.10.2024",
       "Kaufpreis": 153,
       "Hersteller": "Baltany",
@@ -5393,7 +5393,7 @@
     },
     {
       "ID": "288",
-      "Name": "Boderry-Admiral GMT A12T-03",
+      "Name": "Boderry-Admiral GMT A12T-03-",
       "Kaufdatum": "31.10.2024",
       "Kaufpreis": 159,
       "Hersteller": "Boderry",
@@ -5415,7 +5415,7 @@
     },
     {
       "ID": "289",
-      "Name": "Seestern-S383",
+      "Name": "Seestern-S383-",
       "Kaufdatum": "01.11.2024",
       "Kaufpreis": 54,
       "Hersteller": "Seestern",
@@ -5459,7 +5459,7 @@
     },
     {
       "ID": "291",
-      "Name": "Beihua-1019",
+      "Name": "Beihua-1019-",
       "Kaufdatum": "11.11.2024",
       "Kaufpreis": 92,
       "Hersteller": "Beihua",
@@ -5503,7 +5503,7 @@
     },
     {
       "ID": "293",
-      "Name": "Enmex-CS2119M",
+      "Name": "Enmex-CS2119M-",
       "Kaufdatum": "13.11.2024",
       "Kaufpreis": 15,
       "Hersteller": "Enmex",
@@ -5547,7 +5547,7 @@
     },
     {
       "ID": "295",
-      "Name": "Thorn-Shy041-",
+      "Name": "Thorn-Shy041",
       "Kaufdatum": "14.11.2024",
       "Kaufpreis": 114,
       "Hersteller": "Thorn",
@@ -5569,7 +5569,7 @@
     },
     {
       "ID": "296",
-      "Name": "Cooper-SM8016-",
+      "Name": "Cooper-SM8016",
       "Kaufdatum": "16.11.2024",
       "Kaufpreis": 32,
       "Hersteller": "Cooper",
@@ -5591,7 +5591,7 @@
     },
     {
       "ID": "297",
-      "Name": "Baltany-S204041ab-",
+      "Name": "Baltany-S204041ab",
       "Kaufdatum": "17.11.2024",
       "Kaufpreis": 109,
       "Hersteller": "Baltany",
@@ -5613,7 +5613,7 @@
     },
     {
       "ID": "298",
-      "Name": "Breahuas--",
+      "Name": "Breahuas-",
       "Kaufdatum": "23.11.2024",
       "Kaufpreis": 55,
       "Hersteller": "Breahuas",
@@ -5635,7 +5635,7 @@
     },
     {
       "ID": "299",
-      "Name": "Berny-AM439MS-",
+      "Name": "Berny-AM439MS",
       "Kaufdatum": "02.12.2024",
       "Kaufpreis": 100,
       "Hersteller": "Berny",
@@ -5657,7 +5657,7 @@
     },
     {
       "ID": "300",
-      "Name": "Cadisen-C8218M",
+      "Name": "Cadisen-C8218M-",
       "Kaufdatum": "16.12.2024",
       "Kaufpreis": 52,
       "Hersteller": "Cadisen",
@@ -5679,7 +5679,7 @@
     },
     {
       "ID": "301",
-      "Name": "Militado-ML05",
+      "Name": "Militado-ML05-",
       "Kaufdatum": "16.12.2024",
       "Kaufpreis": 60,
       "Hersteller": "Militado",
@@ -5723,7 +5723,7 @@
     },
     {
       "ID": "303",
-      "Name": "Steeldive-SD1994-",
+      "Name": "Steeldive-SD1994",
       "Kaufdatum": "08.01.2025",
       "Kaufpreis": 124,
       "Hersteller": "Steeldive",
@@ -5745,7 +5745,7 @@
     },
     {
       "ID": "304",
-      "Name": "Pagani Design-PD-YN009-",
+      "Name": "Pagani Design-PD-YN009",
       "Kaufdatum": "14.01.2025",
       "Kaufpreis": 77,
       "Hersteller": "Pagani Design",
@@ -5767,7 +5767,7 @@
     },
     {
       "ID": "305",
-      "Name": "Mini Focus-MF 0491 L",
+      "Name": "Mini Focus-MF 0491 L-",
       "Kaufdatum": "25.01.2025",
       "Kaufpreis": 14,
       "Hersteller": "Mini Focus",
@@ -5789,7 +5789,7 @@
     },
     {
       "ID": "306",
-      "Name": "Citizen-NJ0151-88X-",
+      "Name": "Citizen-NJ0151-88X",
       "Kaufdatum": "08.02.2025",
       "Kaufpreis": 175,
       "Hersteller": "Citizen",
@@ -5811,7 +5811,7 @@
     },
     {
       "ID": "307",
-      "Name": "Swatch-YGS1001-",
+      "Name": "Swatch-YGS1001",
       "Kaufdatum": "08.02.2025",
       "Kaufpreis": 40,
       "Hersteller": "Swatch",
@@ -5833,7 +5833,7 @@
     },
     {
       "ID": "308",
-      "Name": "Casio-GBD-200UU-9ER",
+      "Name": "Casio-GBD-200UU-9ER-",
       "Kaufdatum": "08.02.2025",
       "Kaufpreis": 98,
       "Hersteller": "Casio",
@@ -5855,7 +5855,7 @@
     },
     {
       "ID": "309",
-      "Name": "De Tomaso-G-37023-",
+      "Name": "De Tomaso-G-37023",
       "Kaufdatum": "02.03.2025",
       "Kaufpreis": 48,
       "Hersteller": "De Tomaso",
@@ -5877,7 +5877,7 @@
     },
     {
       "ID": "310",
-      "Name": "Tactical Frog-TF04-",
+      "Name": "Tactical Frog-TF04",
       "Kaufdatum": "02.03.2025",
       "Kaufpreis": 96,
       "Hersteller": "Tactical Frog",
@@ -5899,7 +5899,7 @@
     },
     {
       "ID": "311",
-      "Name": "Casio-2100-",
+      "Name": "Casio-2100",
       "Kaufdatum": "02.03.2025",
       "Kaufpreis": 39,
       "Hersteller": "Casio",
@@ -5921,7 +5921,7 @@
     },
     {
       "ID": "312",
-      "Name": "Berny-2785LC-",
+      "Name": "Berny-2785LC",
       "Kaufdatum": "16.03.2025",
       "Kaufpreis": 45,
       "Hersteller": "Berny",
@@ -5943,7 +5943,7 @@
     },
     {
       "ID": "313",
-      "Name": "Momentum-Cobalt V -",
+      "Name": "Momentum-Cobalt V ",
       "Kaufdatum": "16.03.2025",
       "Kaufpreis": 105,
       "Hersteller": "Momentum",
@@ -5965,7 +5965,7 @@
     },
     {
       "ID": "314",
-      "Name": "Addiesdive-AD2078",
+      "Name": "Addiesdive-AD2078-",
       "Kaufdatum": "16.03.2025",
       "Kaufpreis": 96,
       "Hersteller": "Addiesdive",
@@ -5987,7 +5987,7 @@
     },
     {
       "ID": "316",
-      "Name": "Cadisen-C8239-",
+      "Name": "Cadisen-C8239",
       "Kaufdatum": "23.03.2025",
       "Kaufpreis": 50,
       "Hersteller": "Cadisen",
@@ -6031,7 +6031,7 @@
     },
     {
       "ID": "318",
-      "Name": "Baltany-S2204030-",
+      "Name": "Baltany-S2204030",
       "Kaufdatum": "23.03.2025",
       "Kaufpreis": 95,
       "Hersteller": "Baltany",
@@ -6075,7 +6075,7 @@
     },
     {
       "ID": "320",
-      "Name": "Addiesdive-AD2085",
+      "Name": "Addiesdive-AD2085-",
       "Kaufdatum": "04.04.2025",
       "Kaufpreis": 78,
       "Hersteller": "Addiesdive",
@@ -6097,7 +6097,7 @@
     },
     {
       "ID": "321",
-      "Name": "UMF Ruhla-1434-2-",
+      "Name": "UMF Ruhla-1434-2",
       "Kaufdatum": "20.03.2025",
       "Kaufpreis": 499,
       "Hersteller": "UMF Ruhla",
@@ -6119,7 +6119,7 @@
     },
     {
       "ID": "323",
-      "Name": "Boderry-Landmaster A14T-01B-",
+      "Name": "Boderry-Landmaster A14T-01B",
       "Kaufdatum": "01.04.2025",
       "Kaufpreis": 67,
       "Hersteller": "Boderry",
@@ -6141,7 +6141,7 @@
     },
     {
       "ID": "324",
-      "Name": "Detomaso-Compasso-",
+      "Name": "Detomaso-Compasso",
       "Kaufdatum": "16.04.2025",
       "Kaufpreis": 53,
       "Hersteller": "Detomaso",
@@ -6163,7 +6163,7 @@
     },
     {
       "ID": "325",
-      "Name": "Watchdives-WD1972-",
+      "Name": "Watchdives-WD1972",
       "Kaufdatum": "17.04.2025",
       "Kaufpreis": 57,
       "Hersteller": "Watchdives",
@@ -6185,7 +6185,7 @@
     },
     {
       "ID": "326",
-      "Name": "WM-WM194-",
+      "Name": "WM-WM194",
       "Kaufdatum": "16.04.2025",
       "Kaufpreis": 101,
       "Hersteller": "WM",
@@ -6207,7 +6207,7 @@
     },
     {
       "ID": "327",
-      "Name": "Boderry-Voyager A11B-03",
+      "Name": "Boderry-Voyager A11B-03-",
       "Kaufdatum": "27.04.2025",
       "Kaufpreis": 57,
       "Hersteller": "Boderry",
@@ -6229,7 +6229,7 @@
     },
     {
       "ID": "328",
-      "Name": "Shanghai-7120-",
+      "Name": "Shanghai-7120",
       "Kaufdatum": "04.05.2025",
       "Kaufpreis": 32,
       "Hersteller": "Shanghai",
@@ -6251,7 +6251,7 @@
     },
     {
       "ID": "329",
-      "Name": "Pagani Design-PD-1795",
+      "Name": "Pagani Design-PD-1795-",
       "Kaufdatum": "09.04.2025",
       "Kaufpreis": 36,
       "Hersteller": "Pagani Design",
@@ -6273,7 +6273,7 @@
     },
     {
       "ID": "330",
-      "Name": "Shanghai-132-",
+      "Name": "Shanghai-132",
       "Kaufdatum": "04.05.2025",
       "Kaufpreis": 20,
       "Hersteller": "Shanghai",
@@ -6295,7 +6295,7 @@
     },
     {
       "ID": "331",
-      "Name": "Orient-RA-AP0004S10B-",
+      "Name": "Orient-RA-AP0004S10B",
       "Kaufdatum": "15.04.2024",
       "Kaufpreis": 250,
       "Hersteller": "Orient",
@@ -6339,7 +6339,7 @@
     },
     {
       "ID": "333",
-      "Name": "WM Watches-212M",
+      "Name": "WM Watches-212M-",
       "Kaufdatum": "12.05.2025",
       "Kaufpreis": 121,
       "Hersteller": "WM Watches",
@@ -6361,7 +6361,7 @@
     },
     {
       "ID": "334",
-      "Name": "Addiesdive-AD2089",
+      "Name": "Addiesdive-AD2089-",
       "Kaufdatum": "14.05.2025",
       "Kaufpreis": 39,
       "Hersteller": "Addiesdive",
@@ -6383,7 +6383,7 @@
     },
     {
       "ID": "335",
-      "Name": "Berny-AMT143M",
+      "Name": "Berny-AMT143M-",
       "Kaufdatum": "14.05.2025",
       "Kaufpreis": 87,
       "Hersteller": "Berny",
@@ -6401,6 +6401,28 @@
       "Waterproof": "Unknown",
       "CaseSize": "",
       "Glass": "",
+      "BildURL": "https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22"
+    },
+    {
+      "ID": "336",
+      "Name": "Steeldive-SD1984",
+      "Kaufdatum": "25.05.2025",
+      "Kaufpreis": 90,
+      "Hersteller": "Steeldive",
+      "Typ": "Diver",
+      "Modell": "SD1984",
+      "Hommage": "Seiko Monster",
+      "VideoURL": "https://www.youtube.com/watch?v=Qw3P7-0xVgk&pp=ygUQc2QxOTg0IHN0ZWVsZGl2ZQ%3D%3D",
+      "AKA": "",
+      "VKDatum": "-",
+      "VKPreis": "VK-Preis",
+      "Herkunft": "AliExpress",
+      "ShopURL": "Shop",
+      "Bemerkungen": "",
+      "Movement": "Automatic",
+      "Waterproof": "Unknown",
+      "CaseSize": "42,2",
+      "Glass": "Sapphire",
       "BildURL": "https://fakeimg.pl/200x150/b82525/ebd8ae?text=No+watch+image+yet&font=bebas&font_size=22"
     }
   ]
