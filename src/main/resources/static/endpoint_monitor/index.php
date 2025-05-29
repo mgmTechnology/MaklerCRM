@@ -124,9 +124,19 @@ function checkWebsite($url, $contentCheckString = null) {
     curl_setopt($ch, CURLOPT_NOBODY, false);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // SSL-Zertifikate nicht überprüfen
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Hostname-Überprüfung deaktivieren
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
     
     // Website abrufen
     $response = curl_exec($ch);
+    
+    // Prüfen, ob ein cURL-Fehler aufgetreten ist
+    if(curl_errno($ch)) {
+        $error = curl_error($ch);
+        curl_close($ch);
+        throw new Exception("cURL-Fehler: " . $error);
+    }
     
     // Antwortzeit berechnen
     $endTime = microtime(true);
@@ -138,18 +148,31 @@ function checkWebsite($url, $contentCheckString = null) {
     // cURL-Sitzung schließen
     curl_close($ch);
     
+    // Success ist true für alle 2xx und 3xx Status Codes
+    $success = ($httpCode >= 200 && $httpCode < 400);
+    
     // Content-Check durchführen
-    $contentCheckSuccess = false;
-    if ($contentCheckString && $httpCode >= 200 && $httpCode < 400) {
+    $contentCheckSuccess = true; // Standard: true wenn kein Content-Check erforderlich
+    if ($contentCheckString && $success) {
         $contentCheckSuccess = (stripos($response, $contentCheckString) !== false);
     }
+    
+    // Debug-Information in die Logs schreiben
+    error_log(sprintf(
+        "Website Check - URL: %s, HTTP Code: %d, Success: %s, Response Time: %dms, Content Check: %s",
+        $url,
+        $httpCode,
+        $success ? 'Yes' : 'No',
+        $responseTime,
+        $contentCheckSuccess ? 'Yes' : 'No'
+    ));
     
     return [
         'url' => $url,
         'status' => $httpCode,
         'response_time' => $responseTime,
         'timestamp' => date('Y-m-d H:i:s'),
-        'success' => ($httpCode >= 200 && $httpCode < 400),
+        'success' => $success,
         'content_check_string' => $contentCheckString,
         'content_check_success' => $contentCheckSuccess
     ];
@@ -163,8 +186,27 @@ function logResult($result) {
     
     // Schreibe Header, wenn die Datei neu ist
     if (!$fileExists) {
-        fputcsv($handle, ['Timestamp', 'URL', 'Status', 'Response Time (ms)', 'Success', 'Content Check String', 'Content Check Success']);
+        fputcsv($handle, ['Timestamp', 'URL', 'Status', 'Response Time (ms)', 'Success', 'Content Check String', 'Content Check Success'], ",", '"', "\\");
     }
+    
+    // Success-Status basierend auf HTTP-Code bestimmen
+    $isSuccess = $result['status'] >= 200 && $result['status'] < 400;
+    
+    // Content-Check-Status bestimmen
+    $contentCheckSuccess = (!isset($result['content_check_string']) || empty($result['content_check_string'])) ? 'Yes' : 
+        (isset($result['content_check_success']) && $result['content_check_success'] ? 'Yes' : 'No');
+    
+    // HTTP-Erfolg als Yes/No basierend auf Status-Code
+    $success = $isSuccess ? 'Yes' : 'No';
+    
+    // Debug-Log
+    error_log(sprintf(
+        "Writing to CSV - URL: %s, Status: %d, Success: %s, Content Check Success: %s",
+        $result['url'],
+        $result['status'],
+        $success,
+        $contentCheckSuccess
+    ));
     
     // Schreibe Daten
     fputcsv($handle, [
@@ -172,10 +214,10 @@ function logResult($result) {
         $result['url'],
         $result['status'],
         $result['response_time'],
-        $result['success'] ? 'Yes' : 'No',
+        $success,
         $result['content_check_string'] ?? '',
-        isset($result['content_check_success']) && $result['content_check_success'] ? 'Yes' : 'No'
-    ]);
+        $contentCheckSuccess
+    ], ",", '"', "\\");
     
     fclose($handle);
 }
@@ -234,14 +276,15 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'check_all_endpoints') {
             $endpoints[$id]['last_check'] = date('Y-m-d H:i:s');
             $endpoints[$id]['next_check'] = date('Y-m-d H:i:s', strtotime('+' . $endpoint['interval'] . ' minutes'));
             
+            $isSuccess = $result['success'] && (!isset($result['content_check_success']) || $result['content_check_success']);
+            
             $results[$id] = [
-                'success' => true,
+                'success' => $isSuccess,
                 'result' => $result,
                 'endpoint' => $endpoints[$id]
             ];
             
-            $checkedCount++;
-            if (!$result['success'] || (isset($result['content_check_success']) && !$result['content_check_success'])) {
+            if (!$isSuccess) {
                 $failedCount++;
             }
         } catch (Exception $e) {
@@ -251,15 +294,19 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'check_all_endpoints') {
             ];
             $failedCount++;
         }
+        $checkedCount++;
     }
+    
+    $successCount = $checkedCount - $failedCount;
     
     saveEndpoints($endpoints);
     
     echo json_encode([
         'success' => true,
-        'message' => "Alle Endpunkte geprüft: $checkedCount erfolgreich, $failedCount fehlgeschlagen.",
+        'message' => "Alle Endpunkte geprüft: $successCount erfolgreich, $failedCount fehlgeschlagen.",
         'results' => $results,
         'checked_count' => $checkedCount,
+        'success_count' => $successCount,
         'failed_count' => $failedCount
     ]);
     exit;
@@ -287,17 +334,19 @@ if (isset($_POST['action']) && $_POST['action'] === 'check_all_endpoints') {
             $endpoints[$id]['last_check'] = date('Y-m-d H:i:s');
             $endpoints[$id]['next_check'] = date('Y-m-d H:i:s', strtotime('+' . $endpoint['interval'] . ' minutes'));
             
-            $checkedCount++;
             if (!$result['success'] || (isset($result['content_check_success']) && !$result['content_check_success'])) {
                 $failedCount++;
             }
         } catch (Exception $e) {
             $failedCount++;
         }
+        $checkedCount++;
     }
     
+    $successCount = $checkedCount - $failedCount;
+    
     saveEndpoints($endpoints);
-    $message = "Alle Endpunkte geprüft: $checkedCount erfolgreich, $failedCount fehlgeschlagen.";
+    $message = "Alle Endpunkte geprüft: $successCount erfolgreich, $failedCount fehlgeschlagen.";
     $activeTab = 'endpoints';
 }
 
