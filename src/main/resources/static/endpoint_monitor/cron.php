@@ -67,7 +67,7 @@ function checkWebsite($url, $contentCheckString = null) {
         'url' => $url,
         'status' => $httpCode,
         'response_time' => $responseTime,
-        'timestamp' => date('Y-m-d H:i:s'),
+        'timestamp' => (new DateTime('now', new DateTimeZone('Europe/Berlin')))->format('Y-m-d H:i:s'),
         'success' => ($httpCode >= 200 && $httpCode < 400),
         'content_check_string' => $contentCheckString,
         'content_check_success' => $contentCheckSuccess
@@ -120,8 +120,11 @@ foreach ($endpoints as $id => $endpoint) {
             logResult($result);
             
             // Aktualisiere Zeitstempel für letzte und nächste Prüfung
-            $endpoints[$id]['last_check'] = date('Y-m-d H:i:s');
-            $endpoints[$id]['next_check'] = date('Y-m-d H:i:s', strtotime('+' . $endpoint['interval'] . ' minutes'));
+            $now = new DateTime('now', new DateTimeZone('Europe/Berlin'));
+            $endpoints[$id]['last_check'] = $now->format('Y-m-d H:i:s');
+            $next = clone $now;
+            $next->modify('+' . $endpoint['interval'] . ' minutes');
+            $endpoints[$id]['next_check'] = $next->format('Y-m-d H:i:s');
             
             echo "  Status: " . $result['status'] . "\n";
             echo "  Antwortzeit: " . $result['response_time'] . " ms\n";

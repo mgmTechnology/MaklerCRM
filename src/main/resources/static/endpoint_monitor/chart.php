@@ -18,23 +18,28 @@ function readLogData() {
     $data = [];
     $handle = fopen(LOG_FILE, 'r');
     
-    // Header lesen
-    $headers = fgetcsv($handle, 0, ",", '"', "\\");
+    // Zeitzone auf Europe/Berlin setzen
+    date_default_timezone_set('Europe/Berlin');
+    
+    // Header definieren
+    $headers = ['Timestamp', 'URL', 'Status', 'Response Time (ms)', 'Success', 'Content Check String', 'Content Check Success'];
     
     // Daten lesen
     while (($row = fgetcsv($handle, 0, ",", '"', "\\")) !== false) {
-        // Sicherstellen, dass die Anzahl der Werte mit der Anzahl der Header übereinstimmt
-        if (count($headers) != count($row)) {
-            // Fehlende Werte auffüllen oder überschüssige entfernen
-            if (count($headers) > count($row)) {
-                // Fehlende Werte auffüllen
-                $row = array_pad($row, count($headers), '');
-            } else {
-                // Überschüssige Werte entfernen
-                $row = array_slice($row, 0, count($headers));
+        if (count($row) === count($headers)) {
+            $rowData = array_combine($headers, $row);
+            
+            // Timestamp ist bereits in korrekter Zeitzone, nur Format anpassen
+            if (isset($rowData['Timestamp'])) {
+                $rowData['Timestamp'] = str_replace('"', '', $rowData['Timestamp']);
+                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $rowData['Timestamp']);
+                if ($dateTime) {
+                    $rowData['Timestamp'] = $dateTime->format('d.m.Y H:i:s');
+                }
             }
+            
+            $data[] = $rowData;
         }
-        $data[] = array_combine($headers, $row);
     }
     
     fclose($handle);
@@ -256,11 +261,21 @@ $urls = array_unique(array_column($logData, 'URL'));
                 
                 html.setAttribute('data-bs-theme', newTheme);
                 
+                // Button-Text und Icon aktualisieren
+                if (newTheme === 'dark') {
+                    this.innerHTML = '<i class="bi bi-sun"></i> Light Mode';
+                } else {
+                    this.innerHTML = '<i class="bi bi-moon-stars"></i> Dark Mode';
+                }
+                
                 // DataTable neu initialisieren, um Styling anzupassen
                 if (dataTable) {
                     dataTable.destroy();
                     updateTable(filterData());
                 }
+                
+                // Theme in localStorage speichern
+                localStorage.setItem('theme', newTheme);
             });
 
             // Gespeichertes Theme beim Laden anwenden
@@ -310,7 +325,10 @@ $urls = array_unique(array_column($logData, 'URL'));
                 }
                 
                 filteredData = filteredData.filter(item => {
-                    const itemDate = new Date(item.Timestamp);
+                    // Parse das deutsche Datumsformat
+                    const [datePart, timePart] = item.Timestamp.split(' ');
+                    const [day, month, year] = datePart.split('.');
+                    const itemDate = new Date(year, month - 1, day, ...timePart.split(':'));
                     return itemDate >= cutoffDate;
                 });
             }
@@ -443,7 +461,18 @@ $urls = array_unique(array_column($logData, 'URL'));
             const urlGroups = {};
             
             // Daten nach Zeitstempel absteigend sortieren
-            const sortedData = [...data].sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
+            const sortedData = [...data].sort((a, b) => {
+                // Parse deutsche Datumsformate (DD.MM.YYYY HH:mm:ss)
+                const [datePart1, timePart1] = a.Timestamp.split(' ');
+                const [day1, month1, year1] = datePart1.split('.');
+                const dateA = new Date(year1, month1 - 1, day1, ...timePart1.split(':'));
+
+                const [datePart2, timePart2] = b.Timestamp.split(' ');
+                const [day2, month2, year2] = datePart2.split('.');
+                const dateB = new Date(year2, month2 - 1, day2, ...timePart2.split(':'));
+
+                return dateB - dateA;
+            });
             
             // Alle URLs initialisieren
             sortedData.forEach(item => {
@@ -490,14 +519,10 @@ $urls = array_unique(array_column($logData, 'URL'));
                 pointRadius: group.pointRadius
             }));
             
-            if (window.responseChart) {
-                window.responseChart.destroy();
-            }
-            
             window.responseChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.map(item => item.Timestamp),
+                    labels: sortedData.map(item => item.Timestamp),
                     datasets: datasets
                 },
                 options: {

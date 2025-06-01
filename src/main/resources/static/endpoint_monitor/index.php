@@ -64,8 +64,11 @@ function loadEndpoints() {
                 logResult($result);
                 
                 // Nächste Prüfung planen
-                $endpoints[$id]['last_check'] = date('Y-m-d H:i:s');
-                $endpoints[$id]['next_check'] = date('Y-m-d H:i:s', strtotime('+' . $defaultUrl['interval'] . ' minutes'));
+                $now = new DateTime('now', new DateTimeZone('Europe/Berlin'));
+                $endpoints[$id]['last_check'] = $now->format('Y-m-d H:i:s');
+                $next = clone $now;
+                $next->modify('+' . $defaultUrl['interval'] . ' minutes');
+                $endpoints[$id]['next_check'] = $next->format('Y-m-d H:i:s');
             }
             
             // Speichern
@@ -171,7 +174,7 @@ function checkWebsite($url, $contentCheckString = null) {
         'url' => $url,
         'status' => $httpCode,
         'response_time' => $responseTime,
-        'timestamp' => date('Y-m-d H:i:s'),
+        'timestamp' => (new DateTime('now', new DateTimeZone('Europe/Berlin')))->format('Y-m-d H:i:s'),
         'success' => $success,
         'content_check_string' => $contentCheckString,
         'content_check_success' => $contentCheckSuccess
@@ -991,27 +994,52 @@ if (file_exists(LOG_FILE)) {
             document.getElementById('success-count').textContent = successCount;
             document.getElementById('failed-count').textContent = failedCount;
             
+            // Alte Meldungen entfernen
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => alert.remove());
+
             // AJAX-Anfrage senden
             fetch('index.php?ajax=check_all_endpoints')
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Fortschrittsbalken auf 100% setzen
-                        const progressBar = document.querySelector('.progress-bar');
-                        progressBar.style.width = '100%';
-                        progressBar.setAttribute('aria-valuenow', 100);
-                        progressBar.textContent = '100%';
+                        let checkedCount = 0;
+                        const totalCount = Object.keys(data.results).length;
                         
-                        // Statistiken aktualisieren
-                        document.getElementById('checked-count').textContent = data.checked_count;
-                        document.getElementById('success-count').textContent = data.checked_count - data.failed_count;
-                        document.getElementById('failed-count').textContent = data.failed_count;
-                        document.getElementById('current-endpoint').textContent = 'Alle Endpunkte geprüft';
-                        
-                        // Seite nach kurzer Verzögerung neu laden
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
+                        // Jeden Endpunkt einzeln verarbeiten
+                        Object.entries(data.results).forEach(([id, result], index) => {
+                            setTimeout(() => {
+                                checkedCount++;
+                                const percent = (checkedCount / totalCount) * 100;
+                                
+                                // Fortschrittsbalken aktualisieren
+                                const progressBar = document.querySelector('.progress-bar');
+                                progressBar.style.width = percent + '%';
+                                progressBar.setAttribute('aria-valuenow', percent);
+                                progressBar.textContent = Math.round(percent) + '%';
+                                
+                                // Statistiken aktualisieren
+                                document.getElementById('checked-count').textContent = checkedCount;
+                                document.getElementById('success-count').textContent = 
+                                    Object.values(data.results).slice(0, checkedCount)
+                                        .filter(r => r.success).length;
+                                document.getElementById('failed-count').textContent = 
+                                    checkedCount - Object.values(data.results).slice(0, checkedCount)
+                                        .filter(r => r.success).length;
+                                
+                                // Aktuellen Endpunkt anzeigen
+                                const endpoint = result.endpoint || {};
+                                document.getElementById('current-endpoint').textContent = 
+                                    checkedCount === totalCount ? 'Alle Endpunkte geprüft' : endpoint.name || endpoint.url || '';
+                                
+                                // Wenn alle geprüft wurden, Seite neu laden
+                                if (checkedCount === totalCount) {
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 1500);
+                                }
+                            }, index * 500); // Jeder Endpunkt wird mit 500ms Verzögerung aktualisiert
+                        });
                     } else {
                         alert('Fehler: ' + data.message);
                     }
