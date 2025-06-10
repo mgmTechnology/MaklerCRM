@@ -271,12 +271,23 @@ function renderWatchTable(watches) {
         console.log("[DEBUG] aiinfo-trigger clicked");
         const row = target.closest("tr");
         if (!row) return;
-        // Use DataTables API to get row data
-        const table = $("#watchTable").DataTable();
-        const rowData = table.row(row).data();
-        if (!rowData) return;
+        
+        // Hole die ID der Uhr aus dem data-watch-id Attribut der Zeile
+        const watchId = row.getAttribute('data-watch-id');
+        if (!watchId) {
+          console.error("Keine Watch-ID in der Tabellenzeile gefunden");
+          return;
+        }
+        
+        // Finde die Uhr anhand der ID
+        const watch = watches.find(w => w.ID && w.ID.toString() === watchId);
+        if (!watch) {
+          console.error(`Uhr mit ID ${watchId} nicht gefunden`);
+          return;
+        }
+        
         document.getElementById("aiinfo-tab")?.click();
-        fetchAndShowAiInfo(rowData);
+        fetchAndShowAiInfo(watch);
       }
     });
 
@@ -320,6 +331,8 @@ function renderWatchTable(watches) {
   tableBody.innerHTML = "";
   watches.forEach((uhr) => {
     const row = document.createElement("tr");
+    // Füge die Watch-ID als Datenattribut hinzu
+    row.setAttribute('data-watch-id', uhr.ID);
     const getValue = (v) => (v === undefined || v === null ? "" : v);
     // Dreistellige ID generieren
     const paddedId = getValue(uhr.ID).toString().padStart(3, "0");
@@ -453,13 +466,30 @@ function getOpenAiToken() {
  * @param {Object} uhr - The watch object
  */
 async function fetchAndShowAiInfo(uhr) {
+  console.group();
+  console.table(uhr);
   const pane = document.getElementById("aiInfoPane");
   if (pane)
     pane.innerHTML =
       '<div class="card shadow"><div class="card-body text-center text-muted"><span class="spinner-border"></span> Lade KI-Informationen ...</div></div>';
   try {
     const OPENAI_API_KEY = await getOpenAiToken();
-    const prompt = `Gib mir eine ausführliche, aber kompakte Beschreibung dieser Uhr. Nur objektive Fakten darstellen, inklusive Besonderheiten, Geschichte und Bewertung. Antworte auf Deutsch. Keine Inhalte, die schon bekannt sind. Keine Bewertungen oder Meinungen äußern. Verweise nicht auf Bilder oder Videos.\n\nUhrendaten: ${JSON.stringify(uhr)}`;
+    const prompt = `Du bekommst Uhrendaten als JSON-Objekt. Verwende diese Daten nur zur Identifikation des Modells – NICHT in der Antwort zitieren.
+
+Deine Aufgabe:
+• Nenne nur neue, weiterführende Informationen zur Uhr ${uhr.Name}, die nicht bereits aus dem JSON ablesbar sind.
+• Recherchiere technische Besonderheiten, Kaliber, Produktionszeitraum, Varianten, Hintergrund zur Serie, Historie und Relevanz des Modells im Orient-Portfolio.
+• Gib ausschließlich objektive Fakten auf Deutsch zurück.
+• Vermeide Wiederholungen der Eingabedaten (z. B. Durchmesser, Saphirglas, Automatik etc.).
+• Keine Werbesprache, keine Meinungen, keine Bilder, keine Bewertungen.
+
+Eingabe: ${JSON.stringify(uhr)}
+`;
+
+console.dir(prompt);
+console.groupEnd();
+
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
