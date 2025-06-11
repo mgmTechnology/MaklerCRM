@@ -23,9 +23,18 @@
 
   <main class="mb-5">
     <!-- Sticky Toggle Checkbox -->
-    <div class="form-check form-switch mb-2">
-      <input class="form-check-input" type="checkbox" id="stickyToggle">
-      <label class="form-check-label" for="stickyToggle">Tabs und Inhalte oben fixieren</label>
+    <div class="d-flex align-items-center mb-2">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="stickyToggle">
+        <label class="form-check-label" for="stickyToggle">Tabs und Inhalte oben fixieren</label>
+      </div>
+      <div class="ms-3">
+        <label for="aiPlatformSelect" class="form-label">KI Plattform auswählen:</label>
+        <select class="form-select" id="aiPlatformSelect" style="width: auto; display: inline-block;">
+          <option value="openai" selected>OpenAI</option>
+          <option value="gemini">Gemini</option>
+        </select>
+      </div>
     </div>
   <!-- Tab-Navigation -->
   <ul class="nav nav-tabs mb-3" id="chartTabs" role="tablist">
@@ -73,6 +82,7 @@
 
   <!-- Tab-Inhalte -->
   <div class="tab-content" id="chartTabsContent">
+    
     <!-- Specs Tab -->
     <div class="tab-pane fade" id="specs" role="tabpanel">
       <div id="specsCardPane" class="d-flex justify-content-center align-items-center" style="min-height:340px;">

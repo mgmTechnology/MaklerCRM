@@ -430,51 +430,119 @@ function renderWatchTable(watches) {
 }
 
 /**
- * Holt das OpenAI-Token aus localStorage oder fordert es per Modal vom User an.
- * Gibt ein Promise zurück, das das Token liefert.
+ * Holt das API-Token für die ausgewählte KI-Plattform aus dem localStorage oder fordert es an.
+ * @param {string} platform - Die KI-Plattform ('openai' oder 'gemini')
+ * @returns {Promise<string>} Ein Promise, das das API-Token auflöst
  */
-function getOpenAiToken() {
+function getAiToken(platform) {
   return new Promise((resolve) => {
-    let token = localStorage.getItem("open_ai_token");
+    const storageKey = `${platform}_api_token`;
+    const platformName = platform === 'openai' ? 'OpenAI' : 'Google Gemini';
+    
+    let token = localStorage.getItem(storageKey);
     if (token && token.trim() !== "") {
-      console.log("[DEBUG] OpenAI Token aus localStorage gefunden.");
+      console.log(`[DEBUG] ${platformName} Token aus localStorage gefunden.`);
       resolve(token);
       return;
     }
+    
     console.log(
-      "[DEBUG] Kein Token im localStorage, Eingabeaufforderung wird angezeigt.",
+      `[DEBUG] Kein ${platformName} Token im localStorage, Eingabeaufforderung wird angezeigt.`,
     );
-    // Alternative Eingabeaufforderung statt Modal
+    
     let inputToken = prompt(
-      "Bitte gib dein OpenAI API-Token ein (wird lokal gespeichert):",
+      `Bitte gib dein ${platformName} API-Token ein (wird lokal gespeichert):`,
       "",
     );
+    
     if (inputToken && inputToken.trim() !== "") {
-      localStorage.setItem("open_ai_token", inputToken.trim());
-      console.log("[DEBUG] Token eingegeben und gespeichert via prompt.");
+      localStorage.setItem(storageKey, inputToken.trim());
+      console.log(`[DEBUG] ${platformName} Token eingegeben und gespeichert.`);
       resolve(inputToken.trim());
     } else {
-      alert("OpenAI API-Token ist erforderlich, um fortzufahren.");
-      // Wiederhole die Eingabeaufforderung rekursiv
-      resolve(getOpenAiToken());
+      alert(`${platformName} API-Token ist erforderlich, um fortzufahren.`);
+      resolve(getAiToken(platform)); // Rekursiver Aufruf
     }
   });
 }
 
 /**
- * Fetches AI information for a watch from OpenAI and displays it in the #aiInfoPane.
+ * @deprecated Verwende stattdessen getAiToken('openai')
+ */
+function getOpenAiToken() {
+  return getAiToken('openai');
+}
+
+/**
+ * Fetches AI information for a watch from the selected AI platform and displays it in the #aiInfoPane.
  * @param {Object} uhr - The watch object
  */
 async function fetchAndShowAiInfo(uhr) {
-  console.group();
+  console.group('fetchAndShowAiInfo');
   console.table(uhr);
+  
   const pane = document.getElementById("aiInfoPane");
-  if (pane)
-    pane.innerHTML =
-      '<div class="card shadow"><div class="card-body text-center text-muted"><span class="spinner-border"></span> Lade KI-Informationen ...</div></div>';
+  if (pane) {
+    pane.innerHTML = `
+      <div class="card shadow">
+        <div class="card-body text-center text-muted">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Lade KI-Informationen ...
+        </div>
+      </div>`;
+  }
+  
   try {
-    const OPENAI_API_KEY = await getOpenAiToken();
-    const prompt = `Du bekommst Uhrendaten als JSON-Objekt. Verwende diese Daten nur zur Identifikation des Modells – NICHT in der Antwort zitieren.
+    // Bestimme die ausgewählte KI-Plattform
+    const platformSelect = document.getElementById("aiPlatformSelect");
+    const platform = platformSelect ? platformSelect.value : 'openai';
+    
+    let responseText;
+    
+    if (platform === 'gemini') {
+      responseText = await fetchFromGemini(uhr);
+    } else {
+      responseText = await fetchFromOpenAI(uhr);
+    }
+    
+    if (pane) {
+      pane.innerHTML = `
+        <div class="card shadow h-100">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span>KI-Informationen (${platform === 'gemini' ? 'Gemini' : 'OpenAI'})</span>
+            <span class="badge bg-secondary">${platform === 'gemini' ? 'Gemini' : 'OpenAI'}</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="p-3" style="max-height: 500px; overflow-y: auto;">
+              <div class="pe-2">
+                ${responseText.replace(/\n/g, "<br>")}
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+  } catch (err) {
+    console.error('Fehler beim Abrufen der KI-Informationen:', err);
+    if (pane) {
+      pane.innerHTML = `
+        <div class='alert alert-danger'>
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          Fehler beim Laden der KI-Informationen: ${err.message}
+        </div>`;
+    }
+  } finally {
+    console.groupEnd();
+  }
+}
+
+/**
+ * Fetch information from OpenAI API
+ * @param {Object} uhr - The watch object
+ * @returns {Promise<string>} The AI response text
+ */
+async function fetchFromOpenAI(uhr) {
+  const apiKey = await getAiToken('openai');
+  const prompt = `Du bekommst Uhrendaten als JSON-Objekt. Verwende diese Daten nur zur Identifikation des Modells – NICHT in der Antwort zitieren.
 
 Deine Aufgabe:
 • Nenne nur neue, weiterführende Informationen zur Uhr ${uhr.Name}, die nicht bereits aus dem JSON ablesbar sind.
@@ -483,43 +551,88 @@ Deine Aufgabe:
 • Vermeide Wiederholungen der Eingabedaten (z. B. Durchmesser, Saphirglas, Automatik etc.).
 • Keine Werbesprache, keine Meinungen, keine Bilder, keine Bewertungen.
 
-Eingabe: ${JSON.stringify(uhr)}
+Eingabe: ${JSON.stringify(uhr, null, 2)}
 `;
 
-console.dir(prompt);
-console.groupEnd();
-
-
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content:
-              "Du bist ein Uhrenexperte und erklärst Uhrenmodelle für Sammler.",
-          },
-          { role: "user", content: prompt },
-        ],
-        max_tokens: 700,
-        temperature: 0.7,
-      }),
-    });
-    if (!response.ok) throw new Error("Fehler beim Abrufen der KI-Infos");
-    const data = await response.json();
-    const aiText =
-      data.choices?.[0]?.message?.content || "Keine KI-Antwort erhalten.";
-    if (pane)
-      pane.innerHTML = `<div class="card shadow"><div class="card-body">${aiText.replace(/\n/g, "<br>")}</div></div>`;
-  } catch (err) {
-    if (pane)
-      pane.innerHTML = `<div class='alert alert-danger'>Fehler beim Laden der KI-Informationen: ${err.message}</div>`;
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: "Du bist ein Uhrenexperte und erklärst Uhrenmodelle für Sammler.",
+        },
+        { role: "user", content: prompt },
+      ],
+      max_tokens: 1000,
+      temperature: 0.7,
+    }),
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || 'API-Anfrage fehlgeschlagen');
   }
+  
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content || "Keine Antwort von der KI erhalten.";
+}
+
+/**
+ * Fetch information from Google Gemini API
+ * @param {Object} uhr - The watch object
+ * @returns {Promise<string>} The AI response text
+ */
+async function fetchFromGemini(uhr) {
+  const apiKey = await getAiToken('gemini');
+  const prompt = `Du bist ein Uhrenexperte und erklärst Uhrenmodelle für Sammler.
+
+Ich zeige dir Daten einer Uhr. Bitte gib folgende Informationen zurück:
+
+1. Technische Besonderheiten und Spezifikationen
+2. Produktionszeitraum und Modellhistorie
+3. Bedeutung und Positionierung im Hersteller-Portfolio
+4. Besondere Merkmale oder Innovationen
+5. Sammlerwert und Seltenheit
+
+Antworte ausschließlich in gut strukturiertem Deutsch. Verwende keine Anführungszeichen oder Markdown-Formatierung.
+
+Hier sind die Uhrendaten:
+${JSON.stringify(uhr, null, 2)}`;
+
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{
+          text: prompt
+        }]
+      }],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 1000,
+        topP: 0.8,
+        topK: 40
+      }
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || 'Gemini API-Anfrage fehlgeschlagen');
+  }
+  
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 
+         'Keine Antwort von Gemini erhalten.';
 }
 
 // --- Modal-Logik für Bild- und Videoanzeige ---
