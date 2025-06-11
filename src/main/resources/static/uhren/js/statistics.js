@@ -541,6 +541,7 @@ async function fetchAndShowAiInfo(uhr) {
  * @returns {Promise<string>} The AI response text
  */
 async function fetchFromOpenAI(uhr) {
+  console.log('fetchFromOpenAI');
   const apiKey = await getAiToken('openai');
   const prompt = `Du bekommst Uhrendaten als JSON-Objekt. Verwende diese Daten nur zur Identifikation des Modells – NICHT in der Antwort zitieren.
 
@@ -589,6 +590,7 @@ Eingabe: ${JSON.stringify(uhr, null, 2)}
  * @returns {Promise<string>} The AI response text
  */
 async function fetchFromGemini(uhr) {
+  console.log('fetchFromGemini');
   const apiKey = await getAiToken('gemini');
   const prompt = `Du bist ein Uhrenexperte und erklärst Uhrenmodelle für Sammler.
 
